@@ -1,3 +1,11 @@
-<p>
-  alunos works!
-</p>
+<h1>Alunos</h1>
+
+<ul>
+  <li *ngFor="let aluno of alunos$">
+    <a routerLink="/details/{{aluno.id}}">{{ aluno.nome }}</a>
+
+    <ul>
+      <li>Nascimento: {{ aluno.nascimento }}</li>
+    </ul>
+  </li>
+</ul>
