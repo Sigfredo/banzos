@@ -6,7 +6,13 @@ import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AlunosComponent } from './alunos/alunos.component';
 import { ProfessoresComponent } from './professores/professores.component';
-import { DetailComponent } from './detail/detail.component';
+import { DetailsComponent } from './details/details.component';
+
+import { HttpClientModule } from '@angular/common/http';
+import { GradeHorariaComponent } from './grade-horaria/grade-horaria.component';
+import { TurmaComponent } from './turma/turma.component';
+import { FinanceiroComponent } from './financeiro/financeiro.component';
+import { ChamadaComponent } from './chamada/chamada.component';
 
 @NgModule({
   declarations: [
@@ -14,11 +20,16 @@ import { DetailComponent } from './detail/detail.component';
     SidebarComponent,
     AlunosComponent,
     ProfessoresComponent,
-    DetailComponent,
+    DetailsComponent,
+    GradeHorariaComponent,
+    TurmaComponent,
+    FinanceiroComponent,
+    ChamadaComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule 
+    AppRoutingModule,
+    HttpClientModule
 
   ],
   providers: [],
