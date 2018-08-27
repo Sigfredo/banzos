@@ -1,6 +1,9 @@
-nav {
+#sidebar-nav {
     background: #2D2E2E;
     height: 100%;
+    position: fixed;
+    margin-top: 57px;
+
 
     ul {
         list-style-type: none;
