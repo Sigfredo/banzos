@@ -1,11 +1,44 @@
-<h1>Alunos</h1>
+<div class="mt-2 text-center">
 
-<ul>
-  <li *ngFor="let aluno of alunos$">
-    <a routerLink="/details/{{aluno.id}}">{{ aluno.nome }}</a>
+    <h1>Alunos</h1>
 
-    <ul>
-      <li>Nascimento: {{ aluno.nascimento }}</li>
-    </ul>
-  </li>
-</ul>
+</div>
+<div class="row mb-2">
+    <div class="col-sm-8">
+      <div class="form-group-row ">
+          <form class="form-inline">
+              <input class="form-control  col-sm-8 mr-1" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+      </div>
+    </div>
+
+    <div class="col-sm">
+        <a class="btn btn-primary float-right" href="#" role="button">Adicionar Aluno</a>
+      </div>
+</div>
+
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nome</th>
+      <th scope="col">instrumento</th>
+      <th scope="col">Início do Plano</th>
+      <th scope="col">Fim do Plano</th>
+    </tr>
+  </thead>
+  <tbody>
+
+        <tr *ngFor="let aluno of alunos$">
+            <th scope="row">{{aluno.id}}</th>
+            <td>{{aluno.nome}}</td>
+            <td>{{aluno.instrumento}}</td>
+            <td>{{aluno.inicioPlano}}</td>
+            <td>{{aluno.fimPlano}}</td>
+          </tr>
+ 
+   
+  </tbody>
+</table>
