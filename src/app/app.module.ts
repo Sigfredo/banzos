@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { ContentModule } from "./content/content.module";
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +19,6 @@ import { ContentModule } from "./content/content.module";
     HttpClientModule,
     CoreModule,
     ContentModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]
