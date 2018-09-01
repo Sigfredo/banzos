@@ -1,0 +1,82 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#alunoEdicaoModal">
+  Adicionar Aluno
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="alunoEdicaoModal" tabindex="-1" role="dialog" aria-labelledby="alunoEdicaoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="alunoEdicaoModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       
+          <h4 class="text-center">Cadastro de Aluno</h4>
+
+          <form [formGroup]="alunoEdicaoForm" class="form mt-4" (submit)="enviarEdicao()">
+          
+              <div class="form-group">
+                  <input
+                      formControlName="nome"
+                      type="text"
+                      class="form-control"
+                      placeholder="nome do aluno"
+                      autofocus>
+          
+                  <mw-vmessage
+                    *ngIf="cadastroForm.get('name').errors?.required"
+                    texto="Nome do aluno é obrigatório!">
+                  </mw-vmessage>
+              </div>
+          
+              <div class="form-group">
+                  <input
+                      formControlName="instrumento"
+                      type="instrumento"
+                      class="form-control"
+                      placeholder="instrumento do aluno"
+                      autofocus>
+          
+                  <mw-vmessage
+                    *ngIf="cadastroForm.get('instrumento').errors?.required"
+                    texto="Instrumento do aluno é obrigatório!">
+                  </mw-vmessage>
+              </div>
+          
+              <div class="form-group">
+                  <input
+                      formControlName="registration"
+                      type="number"
+                      class="form-control"
+                      placeholder="nascimento do aluno">
+          
+                  <mw-vmessage
+                    *ngIf="cadastroForm.get('registration').errors?.required"
+                    texto="Data de nascimento é obrigatório!">
+                  </mw-vmessage>
+          
+              </div>
+          
+              <button
+                  [disabled]="cadastroForm.invalid"
+                  type="submit"
+                  class="btn btn-primary btn-block">
+                  cadastrar
+              </button>
+          
+          </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
