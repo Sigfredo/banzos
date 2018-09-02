@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from "../../data.service";
-import { Observable } from "rxjs";
+import { AlunosService } from './alunos.service';
+
 
 @Component({
   selector: 'app-alunos',
@@ -9,13 +9,18 @@ import { Observable } from "rxjs";
 })
 export class AlunosComponent implements OnInit {
 
-  alunos$: Object;
+ alunos = [];
+
+
   
-  constructor(private data: DataService) { }
+  constructor(private alunosService: AlunosService) { }
 
   ngOnInit() {
-    this.data.getAlunos().subscribe(
-      data => this.alunos$ = data 
+    this.alunosService.todosAlunos()
+    .subscribe(
+       (response) => {this.alunos = response},
+      // (response) => {console.log(response)},
+      (error) => {console.log(error)}
     );
   }
 

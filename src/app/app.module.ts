@@ -7,11 +7,14 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { CoreModule } from './core/core.module';
 import { ContentModule } from "./content/content.module";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AlunosService } from './content/alunos/alunos.service';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +23,7 @@ import { ContentModule } from "./content/content.module";
     CoreModule,
     ContentModule
   ],
-  providers: [],
+  providers: [AlunosService, FormsModule, ReactiveFormsModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

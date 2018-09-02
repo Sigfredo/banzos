@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EdicaoComponent } from './edicao/edicao.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ListagemComponent } from './listagem/listagem.component';
+import { AlunosComponent } from './alunos.component';
+
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule
+
+
   ],
-  declarations: [EdicaoComponent],
-  exports: [ReactiveFormsModule]
+  declarations: [AlunosComponent, EdicaoComponent, ListagemComponent],
+  providers: [
+
+  ]
 })
 export class AlunosModule { }
