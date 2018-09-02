@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
 @Component({
   selector: 'banzos-aluno-listagem',
   templateUrl: './listagem.component.html',
   styleUrls: ['./listagem.component.scss']
 })
-export class ListagemComponent implements OnInit {
+export class ListagemComponent {
 
-  constructor() { }
+  constructor(){
 
-  ngOnInit() {
   }
+  
+  @Input()
+  alunos = [];
 
 }
