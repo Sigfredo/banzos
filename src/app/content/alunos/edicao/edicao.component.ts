@@ -20,7 +20,15 @@ export class EdicaoComponent implements OnInit {
     this.alunoEdicaoForm = this.formBuilder.group({
       nome: ['', Validators.required],
       instrumento: ['', Validators.required],
-      nascimento: ['', Validators.required]
+      inicioPlano: ['', Validators.required],
+      fimPlano: ['', Validators.required],
+      nascimento: ['', Validators.required],
+      telefone: ['', Validators.required],
+      endereco: ['', Validators.required],
+      cep: ['', Validators.required],
+      nomeResponsavel: ['', Validators.required],
+      cpfResponsavel: ['', Validators.required],
+      rgResponsavel: ['', Validators.required]
     });
 
   }
@@ -29,10 +37,19 @@ export class EdicaoComponent implements OnInit {
     
     const nome = this.alunoEdicaoForm.get('nome').value;
     const instrumento = this.alunoEdicaoForm.get('instrumento').value;
+    const inicioPlano = this.alunoEdicaoForm.get('inicioPlano').value;
+    const fimPlano = this.alunoEdicaoForm.get('fimPlano').value;
     const nascimento = this.alunoEdicaoForm.get('nascimento').value;
+    const telefone = this.alunoEdicaoForm.get('telefone').value;
+    const endereco = this.alunoEdicaoForm.get('endereco').value;
+    const cep = this.alunoEdicaoForm.get('cep').value;
+    const nomeResponsavel = this.alunoEdicaoForm.get('nomeResponsavel').value;
+    const cpfResponsavel = this.alunoEdicaoForm.get('cpfResponsavel').value;
+    const rgResponsavel = this.alunoEdicaoForm.get('rgResponsavel').value
 
     this.alunoService
-        .editarAluno({nome, instrumento, nascimento})
+        .editarAluno({nome, instrumento, inicioPlano, fimPlano ,nascimento, telefone, 
+          endereco, cep, nomeResponsavel, cpfResponsavel, rgResponsavel})
         .subscribe(
             () => {
                 alert('Aluno cadastrado com sucesso');

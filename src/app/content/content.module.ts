@@ -11,11 +11,14 @@ import { GradeHorariaComponent } from "./grade-horaria/grade-horaria.component";
 import { AppRoutingModule } from '../app-routing.module';
 import { ListagemComponent } from './alunos/listagem/listagem.component';
 import { EdicaoComponent } from "./alunos/edicao/edicao.component";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule, 
+    FormsModule, 
+    ReactiveFormsModule
   ],
   declarations: [
     AlunosComponent,

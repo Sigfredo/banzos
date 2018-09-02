@@ -1,3 +1,5 @@
+
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#alunoEdicaoModal">
   Adicionar Aluno
@@ -9,14 +11,12 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="alunoEdicaoModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="alunoEdicaoModalLabel">Cadastro de Aluno</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-       
-          <h4 class="text-center">Cadastro de Aluno</h4>
 
           <form [formGroup]="alunoEdicaoForm" class="form mt-4" (submit)="enviarEdicao()">
           
@@ -25,45 +25,94 @@
                       formControlName="nome"
                       type="text"
                       class="form-control"
-                      placeholder="nome do aluno"
-                      autofocus>
-          
-                  <mw-vmessage
-                    *ngIf="cadastroForm.get('name').errors?.required"
-                    texto="Nome do aluno é obrigatório!">
-                  </mw-vmessage>
+                      placeholder="Nome do aluno"
+                      autofocus>  
               </div>
           
               <div class="form-group">
                   <input
                       formControlName="instrumento"
-                      type="instrumento"
+                      type="email"
                       class="form-control"
-                      placeholder="instrumento do aluno"
-                      autofocus>
-          
-                  <mw-vmessage
-                    *ngIf="cadastroForm.get('instrumento').errors?.required"
-                    texto="Instrumento do aluno é obrigatório!">
-                  </mw-vmessage>
+                      placeholder="Instrumento do aluno">
               </div>
-          
+
               <div class="form-group">
-                  <input
-                      formControlName="registration"
-                      type="number"
-                      class="form-control"
-                      placeholder="nascimento do aluno">
-          
-                  <mw-vmessage
-                    *ngIf="cadastroForm.get('registration').errors?.required"
-                    texto="Data de nascimento é obrigatório!">
-                  </mw-vmessage>
-          
+                <input
+                    formControlName="inicioPlano"
+                    type="text"
+                    class="form-control"
+                    placeholder="Início do plano">  
               </div>
+
+              <div class="form-group">
+              <input
+                    formControlName="fimPlano"
+                    type="text"
+                    class="form-control"
+                    placeholder="Fim do plano">  
+              </div>    
+
+              <div class="form group">
+                  <input
+                    formControlName="nascimento"
+                    type="text"
+                    class="form-control"
+                    placeholder="Nascimento do aluno">
+              </div>
+
+              <div class="form-group">
+                <input
+                    formControlName="telefone"
+                    type="text"
+                    class="form-control"
+                    placeholder="Telefone">  
+              </div>
+
+              <div class="form-group">
+                <input
+                    formControlName="endereco"
+                    type="text"
+                    class="form-control"
+                    placeholder="Endereço">  
+              </div>
+
+              <div class="form-group">
+                <input
+                    formControlName="cep"
+                    type="text"
+                    class="form-control"
+                    placeholder="CEP">  
+              </div>
+
+              <div class="form-group">
+                <input
+                    formControlName="nomeResponsavel"
+                    type="text"
+                    class="form-control"
+                    placeholder="Nome do responsável">  
+              </div>
+
+              <div class="form-group">
+                <input
+                    formControlName="cpfResponsavel"
+                    type="text"
+                    class="form-control"
+                    placeholder="CPF do responsável">  
+              </div>
+
+              <div class="form-group">
+                <input
+                    formControlName="rgResponsavel"
+                    type="text"
+                    class="form-control"
+                    placeholder="Rg do responsável">  
+              </div>
+
+        
           
               <button
-                  [disabled]="cadastroForm.invalid"
+              
                   type="submit"
                   class="btn btn-primary btn-block">
                   cadastrar
