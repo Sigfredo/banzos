@@ -1,0 +1,13 @@
+<h1>Pagamentos</h1>
+
+<ul>
+  <li *ngFor="let pagamento of pagamentos$">
+    <a routerLink="/details/{{pagamento.userId}}">{{ pagamento.completed }}</a>
+
+    <ul>
+
+      <li><strong>Parcela:</strong> {{ pagamento.id }}</li>
+      <li><strong>Descrição:</strong> {{ pagamento.title }}</li>
+    </ul>
+  </li>
+</ul>
