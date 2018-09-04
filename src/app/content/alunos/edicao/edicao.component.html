@@ -1,0 +1,131 @@
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#alunoEdicaoModal">
+  Adicionar Aluno
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="alunoEdicaoModal" tabindex="-1" role="dialog" aria-labelledby="alunoEdicaoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="alunoEdicaoModalLabel">Cadastro de Aluno</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+          <form [formGroup]="alunoEdicaoForm" class="form mt-4" (submit)="enviarEdicao()">
+          
+              <div class="form-group">
+                  <input
+                      formControlName="nome"
+                      type="text"
+                      class="form-control"
+                      placeholder="Nome do aluno"
+                      autofocus>  
+              </div>
+          
+              <div class="form-group">
+                  <input
+                      formControlName="instrumento"
+                      type="email"
+                      class="form-control"
+                      placeholder="Instrumento do aluno">
+              </div>
+              
+              <div class="form-group">
+                <mat-form-field >
+                  <input matInput formControlName="inicioPlano" [matDatepicker]="inicioPlano" placeholder="Data de inicio do plano">
+                  <mat-datepicker-toggle matSuffix [for]="inicioPlano"></mat-datepicker-toggle>
+                  <mat-datepicker #inicioPlano ></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div class="form-group">
+                <mat-form-field >
+                  <input matInput formControlName="fimPlano" [matDatepicker]="fimPlano" placeholder="Data de fim do plano">
+                  <mat-datepicker-toggle matSuffix [for]="fimPlano"></mat-datepicker-toggle>
+                  <mat-datepicker #fimPlano ></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div class="form-group">
+                <mat-form-field >
+                  <input matInput formControlName="nascimento" [matDatepicker]="nascimento" placeholder="Data de nascimento">
+                  <mat-datepicker-toggle matSuffix [for]="nascimento"></mat-datepicker-toggle>
+                  <mat-datepicker #nascimento ></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div class="form-group">
+                <input
+                    formControlName="telefone"
+                    type="text"
+                    class="form-control"
+                    placeholder="Telefone">  
+              </div>
+
+              <div class="form-group">
+                <input
+                    formControlName="endereco"
+                    type="text"
+                    class="form-control"
+                    placeholder="Endereço">  
+              </div>
+
+              <div class="form-group">
+                <input
+                    formControlName="cep"
+                    type="text"
+                    class="form-control"
+                    placeholder="CEP">  
+              </div>
+
+              <div class="form-group">
+                <input
+                    formControlName="nomeResponsavel"
+                    type="text"
+                    class="form-control"
+                    placeholder="Nome do responsável">  
+              </div>
+
+              <div class="form-group">
+                <input
+                    formControlName="cpfResponsavel"
+                    type="text"
+                    class="form-control"
+                    placeholder="CPF do responsável">  
+              </div>
+
+              <div class="form-group">
+                <input
+                    formControlName="rgResponsavel"
+                    type="text"
+                    class="form-control"
+                    placeholder="Rg do responsável">  
+              </div>
+
+        
+          
+              <button
+              
+                  type="submit"
+                  class="btn btn-primary btn-block">
+                  cadastrar
+              </button>
+          
+          </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>

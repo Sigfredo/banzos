@@ -1,0 +1,25 @@
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nome</th>
+      <th scope="col">instrumento</th>
+      <th scope="col">Idade</th>
+      <th scope="col">Início do Plano</th>
+      <th scope="col">Fim do Plano</th>
+    </tr>
+  </thead>
+  <tbody>
+
+        <tr *ngFor="let aluno of alunos">
+            <th scope="row">{{aluno.id}}</th>
+            <td>{{aluno.nome}}</td>
+            <td>{{aluno.instrumento}}</td>
+            <td>{{buscarIdade(aluno.nascimento)}}</td>
+            <td>{{aluno.inicioPlano}}</td>
+            <td>{{aluno.fimPlano}}</td>
+          </tr>
+ 
+   
+  </tbody>
+</table>
