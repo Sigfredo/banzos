@@ -36,29 +36,29 @@
                       class="form-control"
                       placeholder="Instrumento do aluno">
               </div>
-
+              
               <div class="form-group">
-                <input
-                    formControlName="inicioPlano"
-                    type="text"
-                    class="form-control"
-                    placeholder="Início do plano">  
+                <mat-form-field >
+                  <input matInput formControlName="inicioPlano" [matDatepicker]="inicioPlano" placeholder="Data de inicio do plano">
+                  <mat-datepicker-toggle matSuffix [for]="inicioPlano"></mat-datepicker-toggle>
+                  <mat-datepicker #inicioPlano ></mat-datepicker>
+                </mat-form-field>
               </div>
 
               <div class="form-group">
-              <input
-                    formControlName="fimPlano"
-                    type="text"
-                    class="form-control"
-                    placeholder="Fim do plano">  
-              </div>    
+                <mat-form-field >
+                  <input matInput formControlName="fimPlano" [matDatepicker]="fimPlano" placeholder="Data de fim do plano">
+                  <mat-datepicker-toggle matSuffix [for]="fimPlano"></mat-datepicker-toggle>
+                  <mat-datepicker #fimPlano ></mat-datepicker>
+                </mat-form-field>
+              </div>
 
-              <div class="form group">
-                  <input
-                    formControlName="nascimento"
-                    type="text"
-                    class="form-control"
-                    placeholder="Nascimento do aluno">
+              <div class="form-group">
+                <mat-form-field >
+                  <input matInput formControlName="nascimento" [matDatepicker]="nascimento" placeholder="Data de nascimento">
+                  <mat-datepicker-toggle matSuffix [for]="nascimento"></mat-datepicker-toggle>
+                  <mat-datepicker #nascimento ></mat-datepicker>
+                </mat-form-field>
               </div>
 
               <div class="form-group">

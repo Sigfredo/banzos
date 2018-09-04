@@ -8,5 +8,4 @@ import { MatDatepicker } from "@angular/material";
 })
 export class AppComponent {
   title = 'banzos';
-  picker: MatDatepicker<string>;
 }
