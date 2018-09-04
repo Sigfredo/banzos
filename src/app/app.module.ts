@@ -10,7 +10,7 @@ import { ContentModule } from "./content/content.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlunosService } from './content/alunos/alunos.service';
 
-
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import { AlunosService } from './content/alunos/alunos.service';
     AppRoutingModule,
     HttpClientModule,
     CoreModule,
-    ContentModule
+    ContentModule,
+    NoopAnimationsModule
   ],
   providers: [AlunosService, FormsModule, ReactiveFormsModule],
   bootstrap: [AppComponent]
