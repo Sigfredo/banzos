@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import * as moment from 'moment';
 
 @Component({
   selector: 'banzos-aluno-listagem',
@@ -13,5 +14,10 @@ export class ListagemComponent {
   
   @Input()
   alunos = [];
+
+  buscarIdade(nascimento: string){
+
+    return moment(nascimento, "DD/MM/YYYY").fromNow(true);
+  }
 
 }
