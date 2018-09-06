@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 import { AlunosService } from "../alunos.service";
 import * as moment from 'moment';
+import { ViewChild, ElementRef} from '@angular/core';
 
 @Component({
   selector: 'banzos-aluno-edicao',
@@ -12,6 +13,7 @@ import * as moment from 'moment';
 })
 export class EdicaoComponent implements OnInit {
   
+  @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
 
   alunoEdicaoForm: FormGroup;
 
@@ -45,11 +47,8 @@ export class EdicaoComponent implements OnInit {
     const nome = this.alunoEdicaoForm.get('nome').value;
     const instrumento = this.alunoEdicaoForm.get('instrumento').value;
     const inicioPlano = moment(this.alunoEdicaoForm.get('inicioPlano').value).format('L');
-    //const inicioPlano = this.alunoEdicaoForm.get('inicioPlano').value;
-    //console.log(transform(new Date(), "MMM/dd/yyyy"));
-    //console.log(this.alunoEdicaoForm.get('inicioPlano').value.format('DD/MM/YYYY'));
-    const fimPlano = this.alunoEdicaoForm.get('fimPlano').value;
-    const nascimento = this.alunoEdicaoForm.get('nascimento').value;
+    const fimPlano = moment(this.alunoEdicaoForm.get('fimPlano').value).format('L');
+    const nascimento = moment(this.alunoEdicaoForm.get('nascimento').value).format('L');
     const telefone = this.alunoEdicaoForm.get('telefone').value;
     const endereco = this.alunoEdicaoForm.get('endereco').value;
     const cep = this.alunoEdicaoForm.get('cep').value;
@@ -64,6 +63,7 @@ export class EdicaoComponent implements OnInit {
             () => {
                 alert('Aluno cadastrado com sucesso');
                 this.alunoEdicaoForm.reset();
+                this.closeAddExpenseModal.nativeElement.click();
             },
             erro => {
                 this.alunoEdicaoForm.reset();
