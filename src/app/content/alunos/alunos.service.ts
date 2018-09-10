@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Aluno } from "./Aluno";
+import { Aluno } from "./aluno";
 import { Observable, throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 
@@ -32,15 +32,11 @@ export class AlunosService {
     //         return this.http.get<Aluno[]>(ALUNOS_BASE_URL+id);
     // }
 
-    getAluno(id:number): Aluno{
-            this.http.get<Aluno>(ALUNOS_BASE_URL+id)
-            .pipe(
-                map(
-                    (nome) => console.log('Nome: '+nome)
-                )
-            );            
-            console.log(this.aluno)     
-            return this.aluno;  
+    getAluno(id:number): Observable<Aluno> {
+        // console.log("Service, id: "+id)
+        // console.log("GET:")
+        // console.log(this.http.get<Aluno>(ALUNOS_BASE_URL+id).forEach(next => console.log(next.nome)))
+        return this.http.get<Aluno>(ALUNOS_BASE_URL+id)
     }
 
 //     getAluno(id:number): Aluno{

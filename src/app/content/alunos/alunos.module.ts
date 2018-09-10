@@ -4,12 +4,14 @@ import { EditarComponent } from './editar/editar.component';
 import { ListagemComponent } from './listagem/listagem.component';
 import { AlunosComponent } from './alunos.component';
 import { BanzosMatDatePickerModule } from '../../shared/banzosmatdatepicker.module';
+import { AppRoutingModule } from '../../app-routing.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
     BanzosMatDatePickerModule,
+    AppRoutingModule
   ],
   declarations: [
     AlunosComponent,

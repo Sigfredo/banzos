@@ -1,9 +1,11 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 import { AlunosService } from "../alunos.service";
 import * as moment from 'moment';
 import { ViewChild, ElementRef} from '@angular/core';
 import { Aluno } from '../aluno';
+import { ActivatedRoute } from '@angular/router';
+import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'banzos-aluno-editar',
@@ -13,7 +15,7 @@ import { Aluno } from '../aluno';
   ],
 })
 export class EditarComponent implements OnInit {
-  
+  @Input() aluno: Aluno;
   @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
 
   alunoEditarForm: FormGroup;
@@ -22,11 +24,13 @@ export class EditarComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private alunosService: AlunosService,
+    private route: ActivatedRoute
 
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
     moment.locale('pt-BR');
+   
     this.alunoEditarForm = this.formBuilder.group({
       nome: ['', Validators.required],
       instrumento: ['', Validators.required],
@@ -40,6 +44,10 @@ export class EditarComponent implements OnInit {
       cpfResponsavel: ['', Validators.required],
       rgResponsavel: ['', Validators.required]
     });
+
+    this.buscarAluno().subscribe(retorno =>
+      console.log("Retornei: "+retorno)
+    )
 
   }
 
@@ -73,11 +81,29 @@ export class EditarComponent implements OnInit {
         );
   }
 
-  editarAluno (id: number) {
-    this.alunoSelecionado = this.alunosService
-    .getAluno(id)
-    console.log(this.alunoSelecionado)
-    document.getElementById("editar-aluno-button").click();
-}
+  buscarAluno () {
+    const id = +this.route.snapshot.paramMap.get('id');
+
+    return this.alunosService.getAluno(id)
+    .pipe(
+        map(aluno => {
+          this.aluno = aluno;
+          if(id != 0){
+            this.alunoEditarForm.controls['nome'].setValue(aluno.nome);
+            this.alunoEditarForm.controls['instrumento'].setValue(aluno.instrumento);
+            this.alunoEditarForm.controls['inicioPlano'].setValue(aluno.inicioPlano);
+        
+          
+        })
+    );
+
+    // console.log("Achei o aluno id: " + id);
+  
+    // console.log(this.aluno);
+    // this.alunoSelecionado = this.alunosService
+    // .getAluno(id)
+    // console.log(this.alunoSelecionado)
+    // document.getElementById("editar-aluno-button").click();
+  }
 
 }

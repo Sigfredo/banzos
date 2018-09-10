@@ -4,6 +4,7 @@ import { AlunosComponent } from './content/alunos/alunos.component';
 
 import { ProfessoresComponent } from './content/professores/professores.component';
 import { FinanceiroComponent } from './content/financeiro/financeiro.component';
+import { EditarComponent } from './content/alunos/editar/editar.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,11 @@ const routes: Routes = [
   {
   path: 'financeiro',
   component: FinanceiroComponent
-  }
+  },
+  {
+    path: 'aluno/:id',
+    component: EditarComponent
+    }
 
 ];
 

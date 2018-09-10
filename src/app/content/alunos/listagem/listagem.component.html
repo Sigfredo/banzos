@@ -19,9 +19,11 @@
             <td>{{buscarIdade(aluno.nascimento)}}</td>
             <td>{{aluno.inicioPlano}}</td>
             <td>{{aluno.fimPlano}}</td>
-            <td> <button (click)='adicionarAluno(aluno.id)'>
-              <span class="glyphicon">&#x270f;</span>
-            </button></td>
+            <td> 
+                <a routerLink="/aluno/{{aluno.id}}">
+                  <span class="glyphicon">&#x270f;</span>
+                </a>
+            </td>
           </tr>
  
    

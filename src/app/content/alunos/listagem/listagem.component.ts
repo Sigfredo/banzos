@@ -26,13 +26,7 @@ export class ListagemComponent {
     return moment(nascimento, "DD/MM/YYYY").fromNow(true);
   }
 
-  adicionarAluno(id: number){
-    
-    console.log(
-    this.alunos
-    .find(aluno => aluno.id == id)
-    // this.alunoEditar.editarAluno(id);
-    )
-    
-  }
+  // adicionarAluno(id: number){
+  //   this.alunoEditar.editarAluno(id);    
+  // }
 }
