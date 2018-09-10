@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EdicaoComponent } from './edicao/edicao.component';
+import { EditarComponent } from './editar/editar.component';
 import { ListagemComponent } from './listagem/listagem.component';
 import { AlunosComponent } from './alunos.component';
 import { BanzosMatDatePickerModule } from '../../shared/banzosmatdatepicker.module';
@@ -13,11 +13,14 @@ import { BanzosMatDatePickerModule } from '../../shared/banzosmatdatepicker.modu
   ],
   declarations: [
     AlunosComponent,
-    EdicaoComponent, 
+    EditarComponent, 
     ListagemComponent],
 
   exports: [
     AlunosComponent
+  ],
+  providers: [
+    EditarComponent
   ]
 })
 export class AlunosModule { }

@@ -7,6 +7,7 @@
       <th scope="col">Idade</th>
       <th scope="col">Início do Plano</th>
       <th scope="col">Fim do Plano</th>
+      <th scope="col">Editar</th>
     </tr>
   </thead>
   <tbody>
@@ -18,6 +19,9 @@
             <td>{{buscarIdade(aluno.nascimento)}}</td>
             <td>{{aluno.inicioPlano}}</td>
             <td>{{aluno.fimPlano}}</td>
+            <td> <button (click)='adicionarAluno(aluno.id)'>
+              <span class="glyphicon">&#x270f;</span>
+            </button></td>
           </tr>
  
    
