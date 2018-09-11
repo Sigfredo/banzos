@@ -110,6 +110,8 @@ export class EditarComponent implements OnInit {
         .subscribe(
             () => {
                 alert('Aluno excluído com sucesso');
+                this.alunoEditarForm.reset();
+                this.voltar();
             },
             erro => {
                 alert('Erro ao excluir o aluno');
@@ -153,7 +155,7 @@ export class EditarComponent implements OnInit {
     this.enviarAlteracaoAluno();
   }
 
-  alunoEdicaoBack() {
+  voltar() {
     this._location.back()
   }
 
