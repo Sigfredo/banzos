@@ -21,9 +21,9 @@ export class ListagemComponent {
 
   alunoTeste: Aluno;
 
-  buscarIdade(nascimento: string){
-
-    return moment(nascimento, "DD/MM/YYYY").fromNow(true);
+  buscarIdade(nascimento: Date){
+    
+    return moment(new Date(nascimento)).locale('pt-br').fromNow(true);
   }
 
   // adicionarAluno(id: number){

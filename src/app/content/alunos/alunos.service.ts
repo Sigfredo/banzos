@@ -18,13 +18,25 @@ export class AlunosService {
     }
 
     editarAluno(aluno) {
-        return this.http.post( ALUNOS_BASE_URL,
-            aluno,
-            {
-                headers: new HttpHeaders()
-                  .set('Content-Type', 'application/json')
-              }
-            );
+        console.log("ID: "+aluno.nome)
+        if (aluno.id == 0){
+            return this.http.post( ALUNOS_BASE_URL,
+                aluno,
+                {
+                    headers: new HttpHeaders()
+                      .set('Content-Type', 'application/json')
+                  }
+                );
+        } else {
+            return this.http.put( ALUNOS_BASE_URL+aluno.id,
+                aluno,
+                {
+                    headers: new HttpHeaders()
+                      .set('Content-Type', 'application/json')
+                  }
+                );
+        }
+       
     }
 
     

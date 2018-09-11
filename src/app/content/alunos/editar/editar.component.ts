@@ -6,6 +6,7 @@ import { ViewChild, ElementRef} from '@angular/core';
 import { Aluno } from '../aluno';
 import { ActivatedRoute } from '@angular/router';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'banzos-aluno-editar',
@@ -20,18 +21,27 @@ export class EditarComponent implements OnInit {
 
   alunoEditarForm: FormGroup;
   alunoSelecionado: Aluno;
+  tituloEdicaoAluno: String;
+  labelBotaoEdicaoAluno: String;
+  isAlunoEdicao: boolean;
+  
 
   constructor(
     private formBuilder: FormBuilder,
     private alunosService: AlunosService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _location: Location
+    
 
   ) { }
 
   ngOnInit(): void { 
     moment.locale('pt-BR');
    
+    const id = +this.route.snapshot.paramMap.get('id');
+
     this.alunoEditarForm = this.formBuilder.group({
+      id: ['', Validators.required],
       nome: ['', Validators.required],
       instrumento: ['', Validators.required],
       inicioPlano: ['', Validators.required],
@@ -45,19 +55,30 @@ export class EditarComponent implements OnInit {
       rgResponsavel: ['', Validators.required]
     });
 
-    this.buscarAluno().subscribe(retorno =>
-      console.log("Retornei: "+retorno)
-    )
+    if (id != 0) {
+      this.tituloEdicaoAluno = "Aluno";
+      this.labelBotaoEdicaoAluno = "Salvar";
+      this.isAlunoEdicao = true;
+      this.buscarAluno(id).subscribe(retorno =>
+        {}
+      )
+    } else {
+      this.tituloEdicaoAluno = "Adicionar Aluno";
+      this.labelBotaoEdicaoAluno = "Cadastrar"
+      this.isAlunoEdicao = false;
+    }
 
+    console.log("Aluno Cadastro: "+this.isAlunoEdicao)
   }
 
   enviarEditar () {
-    
+
+    const id = this.alunoEditarForm.get('id').value;
     const nome = this.alunoEditarForm.get('nome').value;
     const instrumento = this.alunoEditarForm.get('instrumento').value;
-    const inicioPlano = moment(this.alunoEditarForm.get('inicioPlano').value).format('L');
-    const fimPlano = moment(this.alunoEditarForm.get('fimPlano').value).format('L');
-    const nascimento = moment(this.alunoEditarForm.get('nascimento').value).format('L');
+    const inicioPlano = this.alunoEditarForm.get('inicioPlano').value;
+    const fimPlano = this.alunoEditarForm.get('fimPlano').value;
+    const nascimento = this.alunoEditarForm.get('nascimento').value;
     const telefone = this.alunoEditarForm.get('telefone').value;
     const endereco = this.alunoEditarForm.get('endereco').value;
     const cep = this.alunoEditarForm.get('cep').value;
@@ -66,44 +87,45 @@ export class EditarComponent implements OnInit {
     const rgResponsavel = this.alunoEditarForm.get('rgResponsavel').value
 
     this.alunosService
-        .editarAluno({nome, instrumento, inicioPlano, fimPlano ,nascimento, telefone, 
+        .editarAluno({id, nome, instrumento, inicioPlano, fimPlano ,nascimento, telefone, 
           endereco, cep, nomeResponsavel, cpfResponsavel, rgResponsavel})
         .subscribe(
             () => {
                 alert('Aluno cadastrado com sucesso');
-                this.alunoEditarForm.reset();
-                this.closeAddExpenseModal.nativeElement.click();
             },
             erro => {
-                this.alunoEditarForm.reset();
                 alert('Algum dado está repetido ou inválido');
             }
         );
   }
 
-  buscarAluno () {
-    const id = +this.route.snapshot.paramMap.get('id');
-
+  buscarAluno (id) {
     return this.alunosService.getAluno(id)
     .pipe(
         map(aluno => {
           this.aluno = aluno;
           if(id != 0){
+            this.alunoEditarForm.controls['id'].setValue(aluno.id);
             this.alunoEditarForm.controls['nome'].setValue(aluno.nome);
             this.alunoEditarForm.controls['instrumento'].setValue(aluno.instrumento);
             this.alunoEditarForm.controls['inicioPlano'].setValue(aluno.inicioPlano);
-        
-          
+            this.alunoEditarForm.controls['fimPlano'].setValue(aluno.fimPlano);
+            this.alunoEditarForm.controls['nascimento'].setValue(aluno.nascimento);
+            this.alunoEditarForm.controls['telefone'].setValue(aluno.telefone);
+            this.alunoEditarForm.controls['endereco'].setValue(aluno.endereco);
+            this.alunoEditarForm.controls['cep'].setValue(aluno.cep);
+            this.alunoEditarForm.controls['nomeResponsavel'].setValue(aluno.nomeResponsavel);
+            this.alunoEditarForm.controls['cpfResponsavel'].setValue(aluno.cpfResponsavel);
+            this.alunoEditarForm.controls['rgResponsavel'].setValue(aluno.rgResponsavel);
+
+          }
         })
     );
+    
+  }
 
-    // console.log("Achei o aluno id: " + id);
-  
-    // console.log(this.aluno);
-    // this.alunoSelecionado = this.alunosService
-    // .getAluno(id)
-    // console.log(this.alunoSelecionado)
-    // document.getElementById("editar-aluno-button").click();
+  alunoEdicaoBack() {
+    this._location.back()
   }
 
 }

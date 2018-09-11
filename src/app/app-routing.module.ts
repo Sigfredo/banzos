@@ -26,7 +26,12 @@ const routes: Routes = [
   {
     path: 'aluno/:id',
     component: EditarComponent
-    }
+  },
+  {
+    path: 'novo-aluno',
+    component: EditarComponent
+  }
+  
 
 ];
 

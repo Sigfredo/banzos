@@ -17,8 +17,8 @@
             <td>{{aluno.nome}}</td>
             <td>{{aluno.instrumento}}</td>
             <td>{{buscarIdade(aluno.nascimento)}}</td>
-            <td>{{aluno.inicioPlano}}</td>
-            <td>{{aluno.fimPlano}}</td>
+            <td>{{aluno.inicioPlano | date:'dd/MM/yyyy'}}</td>
+            <td>{{aluno.fimPlano | date:'dd/MM/yyyy'}}</td>
             <td> 
                 <a routerLink="/aluno/{{aluno.id}}">
                   <span class="glyphicon">&#x270f;</span>
