@@ -1,5 +1,5 @@
 
-<form [formGroup]="alunoEditarForm" class="form mt-4" (submit)="enviarEditar()">
+<form [formGroup]="alunoEditarForm" class="form mt-4" (submit)="editarAluno()">
     <div class="row" style="position: relative;">
             <div class="col">
                     <h2 class="text-center">{{tituloEdicaoAluno}}</h2>
@@ -158,6 +158,7 @@
                 <button
                 *ngIf="isAlunoEdicao"
                 type="button"
+                (click)="excluirAluno();"
                 class="btn btn-danger btn-block">
                     Excluir
                 </button>

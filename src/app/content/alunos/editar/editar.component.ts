@@ -24,6 +24,7 @@ export class EditarComponent implements OnInit {
   tituloEdicaoAluno: String;
   labelBotaoEdicaoAluno: String;
   isAlunoEdicao: boolean;
+  isAlunoExclusao: boolean;
   
 
   constructor(
@@ -71,7 +72,7 @@ export class EditarComponent implements OnInit {
     console.log("Aluno Cadastro: "+this.isAlunoEdicao)
   }
 
-  enviarEditar () {
+  enviarAlteracaoAluno () {
 
     const id = this.alunoEditarForm.get('id').value;
     const nome = this.alunoEditarForm.get('nome').value;
@@ -86,17 +87,35 @@ export class EditarComponent implements OnInit {
     const cpfResponsavel = this.alunoEditarForm.get('cpfResponsavel').value;
     const rgResponsavel = this.alunoEditarForm.get('rgResponsavel').value
 
-    this.alunosService
+    if (!this.isAlunoExclusao) {
+      this.alunosService
         .editarAluno({id, nome, instrumento, inicioPlano, fimPlano ,nascimento, telefone, 
           endereco, cep, nomeResponsavel, cpfResponsavel, rgResponsavel})
         .subscribe(
             () => {
+              if (this.isAlunoEdicao) {
+                alert('Aluno Salvo com sucesso');
+              } else {
                 alert('Aluno cadastrado com sucesso');
+              }
+               
             },
             erro => {
                 alert('Algum dado está repetido ou inválido');
             }
         );
+    } else {
+      this.alunosService
+        .excluirAluno(id)
+        .subscribe(
+            () => {
+                alert('Aluno excluído com sucesso');
+            },
+            erro => {
+                alert('Erro ao excluir o aluno');
+            }
+        );
+    }
   }
 
   buscarAluno (id) {
@@ -122,6 +141,16 @@ export class EditarComponent implements OnInit {
         })
     );
     
+  }
+
+  excluirAluno() {
+    this.isAlunoExclusao = true;
+    this.enviarAlteracaoAluno();
+  }
+
+  editarAluno() {
+    this.isAlunoExclusao = false;
+    this.enviarAlteracaoAluno();
   }
 
   alunoEdicaoBack() {

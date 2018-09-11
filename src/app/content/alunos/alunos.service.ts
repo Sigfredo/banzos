@@ -17,6 +17,10 @@ export class AlunosService {
         return this.http.get<Aluno[]>(ALUNOS_BASE_URL);
     }
 
+    getAluno(id:number): Observable<Aluno> {
+        return this.http.get<Aluno>(ALUNOS_BASE_URL+id)
+    }
+
     editarAluno(aluno) {
         console.log("ID: "+aluno.nome)
         if (aluno.id == 0){
@@ -39,30 +43,8 @@ export class AlunosService {
        
     }
 
-    
-    // getAluno(id:number): Observable<Aluno[]>{
-    //         return this.http.get<Aluno[]>(ALUNOS_BASE_URL+id);
-    // }
-
-    getAluno(id:number): Observable<Aluno> {
-        // console.log("Service, id: "+id)
-        // console.log("GET:")
-        // console.log(this.http.get<Aluno>(ALUNOS_BASE_URL+id).forEach(next => console.log(next.nome)))
-        return this.http.get<Aluno>(ALUNOS_BASE_URL+id)
+    excluirAluno(id) {
+        return this.http.delete(ALUNOS_BASE_URL+id);
     }
 
-//     getAluno(id:number): Aluno{
-//         return this.http.get<Aluno[]>(ALUNOS_BASE_URL+id)
-//         .pipe(map(res => 
-//             {
-//                 return res.json().results.map(item => {
-//                     return new Aluno(
-//                         item.id;
-//                         item.nome;
-//                     );
-//                 });
-
-//             }));
-     
-// }
 }
