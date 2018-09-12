@@ -1,5 +1,9 @@
 <div class="mt-2 text-center">
 
+        <ngb-alert *ngIf="mensagemAlunoSucesso" type="success" (close)="mensagemAlunoSucesso = null">{{ mensagemAlunoSucesso }}</ngb-alert>
+        <ngb-alert *ngIf="mensagemAlunoAlerta" type="warning" (close)="mensagemAlunoAlerta = null">{{ mensagemAlunoAlerta }}</ngb-alert>
+        <ngb-alert *ngIf="mensagemAlunoErro" type="error" (close)="mensagemAlunoErro = null">{{ mensagemAlunoErro }}</ngb-alert>
+
     <h1>Alunos</h1>
 
 </div>

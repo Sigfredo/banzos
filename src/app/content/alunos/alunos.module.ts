@@ -5,13 +5,15 @@ import { ListagemComponent } from './listagem/listagem.component';
 import { AlunosComponent } from './alunos.component';
 import { BanzosMatDatePickerModule } from '../../shared/banzosmatdatepicker.module';
 import { AppRoutingModule } from '../../app-routing.module';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
   imports: [
     CommonModule,
     BanzosMatDatePickerModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   declarations: [
     AlunosComponent,
