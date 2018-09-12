@@ -11,10 +11,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlunosService } from './content/alunos/alunos.service';
 
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { AdicionarAlunoComponent } from './content/alunos/adicionar-aluno/adicionar-aluno.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AdicionarAlunoComponent
   ],
   imports: [
     BrowserModule,
