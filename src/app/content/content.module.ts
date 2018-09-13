@@ -16,7 +16,7 @@ import { AlunosModule } from './alunos/alunos.module';
   imports: [
     CommonModule,
     AppRoutingModule, 
-    AlunosModule
+    AlunosModule,
 
   ],
   declarations: [

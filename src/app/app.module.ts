@@ -15,6 +15,7 @@ import { AdicionarAlunoComponent } from './content/alunos/adicionar-aluno/adicio
 import { AlunosMensagemService } from './content/alunos/alunos-mensagem.service';
 import { AlunosComponent } from './content/alunos/alunos.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,8 @@ import { AlunosComponent } from './content/alunos/alunos.component';
     HttpClientModule,
     CoreModule,
     ContentModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+
   ],
   providers: [AlunosService, AlunosMensagemService, FormsModule, ReactiveFormsModule, AlunosComponent],
   bootstrap: [AppComponent]

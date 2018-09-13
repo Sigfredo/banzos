@@ -1,3 +1,23 @@
+<div class="row mb-3">
+  <div class="col-sm-8">
+    <div class="form-group-row ">
+        <form class="form-inline">
+            <input  
+            (keyup)="buscarTexto = $event.target.value" 
+            name="buscarTexto" class="form-control  col-sm-8 mr-1" 
+            type="search" placeholder="Filtrar Aluno" aria-label="Search">
+          </form>
+    </div>
+  </div>
+
+  <div class="col-sm">
+      <a routerLink="/novo-aluno">
+        <button id="editar-aluno-button" type="button" class="btn btn-primary">
+            Adicionar Aluno
+        </button>
+      </a>
+    </div>
+</div>
 
 <table class="table">
   <thead class="thead-dark">
@@ -13,7 +33,7 @@
   </thead>
   <tbody>
 
-        <tr *ngFor="let aluno of alunos">
+        <tr *ngFor="let aluno of alunos | filter : buscarTexto">
             <th scope="row">{{aluno.id}}</th>
             <td>{{aluno.nome}}</td>
             <td>{{aluno.instrumento}}</td>

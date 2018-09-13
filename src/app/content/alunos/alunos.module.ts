@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EditarComponent } from './editar/editar.component';
 import { ListagemComponent } from './listagem/listagem.component';
 import { AlunosComponent } from './alunos.component';
-import { BanzosMatDatePickerModule } from '../../shared/banzosmatdatepicker.module';
+import { SharedModule } from '../../shared/shared.module';
 import { AppRoutingModule } from '../../app-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -11,7 +11,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   imports: [
     CommonModule,
-    BanzosMatDatePickerModule,
+    SharedModule,
     AppRoutingModule,
     NgbModule
   ],
