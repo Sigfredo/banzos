@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BanzosFilterPipe } from './banzos-filter.pipe';
 
 @NgModule({
   imports: [
@@ -19,13 +20,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   declarations: [
-    
+    BanzosFilterPipe
   ],
   exports: [MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
     MatDatepickerModule,
     FormsModule, 
-    ReactiveFormsModule,]
+    ReactiveFormsModule,
+    BanzosFilterPipe
+  ]
 })
-export class BanzosMatDatePickerModule { }
+export class SharedModule { }

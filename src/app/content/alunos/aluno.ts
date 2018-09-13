@@ -1,4 +1,5 @@
 export class Aluno {
+    id: number;
     nome: string;
     instrumento: string;
     inicioPlano: Date;

@@ -1,23 +1,12 @@
 <div class="mt-2 text-center">
 
+        <ngb-alert *ngIf="mensagemAlunoSucesso" type="success" (close)="mensagemAlunoSucesso = null">{{ mensagemAlunoSucesso }}</ngb-alert>
+        <ngb-alert *ngIf="mensagemAlunoAlerta" type="warning" (close)="mensagemAlunoAlerta = null">{{ mensagemAlunoAlerta }}</ngb-alert>
+        <ngb-alert *ngIf="mensagemAlunoErro" type="error" (close)="mensagemAlunoErro = null">{{ mensagemAlunoErro }}</ngb-alert>
+
     <h1>Alunos</h1>
 
 </div>
-<div class="row mb-2">
-    <div class="col-sm-8">
-      <div class="form-group-row ">
-          <form class="form-inline">
-              <input class="form-control  col-sm-8 mr-1" type="search" placeholder="Search" aria-label="Search">
-              
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-      </div>
-    </div>
 
-    <div class="col-sm">
-        <banzos-aluno-edicao></banzos-aluno-edicao>
-        <!-- <a class="btn btn-primary float-right" href="#" role="button">Adicionar Aluno</a> -->
-      </div>
-</div>
 
 <banzos-aluno-listagem [alunos] = "alunos"></banzos-aluno-listagem>
