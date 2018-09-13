@@ -14,12 +14,16 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { AdicionarAlunoComponent } from './content/alunos/adicionar-aluno/adicionar-aluno.component';
 import { AlunosMensagemService } from './content/alunos/alunos-mensagem.service';
 import { AlunosComponent } from './content/alunos/alunos.component';
+import { ListagemComponent } from './content/professores/listagem/listagem.component';
+import { EdicaoComponent } from './content/professores/edicao/edicao.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdicionarAlunoComponent
+    AdicionarAlunoComponent,
+    ListagemComponent,
+    EdicaoComponent
   ],
   imports: [
     BrowserModule,
