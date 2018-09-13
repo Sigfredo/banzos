@@ -23,7 +23,8 @@ export class AlunosComponent implements OnInit {
 
   ngOnInit() {
 
-     this.mensagemAlunoSucesso = this.alunosMensagemService.alunoMensagemSucesso().getValue();
+    this.alunosMensagemService.alunoMensagemSucesso().subscribe((message) => {this.mensagemAlunoSucesso = message});
+    //  this.mensagemAlunoSucesso = this.alunosMensagemService.alunoMensagemSucesso().getValue();
      this.alunosMensagemService.alunoMensagemAlerta().subscribe((message) => {this.mensagemAlunoAlerta = message});
      this.alunosMensagemService.alunoMensagemErro().subscribe((message) => {this.mensagemAlunoErro = message});
 

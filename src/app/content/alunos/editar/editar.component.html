@@ -1,4 +1,4 @@
-
+<ngb-alert *ngIf="mensagemAlunoErro" type="error" (close)="mensagemAlunoErro = null">{{ mensagemAlunoErro }}</ngb-alert>
 <form [formGroup]="alunoEditarForm" class="form mt-4" (submit)="editarAluno()">
     <div class="row" style="position: relative;">
             <div class="col">

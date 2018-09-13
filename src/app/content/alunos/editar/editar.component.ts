@@ -7,7 +7,6 @@ import { Aluno } from '../aluno';
 import { ActivatedRoute } from '@angular/router';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import {Location} from '@angular/common';
-import {debounceTime} from 'rxjs/operators';
 import { AlunosMensagemService } from '../alunos-mensagem.service';
 import { AlunosComponent } from '../alunos.component';
 
@@ -105,13 +104,14 @@ export class EditarComponent implements OnInit {
                 // this.alunosMensagemService.alunoMensagemSucesso.emit("Editei!!!!!!!!!");
                 // this.alunosMensagemService.alunoMensagemSucesso().next('Aluno salvo com sucesso');
               } else {
-                this.alunosMensagemService.setAlunoMensagemSucesso('Aluno cadastrado com sucesso');
+                this.alunosMensagemService.alunoMensagemSucesso().next('Aluno cadastrado com sucesso');
                 console.log("Passei")
                 // this.alunosMensagemService.alunoMensagemSucesso().next('Aluno cadastrado com sucesso');
               }
               this.voltar()
             },
             erro => {
+              this.alunosMensagemService.alunoMensagemErro().next('Algum dado está repetido ou inválido');
               // this.alunosMensagemService.setAlunoMensagemErro('Algum dado está repetido ou inválido');
             }
         );
@@ -121,11 +121,12 @@ export class EditarComponent implements OnInit {
         .subscribe(
             () => {
               // this.alunosMensagemService.alunoMensagemAlerta().next('Aluno excluído com sucesso');
-              this.alunosMensagemService.setAlunoMensagemAlerta('Aluno excluído com sucesso');
+              this.alunosMensagemService.alunoMensagemAlerta().next('Aluno excluído com sucesso');
                 this.alunoEditarForm.reset();
                 this.voltar();
             },
             erro => {
+              this.alunosMensagemService.alunoMensagemErro().next('Erro ao excluir o aluno');
               // this.alunosMensagemService.alunoMensagemErro('Erro ao excluir o aluno');
             }
         );
@@ -169,8 +170,8 @@ export class EditarComponent implements OnInit {
 
   limparMensagens(): any {
      this.alunosMensagemService.alunoMensagemSucesso().next(null);
-    // this.alunosMensagemService.alunoMensagemAlerta().next("");
-    // this.alunosMensagemService.alunoMensagemErro().next("");
+     this.alunosMensagemService.alunoMensagemAlerta().next(null);
+     this.alunosMensagemService.alunoMensagemErro().next("");
   }
 
   voltar() {
@@ -178,7 +179,7 @@ export class EditarComponent implements OnInit {
   }
 
   botaoVoltar() {
-    this.alunosMensagemService.alunoMensagemSucesso().next(null);
+    this.limparMensagens();
     this._location.back()
   }
 
