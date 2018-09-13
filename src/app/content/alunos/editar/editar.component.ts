@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, EventEmitter, Output } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 import { AlunosService } from "../alunos.service";
 import * as moment from 'moment';
@@ -7,6 +7,8 @@ import { Aluno } from '../aluno';
 import { ActivatedRoute } from '@angular/router';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import {Location} from '@angular/common';
+import { AlunosMensagemService } from '../alunos-mensagem.service';
+import { AlunosComponent } from '../alunos.component';
 
 @Component({
   selector: 'banzos-aluno-editar',
@@ -18,25 +20,28 @@ import {Location} from '@angular/common';
 export class EditarComponent implements OnInit {
   @Input() aluno: Aluno;
   @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
+  @Output() mensagemSucessoAluno: EventEmitter<string> = new EventEmitter<string>();
 
   alunoEditarForm: FormGroup;
   alunoSelecionado: Aluno;
-  tituloEdicaoAluno: String;
-  labelBotaoEdicaoAluno: String;
+  tituloEdicaoAluno: string;
+  labelBotaoEdicaoAluno: string;
   isAlunoEdicao: boolean;
   isAlunoExclusao: boolean;
-  
 
   constructor(
     private formBuilder: FormBuilder,
     private alunosService: AlunosService,
+    private alunosMensagemService: AlunosMensagemService,
     private route: ActivatedRoute,
-    private _location: Location
+    private _location: Location,
+    private alunoComponent: AlunosComponent
     
 
   ) { }
 
   ngOnInit(): void { 
+
     moment.locale('pt-BR');
    
     const id = +this.route.snapshot.paramMap.get('id');
@@ -68,8 +73,6 @@ export class EditarComponent implements OnInit {
       this.labelBotaoEdicaoAluno = "Cadastrar"
       this.isAlunoEdicao = false;
     }
-
-    console.log("Aluno Cadastro: "+this.isAlunoEdicao)
   }
 
   enviarAlteracaoAluno () {
@@ -88,20 +91,28 @@ export class EditarComponent implements OnInit {
     const rgResponsavel = this.alunoEditarForm.get('rgResponsavel').value
 
     if (!this.isAlunoExclusao) {
+
+      this.limparMensagens();
+
       this.alunosService
         .editarAluno({id, nome, instrumento, inicioPlano, fimPlano ,nascimento, telefone, 
           endereco, cep, nomeResponsavel, cpfResponsavel, rgResponsavel})
         .subscribe(
             () => {
               if (this.isAlunoEdicao) {
-                alert('Aluno Salvo com sucesso');
+                 this.alunosMensagemService.alunoMensagemSucesso().next('Aluno salvo com sucesso');
+                // this.alunosMensagemService.alunoMensagemSucesso.emit("Editei!!!!!!!!!");
+                // this.alunosMensagemService.alunoMensagemSucesso().next('Aluno salvo com sucesso');
               } else {
-                alert('Aluno cadastrado com sucesso');
+                this.alunosMensagemService.alunoMensagemSucesso().next('Aluno cadastrado com sucesso');
+                console.log("Passei")
+                // this.alunosMensagemService.alunoMensagemSucesso().next('Aluno cadastrado com sucesso');
               }
-               
+              this.voltar()
             },
             erro => {
-                alert('Algum dado está repetido ou inválido');
+              this.alunosMensagemService.alunoMensagemErro().next('Algum dado está repetido ou inválido');
+              // this.alunosMensagemService.setAlunoMensagemErro('Algum dado está repetido ou inválido');
             }
         );
     } else {
@@ -109,17 +120,19 @@ export class EditarComponent implements OnInit {
         .excluirAluno(id)
         .subscribe(
             () => {
-                alert('Aluno excluído com sucesso');
+              // this.alunosMensagemService.alunoMensagemAlerta().next('Aluno excluído com sucesso');
+              this.alunosMensagemService.alunoMensagemAlerta().next('Aluno excluído com sucesso');
                 this.alunoEditarForm.reset();
                 this.voltar();
             },
             erro => {
-                alert('Erro ao excluir o aluno');
+              this.alunosMensagemService.alunoMensagemErro().next('Erro ao excluir o aluno');
+              // this.alunosMensagemService.alunoMensagemErro('Erro ao excluir o aluno');
             }
         );
     }
   }
-
+  
   buscarAluno (id) {
     return this.alunosService.getAluno(id)
     .pipe(
@@ -155,8 +168,20 @@ export class EditarComponent implements OnInit {
     this.enviarAlteracaoAluno();
   }
 
+  limparMensagens(): any {
+     this.alunosMensagemService.alunoMensagemSucesso().next(null);
+     this.alunosMensagemService.alunoMensagemAlerta().next(null);
+     this.alunosMensagemService.alunoMensagemErro().next("");
+  }
+
   voltar() {
     this._location.back()
   }
 
+  botaoVoltar() {
+    this.limparMensagens();
+    this._location.back()
+  }
+
+  
 }

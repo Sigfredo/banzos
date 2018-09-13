@@ -22,7 +22,6 @@ export class AlunosService {
     }
 
     editarAluno(aluno) {
-        console.log("ID: "+aluno.nome)
         if (aluno.id == 0){
             return this.http.post( ALUNOS_BASE_URL,
                 aluno,

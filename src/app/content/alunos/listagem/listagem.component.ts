@@ -1,7 +1,8 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import * as moment from 'moment';
 import { EditarComponent } from "../editar/editar.component";
 import { Aluno } from "../aluno";
+import { AlunosMensagemService } from "../alunos-mensagem.service";
 
 @Component({
   selector: 'banzos-aluno-listagem',
@@ -9,12 +10,6 @@ import { Aluno } from "../aluno";
   styleUrls: ['./listagem.component.scss']
 })
 export class ListagemComponent {
-
-  constructor(
-    private alunoEditar: EditarComponent
-  ){
-
-  }
   
   @Input()
   alunos = [];
@@ -25,8 +20,4 @@ export class ListagemComponent {
     
     return moment(new Date(nascimento)).locale('pt-br').fromNow(true);
   }
-
-  // adicionarAluno(id: number){
-  //   this.alunoEditar.editarAluno(id);    
-  // }
 }

@@ -1,4 +1,4 @@
-
+<ngb-alert *ngIf="mensagemAlunoErro" type="error" (close)="mensagemAlunoErro = null">{{ mensagemAlunoErro }}</ngb-alert>
 <form [formGroup]="alunoEditarForm" class="form mt-4" (submit)="editarAluno()">
     <div class="row" style="position: relative;">
             <div class="col">
@@ -8,7 +8,7 @@
             <div class="col-md-2 mt-2 float-right">    
                         <button
                         type="button"
-                        (click)="alunoEdicaoBack();"
+                        (click)="botaoVoltar();"
                         class="btn btn-block">
                         Voltar
                         </button>     
