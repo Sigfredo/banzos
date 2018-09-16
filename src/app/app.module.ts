@@ -16,6 +16,7 @@ import { AlunosMensagemService } from './content/alunos/alunos-mensagem.service'
 import { AlunosComponent } from './content/alunos/alunos.component';
 import { ListagemComponent } from './content/professores/listagem/listagem.component';
 import { EdicaoComponent } from './content/professores/edicao/edicao.component';
+import { ChamadaComponent } from './content/turma/chamada/chamada.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { EdicaoComponent } from './content/professores/edicao/edicao.component';
     AppComponent,
     AdicionarAlunoComponent,
     ListagemComponent,
-    EdicaoComponent
+    EdicaoComponent,
+    ChamadaComponent
   ],
   imports: [
     BrowserModule,
