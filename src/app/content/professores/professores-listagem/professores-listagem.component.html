@@ -1,0 +1,55 @@
+<div class="row mb-3">
+  <div class="col-sm-8">
+    <div class="form-group-row ">
+        <form class="form-inline">
+            <input  
+            (keyup)="buscarTexto = $event.target.value" 
+            name="buscarTexto"
+            type="search" placeholder="Filtrar Professor" aria-label="Search">
+          </form>
+    </div>
+  </div>
+
+  <div class="col-sm">
+      <a routerLink="/novo-professor">
+        <button id="editar-professor-button" type="button" class="btn btn-primary">
+            Adicionar Professor
+        </button>
+      </a>
+    </div>
+</div>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nome</th>
+      <th scope="col">instrumento</th>
+      <th scope="col">Idade</th>
+      <th scope="col">Início do Plano</th>
+      <th scope="col">Fim do Plano</th>
+      <th scope="col">Editar</th>
+    </tr>
+  </thead>
+  <tbody>
+
+        <tr *ngFor="let professor of professores | filter : buscarTexto">
+            <th scope="row">{{professor.id}}</th>
+            <td>{{professor.nome}}</td>
+            <td>{{professor.instrumento}}</td>
+            <td>{{buscarIdade(professor.nascimento)}}</td>
+            <td>{{professor.inicioPlano | date:'dd/MM/yyyy'}}</td>
+            <td>{{professor.fimPlano | date:'dd/MM/yyyy'}}</td>
+            <td> 
+                <a routerLink="/professor/{{professor.id}}">
+                  
+                    <i class="material-icons">
+                      edit
+                      </i>
+                </a>
+            </td>
+          </tr>
+ 
+   
+  </tbody>
+</table>

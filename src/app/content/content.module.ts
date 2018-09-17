@@ -10,6 +10,7 @@ import { GradeHorariaComponent } from "./grade-horaria/grade-horaria.component";
 import { AppRoutingModule } from '../app-routing.module';
 
 import { AlunosModule } from './alunos/alunos.module';
+import { InstrumentosModule } from './instrumentos/instrumentos.module';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { AlunosModule } from './alunos/alunos.module';
     CommonModule,
     AppRoutingModule, 
     AlunosModule,
+    InstrumentosModule
 
   ],
   declarations: [
