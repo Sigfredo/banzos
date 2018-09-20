@@ -4,7 +4,7 @@
         <form class="form-inline">
             <input  
             (keyup)="buscarTexto = $event.target.value" 
-            name="buscarTexto"
+            name="buscarTexto" class="form-control  col-sm-8 mr-1" 
             type="search" placeholder="Filtrar Professor" aria-label="Search">
           </form>
     </div>
@@ -24,10 +24,6 @@
     <tr>
       <th scope="col">Id</th>
       <th scope="col">Nome</th>
-      <th scope="col">instrumento</th>
-      <th scope="col">Idade</th>
-      <th scope="col">Início do Plano</th>
-      <th scope="col">Fim do Plano</th>
       <th scope="col">Editar</th>
     </tr>
   </thead>
@@ -36,10 +32,6 @@
         <tr *ngFor="let professor of professores | filter : buscarTexto">
             <th scope="row">{{professor.id}}</th>
             <td>{{professor.nome}}</td>
-            <td>{{professor.instrumento}}</td>
-            <td>{{buscarIdade(professor.nascimento)}}</td>
-            <td>{{professor.inicioPlano | date:'dd/MM/yyyy'}}</td>
-            <td>{{professor.fimPlano | date:'dd/MM/yyyy'}}</td>
             <td> 
                 <a routerLink="/professor/{{professor.id}}">
                   

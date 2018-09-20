@@ -1,3 +1,12 @@
-<p>
-  professores works!
-</p>
+<div class="mt-2 text-center">
+
+  <ngb-alert *ngIf="mensagemProfessorSucesso" type="success" (close)="mensagemProfessorSucesso = null">{{ mensagemProfessorSucesso }}</ngb-alert>
+  <ngb-alert *ngIf="mensagemProfessorAlerta" type="warning" (close)="mensagemProfessorAlerta = null">{{ mensagemProfessorAlerta }}</ngb-alert>
+  <ngb-alert *ngIf="mensagemProfessorErro" type="error" (close)="mensagemProfessorErro = null">{{ mensagemProfessorErro }}</ngb-alert>
+
+<h1>Professores</h1>
+
+</div>
+
+
+<banzos-professores-listagem [professores] = "professores"></banzos-professores-listagem>
