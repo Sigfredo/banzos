@@ -11,8 +11,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlunosService } from './content/alunos/alunos.service';
 
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import { AlunosMensagemService } from './content/alunos/alunos-mensagem.service';
-import { AlunosComponent } from './content/alunos/alunos.component';
 import { ChamadaComponent } from './content/turma/chamada/chamada.component';
 
 
