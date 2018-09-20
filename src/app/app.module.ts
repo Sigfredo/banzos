@@ -30,7 +30,11 @@ import { ChamadaComponent } from './content/turma/chamada/chamada.component';
     NoopAnimationsModule,
 
   ],
-  providers: [AlunosService, AlunosMensagemService, FormsModule, ReactiveFormsModule, AlunosComponent],
+  providers: [
+    FormsModule, 
+    ReactiveFormsModule
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,6 +11,7 @@ import { AppRoutingModule } from '../app-routing.module';
 
 import { AlunosModule } from './alunos/alunos.module';
 import { InstrumentosModule } from './instrumentos/instrumentos.module';
+import { ProfessoresModule } from './professores/professores.module';
 
 
 @NgModule({
@@ -18,11 +19,11 @@ import { InstrumentosModule } from './instrumentos/instrumentos.module';
     CommonModule,
     AppRoutingModule, 
     AlunosModule,
-    InstrumentosModule
+    InstrumentosModule,
+    ProfessoresModule
 
   ],
   declarations: [
-    ProfessoresComponent,
     FinanceiroComponent,
     TurmaComponent,
     GradeHorariaComponent,
@@ -31,7 +32,7 @@ import { InstrumentosModule } from './instrumentos/instrumentos.module';
   ],
   exports: [
     AlunosModule,
-    ProfessoresComponent,
+    ProfessoresModule,
     FinanceiroComponent,
     TurmaComponent,
     GradeHorariaComponent

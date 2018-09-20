@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Professor } from "./Professor";
+import { Professor } from "./professor";
 import { Observable, throwError } from "rxjs";
 
 const PROFESSORES_BASE_URL = 'http://localhost:3000/Professores/';
