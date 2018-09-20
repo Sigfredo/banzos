@@ -19,7 +19,7 @@ import { ProfessoresComponent } from '../professores.component';
 })
 export class ProfessoresEdicaoComponent implements OnInit {
   @Input() professor: Professor;
-  @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
+  @ViewChild('closeAddProfessorModal') closeAddProfessorModal: ElementRef;
   @Output() mensagemSucessoProfessor: EventEmitter<string> = new EventEmitter<string>();
 
   professorEditarForm: FormGroup;
@@ -34,8 +34,8 @@ export class ProfessoresEdicaoComponent implements OnInit {
     private professoresService: ProfessoresService,
     private professoresMensagemService: ProfessoresMensagemService,
     private route: ActivatedRoute,
-    private _location: Location,
-    private professorComponent: ProfessoresComponent
+    private _location: Location
+
     
 
   ) { }
@@ -49,16 +49,12 @@ export class ProfessoresEdicaoComponent implements OnInit {
     this.professorEditarForm = this.formBuilder.group({
       id: ['', Validators.required],
       nome: ['', Validators.required],
-      instrumento: ['', Validators.required],
-      inicioPlano: ['', Validators.required],
-      fimPlano: ['', Validators.required],
       nascimento: ['', Validators.required],
       telefone: ['', Validators.required],
       endereco: ['', Validators.required],
       cep: ['', Validators.required],
-      nomeResponsavel: ['', Validators.required],
-      cpfResponsavel: ['', Validators.required],
-      rgResponsavel: ['', Validators.required]
+      cpf: ['', Validators.required],
+      rg: ['', Validators.required]
     });
 
     if (id != 0) {
@@ -79,24 +75,20 @@ export class ProfessoresEdicaoComponent implements OnInit {
 
     const id = this.professorEditarForm.get('id').value;
     const nome = this.professorEditarForm.get('nome').value;
-    const instrumento = this.professorEditarForm.get('instrumento').value;
-    const inicioPlano = this.professorEditarForm.get('inicioPlano').value;
-    const fimPlano = this.professorEditarForm.get('fimPlano').value;
     const nascimento = this.professorEditarForm.get('nascimento').value;
     const telefone = this.professorEditarForm.get('telefone').value;
     const endereco = this.professorEditarForm.get('endereco').value;
     const cep = this.professorEditarForm.get('cep').value;
-    const nomeResponsavel = this.professorEditarForm.get('nomeResponsavel').value;
-    const cpfResponsavel = this.professorEditarForm.get('cpfResponsavel').value;
-    const rgResponsavel = this.professorEditarForm.get('rgResponsavel').value
+    const cpf = this.professorEditarForm.get('cpf').value;
+    const rg= this.professorEditarForm.get('rg').value
 
     if (!this.isProfessorExclusao) {
 
       this.limparMensagens();
 
       this.professoresService
-        .editarProfessor({id, nome, instrumento, inicioPlano, fimPlano ,nascimento, telefone, 
-          endereco, cep, nomeResponsavel, cpfResponsavel, rgResponsavel})
+        .editarProfessor({id, nome, nascimento, telefone, 
+          endereco, cep, cpf, rg})
         .subscribe(
             () => {
               if (this.isProfessorEdicao) {
@@ -140,7 +132,6 @@ export class ProfessoresEdicaoComponent implements OnInit {
             this.professorEditarForm.controls['cep'].setValue(professor.cep);
             this.professorEditarForm.controls['cpf'].setValue(professor.cpf);
             this.professorEditarForm.controls['rg'].setValue(professor.rg);
-            this.professorEditarForm.controls['rg'].setValue(professor.instrumentos);
 
           }
         })

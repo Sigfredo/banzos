@@ -53,45 +53,6 @@
     </div>
     </div>
 
-    <div class="form-group">
-        <div class="form-row align-items-center">
-            <div class="col mr-4">
-            <div class="form-group">
-                <label for="instrumentoProfessorInput">Instrumento</label>
-                <input
-                    formControlName="instrumento"
-                    type="email"
-                    class="form-control"
-                    placeholder="Instrumento do professor">
-            </div>
-            </div>
-    
-        <div class="col">
-            <div class="form-group">
-                
-                <mat-form-field >
-                <label for="inicioPlanoProfessorInput">Data de início do plano</label>
-                <input matInput id="inicioPlanoProfessorInput" formControlName="inicioPlano" [matDatepicker]="inicioPlano" placeholder="">
-                <mat-datepicker-toggle matSuffix [for]="inicioPlano"></mat-datepicker-toggle>
-                <mat-datepicker #inicioPlano ></mat-datepicker>
-                </mat-form-field>
-            </div>
-            </div>
-        
-        <div class="col">
-            <div class="form-group">
-                
-                <mat-form-field >
-                <label for="fimPlanoProfessorInput">Data de fim do plano</label>
-                <input matInput id="fimPlanoProfessorInput" formControlName="fimPlano" [matDatepicker]="fimPlano" placeholder="">
-                <mat-datepicker-toggle matSuffix [for]="fimPlano"></mat-datepicker-toggle>
-                <mat-datepicker #fimPlano ></mat-datepicker>
-                </mat-form-field>
-            </div>
-            </div>
-        </div>
-    </div>
-
     <div class="form-row">
     <div class="col-9">
         <div class="form-group">
@@ -116,38 +77,28 @@
         </div>
     </div>                
     </div>
-
-    <div class="form-group">
-        <label for="nomeResponsavelProfessorInput">Nome do Responsável</label>
-    <input
-        id="nomeResponsavelProfessorInput"
-        formControlName="nomeResponsavel"
-        type="text"
-        class="form-control"
-        placeholder="Nome do responsável">  
-    </div>
     
     <div class="form-row">
     <div class="col">
         <div class="form-group">
-            <label for="cpfResponsavelProfessorInput">CPF do Responsável</label>
+            <label for="cpfProfessorInput">CPF</label>
             <input
-                id="cpfResponsavelProfessorInput"
-                formControlName="cpfResponsavel"
+                id="cpfProfessorInput"
+                formControlName="cpf"
                 type="text"
                 class="form-control"
-                placeholder="CPF do responsável">  
+                placeholder="Número do CPF">  
         </div>
     </div>
     <div class="col">
         <div class="form-group">
-            <label for="rgResponsavelProfessorInput">RG do Responsável</label>
+            <label for="rgProfessorInput">RG</label>
             <input
-                id="rgResponsavelProfessorInput"
-                formControlName="rgResponsavel"
+                id="rgProfessorInput"
+                formControlName="rg"
                 type="text"
                 class="form-control"
-                placeholder="Rg do responsável">  
+                placeholder="Número do Rg">  
         </div>
     </div>
     </div>
