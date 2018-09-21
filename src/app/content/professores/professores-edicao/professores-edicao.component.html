@@ -27,7 +27,7 @@
 
     <div class="form-group">
     <div class="form-row align-items-center justify-content-start">
-        <div class="col mr-4">
+        <div class="col-3 mr-4">
             <label for="telefoneProfessorInput">Telefone</label>
             <input
                 formControlName="telefone"
@@ -46,10 +46,19 @@
             <mat-datepicker #nascimento ></mat-datepicker>
             </mat-form-field>
         </div>
-        
-        <div class="col">
 
+        <div class="col-5">
+            <label for="emailProfessorInput">E-mail</label>
+            <input
+                formControlName="email"
+                id="emailProfessorInput"
+                type="text "
+                class="form-control"
+                placeholder="E-mail">
         </div> 
+
+        
+        
     </div>
     </div>
 
@@ -101,6 +110,62 @@
                 placeholder="Número do Rg">  
         </div>
     </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-7">
+            <div class="form-group">
+                <label for="bancoProfessorInput">Banco</label>
+                <input
+                    id="bancoProfessorInput"
+                    formControlName="banco"
+                    type="text"
+                    class="form-control"
+                    placeholder="Nome do Banco">  
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="tipoContaProfessorInput">Tipo da Conta</label>
+                <input
+                    id="tipoContaProfessorInput"
+                    formControlName="tipoConta"
+                    type="text"
+                    class="form-control"
+                    placeholder="Tipo da Conta">  
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col">
+            <div class="form-group">
+                <label for="numeroContaProfessorInput">Número da Conta</label>
+                <input
+                    id="numeroContaProfessorInput"
+                    formControlName="numeroConta"
+                    type="text"
+                    class="form-control"
+                    placeholder="Número da Conta">  
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="agenciaProfessorInput">Agência</label>
+                <input
+                    id="agenciaProfessorInput"
+                    formControlName="agencia"
+                    type="text"
+                    class="form-control"
+                    placeholder="Agência">  
+            </div>
+        </div>
+        <div class="col">
+            
+        </div>
+        <div class="col">
+           
+        </div>
     </div>
 
 
