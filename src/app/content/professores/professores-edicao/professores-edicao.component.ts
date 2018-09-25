@@ -51,8 +51,13 @@ export class ProfessoresEdicaoComponent implements OnInit {
       nome: ['', Validators.required],
       nascimento: ['', Validators.required],
       telefone: ['', Validators.required],
+      email: ['', Validators.required],
       endereco: ['', Validators.required],
       cep: ['', Validators.required],
+      banco: ['', Validators.required],
+      tipoConta: ['', Validators.required],
+      numeroConta: ['', Validators.required],
+      agencia: ['', Validators.required],
       cpf: ['', Validators.required],
       rg: ['', Validators.required]
     });
@@ -77,8 +82,13 @@ export class ProfessoresEdicaoComponent implements OnInit {
     const nome = this.professorEditarForm.get('nome').value;
     const nascimento = this.professorEditarForm.get('nascimento').value;
     const telefone = this.professorEditarForm.get('telefone').value;
+    const email = this.professorEditarForm.get('email').value;
     const endereco = this.professorEditarForm.get('endereco').value;
     const cep = this.professorEditarForm.get('cep').value;
+    const banco = this.professorEditarForm.get('banco').value;
+    const tipoConta = this.professorEditarForm.get('tipoConta').value;
+    const numeroConta = this.professorEditarForm.get('numeroConta').value;
+    const agencia = this.professorEditarForm.get('agencia').value;
     const cpf = this.professorEditarForm.get('cpf').value;
     const rg= this.professorEditarForm.get('rg').value
 
@@ -87,8 +97,8 @@ export class ProfessoresEdicaoComponent implements OnInit {
       this.limparMensagens();
 
       this.professoresService
-        .editarProfessor({id, nome, nascimento, telefone, 
-          endereco, cep, cpf, rg})
+        .editarProfessor({id, nome, nascimento, telefone, email,
+          endereco, cep, banco, tipoConta, numeroConta, agencia, cpf, rg})
         .subscribe(
             () => {
               if (this.isProfessorEdicao) {
@@ -128,8 +138,13 @@ export class ProfessoresEdicaoComponent implements OnInit {
             this.professorEditarForm.controls['nome'].setValue(professor.nome);
             this.professorEditarForm.controls['nascimento'].setValue(professor.nascimento);
             this.professorEditarForm.controls['telefone'].setValue(professor.telefone);
+            this.professorEditarForm.controls['email'].setValue(professor.email);
             this.professorEditarForm.controls['endereco'].setValue(professor.endereco);
             this.professorEditarForm.controls['cep'].setValue(professor.cep);
+            this.professorEditarForm.controls['banco'].setValue(professor.banco);
+            this.professorEditarForm.controls['tipoConta'].setValue(professor.tipoConta);
+            this.professorEditarForm.controls['numeroConta'].setValue(professor.numeroConta);
+            this.professorEditarForm.controls['agencia'].setValue(professor.agencia);
             this.professorEditarForm.controls['cpf'].setValue(professor.cpf);
             this.professorEditarForm.controls['rg'].setValue(professor.rg);
 
