@@ -6,6 +6,8 @@ import { AlunosComponent } from './alunos.component';
 import { SharedModule } from '../../shared/shared.module';
 import { AppRoutingModule } from '../../app-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AlunosService } from './alunos.service';
+import { AlunosMensagemService } from './alunos-mensagem.service';
 
 
 @NgModule({
@@ -24,7 +26,10 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     AlunosComponent
   ],
   providers: [
-    EditarComponent
+    AlunosComponent,
+    EditarComponent, 
+    AlunosService, 
+    AlunosMensagemService,
   ]
 })
 export class AlunosModule { }

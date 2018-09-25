@@ -101,18 +101,13 @@ export class EditarComponent implements OnInit {
             () => {
               if (this.isAlunoEdicao) {
                  this.alunosMensagemService.alunoMensagemSucesso().next('Aluno salvo com sucesso');
-                // this.alunosMensagemService.alunoMensagemSucesso.emit("Editei!!!!!!!!!");
-                // this.alunosMensagemService.alunoMensagemSucesso().next('Aluno salvo com sucesso');
               } else {
                 this.alunosMensagemService.alunoMensagemSucesso().next('Aluno cadastrado com sucesso');
-                console.log("Passei")
-                // this.alunosMensagemService.alunoMensagemSucesso().next('Aluno cadastrado com sucesso');
               }
               this.voltar()
             },
             erro => {
               this.alunosMensagemService.alunoMensagemErro().next('Algum dado está repetido ou inválido');
-              // this.alunosMensagemService.setAlunoMensagemErro('Algum dado está repetido ou inválido');
             }
         );
     } else {
@@ -120,14 +115,12 @@ export class EditarComponent implements OnInit {
         .excluirAluno(id)
         .subscribe(
             () => {
-              // this.alunosMensagemService.alunoMensagemAlerta().next('Aluno excluído com sucesso');
               this.alunosMensagemService.alunoMensagemAlerta().next('Aluno excluído com sucesso');
                 this.alunoEditarForm.reset();
                 this.voltar();
             },
             erro => {
               this.alunosMensagemService.alunoMensagemErro().next('Erro ao excluir o aluno');
-              // this.alunosMensagemService.alunoMensagemErro('Erro ao excluir o aluno');
             }
         );
     }

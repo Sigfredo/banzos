@@ -5,6 +5,7 @@ import { AlunosComponent } from './content/alunos/alunos.component';
 import { ProfessoresComponent } from './content/professores/professores.component';
 import { FinanceiroComponent } from './content/financeiro/financeiro.component';
 import { EditarComponent } from './content/alunos/editar/editar.component';
+import { ProfessoresEdicaoComponent } from './content/professores/professores-edicao/professores-edicao.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,14 @@ const routes: Routes = [
   {
     path: 'novo-aluno',
     component: EditarComponent
+  },
+  {
+    path: 'novo-professor',
+    component: ProfessoresEdicaoComponent
+  },
+  {
+    path: 'professor/:id',
+    component: ProfessoresEdicaoComponent
   }
   
 

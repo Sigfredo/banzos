@@ -11,15 +11,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlunosService } from './content/alunos/alunos.service';
 
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import { AdicionarAlunoComponent } from './content/alunos/adicionar-aluno/adicionar-aluno.component';
-import { AlunosMensagemService } from './content/alunos/alunos-mensagem.service';
-import { AlunosComponent } from './content/alunos/alunos.component';
+import { ChamadaComponent } from './content/turma/chamada/chamada.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdicionarAlunoComponent
+    ChamadaComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +28,11 @@ import { AlunosComponent } from './content/alunos/alunos.component';
     NoopAnimationsModule,
 
   ],
-  providers: [AlunosService, AlunosMensagemService, FormsModule, ReactiveFormsModule, AlunosComponent],
+  providers: [
+    FormsModule, 
+    ReactiveFormsModule
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
