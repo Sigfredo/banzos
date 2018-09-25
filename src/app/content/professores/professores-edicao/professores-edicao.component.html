@@ -127,12 +127,14 @@
         <div class="col">
             <div class="form-group">
                 <label for="tipoContaProfessorInput">Tipo da Conta</label>
-                <input
+                <select
                     id="tipoContaProfessorInput"
                     formControlName="tipoConta"
-                    type="text"
-                    class="form-control"
-                    placeholder="Tipo da Conta">  
+                    class="form-control">  
+                    <option *ngFor="let tipoConta of tiposConta" value= {{tipoConta.id}}>
+                        {{tipoConta.nome}}
+                      </option>
+                   </select>
             </div>
         </div>
     </div>

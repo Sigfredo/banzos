@@ -12,6 +12,7 @@ import { AlunosService } from './content/alunos/alunos.service';
 
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ChamadaComponent } from './content/turma/chamada/chamada.component';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ChamadaComponent } from './content/turma/chamada/chamada.component';
     CoreModule,
     ContentModule,
     NoopAnimationsModule,
+    SharedModule
 
   ],
   providers: [
