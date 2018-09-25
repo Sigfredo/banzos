@@ -138,13 +138,13 @@ export class ProfessoresEdicaoComponent implements OnInit {
             this.professorEditarForm.controls['nome'].setValue(professor.nome);
             this.professorEditarForm.controls['nascimento'].setValue(professor.nascimento);
             this.professorEditarForm.controls['telefone'].setValue(professor.telefone);
-            this.professorEditarForm.controls['email'].setValue(professor.rg);
+            this.professorEditarForm.controls['email'].setValue(professor.email);
             this.professorEditarForm.controls['endereco'].setValue(professor.endereco);
             this.professorEditarForm.controls['cep'].setValue(professor.cep);
-            this.professorEditarForm.controls['banco'].setValue(professor.rg);
-            this.professorEditarForm.controls['tipoConta'].setValue(professor.rg);
-            this.professorEditarForm.controls['numeroconta'].setValue(professor.rg);
-            this.professorEditarForm.controls['agencia'].setValue(professor.rg);
+            this.professorEditarForm.controls['banco'].setValue(professor.banco);
+            this.professorEditarForm.controls['tipoConta'].setValue(professor.tipoConta);
+            this.professorEditarForm.controls['numeroConta'].setValue(professor.numeroConta);
+            this.professorEditarForm.controls['agencia'].setValue(professor.agencia);
             this.professorEditarForm.controls['cpf'].setValue(professor.cpf);
             this.professorEditarForm.controls['rg'].setValue(professor.rg);
 
