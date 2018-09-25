@@ -1,0 +1,12 @@
+<div class="mt-2 text-center">
+
+  <ngb-alert *ngIf="mensagemDisciplinaSucesso" type="success" (close)="mensagemDisciplinaSucesso = null">{{ mensagemDisciplinaSucesso }}</ngb-alert>
+  <ngb-alert *ngIf="mensagemDisciplinaAlerta" type="warning" (close)="mensagemDisciplinaAlerta = null">{{ mensagemDisciplinaAlerta }}</ngb-alert>
+  <ngb-alert *ngIf="mensagemDisciplinaErro" type="error" (close)="mensagemDisciplinaErro = null">{{ mensagemDisciplinaErro }}</ngb-alert>
+
+<h1>Disciplinas</h1>
+
+</div>
+
+
+<banzos-disciplinas-listagem [disciplinas] = "disciplinas"></banzos-disciplinas-listagem>

@@ -251,5 +251,39 @@
       "id": 3,
       "nome": "Conta Salário"
     }
+  ],
+  "disciplina": [
+    {
+      "id": 1,
+      "nome": "Canto",
+      "instrumento": "1"
+    },
+    {
+      "id": 2,
+      "nome": "Violão",
+      "instrumento": "2"
+    },
+    {
+      "id": 3,
+      "nome": "Piano",
+      "instrumento": "3"
+    }
+  ],
+  "instrumento": [
+    {
+      "id": 1,
+      "nome": "Voz",
+      "descricao": ""
+    },
+    {
+      "id": 2,
+      "nome": "Violão",
+      "descricao": ""
+    },
+    {
+      "id": 3,
+      "nome": "Piano",
+      "descricao": ""
+    }
   ]
 }

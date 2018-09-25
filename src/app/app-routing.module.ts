@@ -39,7 +39,11 @@ const routes: Routes = [
   {
     path: 'professor/:id',
     component: ProfessoresEdicaoComponent
-  }
+  },
+  {
+    path: 'disciplinas',
+    component: ProfessoresEdicaoComponent
+  },
   
 
 ];
