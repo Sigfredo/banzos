@@ -9,6 +9,8 @@ import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import {Location} from '@angular/common';
 import { ProfessoresMensagemService } from '../professores-mensagem.service';
 import { ProfessoresComponent } from '../professores.component';
+import { SelectItemsService } from '../../../shared/select-items/select-items.service';
+import { TipoConta } from '../../../shared/select-items/tipo-conta';
 
 @Component({
   selector: 'banzos-professor-edicao',
@@ -28,16 +30,16 @@ export class ProfessoresEdicaoComponent implements OnInit {
   labelBotaoEdicaoProfessor: string;
   isProfessorEdicao: boolean;
   isProfessorExclusao: boolean;
+  tiposConta: TipoConta[];
+
 
   constructor(
     private formBuilder: FormBuilder,
     private professoresService: ProfessoresService,
     private professoresMensagemService: ProfessoresMensagemService,
     private route: ActivatedRoute,
-    private _location: Location
-
-    
-
+    private _location: Location,
+    private selectItemsService: SelectItemsService
   ) { }
 
   ngOnInit(): void { 
@@ -74,6 +76,11 @@ export class ProfessoresEdicaoComponent implements OnInit {
       this.labelBotaoEdicaoProfessor = "Cadastrar"
       this.isProfessorEdicao = false;
     }
+
+    this.selectItemsService.buscarTipoContas()
+        .subscribe(
+            (tipoConta) => this.tiposConta = tipoConta
+        );
   }
 
   enviarAlteracaoProfessor () {
