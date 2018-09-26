@@ -1,0 +1,27 @@
+<div class="row mb-5 mt-3">
+  <div class="col-sm-8">
+    <div class="form-group-row ">
+        <form class="form-inline">
+            <input  
+            (keyup)="buscarTexto = $event.target.value" 
+            name="buscarTexto" class="form-control  col-sm-8 mr-1" 
+            type="search" placeholder="Filtrar Instrumento" aria-label="Search">
+          </form>
+    </div>
+  </div>
+
+  <div class="col-sm">
+      <a routerLink="/novo-disciplina">
+        <button id="editar-disciplina-button" type="button" class="btn btn-primary">
+            Adicionar
+        </button>
+      </a>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col mb-3" *ngFor="let instrumento of instrumentos">
+    <button type="button" class="btn btn-info btn-lg btn-block">{{instrumento.nome}}</button> 
+  </div>
+</div>
+  

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DisciplinasService } from './disciplinas.service';
+import { ConfiguracoesService } from '../configuracoes.service';
 import { DisciplinasMensagemService } from './disciplinas-mensagem.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class DisciplinasComponent implements OnInit {
   
 
   constructor(
-    private disciplinasService: DisciplinasService,
+    private configuracoesService: ConfiguracoesService,
     private disciplinasMensagemService: DisciplinasMensagemService,
     ) { }
 
@@ -27,7 +27,7 @@ export class DisciplinasComponent implements OnInit {
      this.disciplinasMensagemService.disciplinaMensagemAlerta().subscribe((message) => {this.mensagemDisciplinaAlerta = message});
      this.disciplinasMensagemService.disciplinaMensagemErro().subscribe((message) => {this.mensagemDisciplinaErro = message});
 
-     this.disciplinasService.todosDisciplinas()
+     this.configuracoesService.buscarDisciplinas()
     .subscribe(
        (response) => {this.disciplinas = response},
       (error) => {console.log(error)}

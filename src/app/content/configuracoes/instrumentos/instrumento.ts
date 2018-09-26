@@ -1,6 +1,4 @@
-import { Instrumento } from "../instrumentos/instrumento";
-
-export class Disciplina {
+export class Instrumento {
     id: number;
     nome: string;
     nascimento: Date;
@@ -14,5 +12,4 @@ export class Disciplina {
     agencia: string;
     cpf: string;
     rg: string;
-    instrumentos: Instrumento[];
   }

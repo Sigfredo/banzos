@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import * as moment from 'moment';
-import { DisciplinasEdicaoComponent } from "../disciplinas-edicao/disciplinas-edicao.component"
+
 import { Disciplina } from "../disciplina";
 import { DisciplinasMensagemService } from "../disciplinas-mensagem.service";
 
@@ -11,13 +11,13 @@ import { DisciplinasMensagemService } from "../disciplinas-mensagem.service";
 })
 export class DisciplinasListagemComponent {
   
-  @Input()
-  disciplinas = [];
+  // @Input()
+  // disciplinas = [];
 
-  disciplinaTeste: Disciplina;
+  // disciplinaTeste: Disciplina;
 
-  buscarIdade(nascimento: Date){
+  // buscarIdade(nascimento: Date){
     
-    return moment(new Date(nascimento)).locale('pt-br').fromNow(true);
-  }
+  //   return moment(new Date(nascimento)).locale('pt-br').fromNow(true);
+  // }
 }

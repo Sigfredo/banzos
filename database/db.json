@@ -252,7 +252,7 @@
       "nome": "Conta Salário"
     }
   ],
-  "disciplina": [
+  "disciplinas": [
     {
       "id": 1,
       "nome": "Canto",
@@ -269,7 +269,7 @@
       "instrumento": "3"
     }
   ],
-  "instrumento": [
+  "instrumentos": [
     {
       "id": 1,
       "nome": "Voz",
@@ -283,6 +283,16 @@
     {
       "id": 3,
       "nome": "Piano",
+      "descricao": ""
+    },
+    {
+      "id": 4,
+      "nome": "Guitarra",
+      "descricao": ""
+    },
+    {
+      "id": 5,
+      "nome": "Saxofone",
       "descricao": ""
     }
   ]
