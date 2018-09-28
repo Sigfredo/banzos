@@ -9,6 +9,7 @@ import { ProfessoresEdicaoComponent } from './content/professores/professores-ed
 import { DisciplinasComponent } from './content/configuracoes/disciplinas/disciplinas.component';
 import { InstrumentosListagemComponent } from './content/configuracoes/instrumentos/instrumentos-listagem/instrumentos-listagem.component';
 import { ConfiguracoesComponent } from './content/configuracoes/configuracoes.component';
+import { DisciplinasEdicaoComponent } from './content/configuracoes/disciplinas/disciplinas-edicao/disciplinas-edicao.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,14 @@ const routes: Routes = [
   {
     path: 'disciplinas',
     component: DisciplinasComponent
+  },
+  {
+    path: 'disciplina/:id',
+    component: DisciplinasEdicaoComponent
+  },
+  {
+    path: 'nova-disciplina',
+    component: DisciplinasEdicaoComponent
   },
   {
     path: 'instrumentos',

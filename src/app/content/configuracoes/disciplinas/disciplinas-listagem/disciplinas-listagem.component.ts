@@ -11,13 +11,7 @@ import { DisciplinasMensagemService } from "../disciplinas-mensagem.service";
 })
 export class DisciplinasListagemComponent {
   
-  // @Input()
-  // disciplinas = [];
-
-  // disciplinaTeste: Disciplina;
-
-  // buscarIdade(nascimento: Date){
-    
-  //   return moment(new Date(nascimento)).locale('pt-br').fromNow(true);
-  // }
+  @Input()
+  disciplinas = [];
+  
 }
