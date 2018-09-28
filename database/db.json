@@ -85,20 +85,6 @@
       "rgResponsavel": "1111111"
     },
     {
-      "id": 16,
-      "nome": "asdfasdf",
-      "instrumento": "",
-      "inicioPlano": "",
-      "fimPlano": "",
-      "nascimento": "",
-      "telefone": "",
-      "endereco": "",
-      "cep": "",
-      "nomeResponsavel": "",
-      "cpfResponsavel": "",
-      "rgResponsavel": ""
-    },
-    {
       "id": 17,
       "nome": "afsddddddddddddd",
       "instrumento": "",
@@ -250,6 +236,80 @@
     {
       "id": 3,
       "nome": "Conta Salário"
+    }
+  ],
+  "disciplinas": [
+    {
+      "id": 1,
+      "nome": "Canto",
+      "instrumento": "1"
+    },
+    {
+      "id": 2,
+      "nome": "Violão",
+      "instrumento": "2"
+    },
+    {
+      "id": 3,
+      "nome": "Piano",
+      "instrumento": "3"
+    }
+  ],
+  "instrumentos": [
+    {
+      "id": 1,
+      "nome": "Voz",
+      "descricao": ""
+    },
+    {
+      "id": 2,
+      "nome": "Violão",
+      "descricao": ""
+    },
+    {
+      "id": 3,
+      "nome": "Piano",
+      "descricao": ""
+    },
+    {
+      "id": 4,
+      "nome": "Guitarra",
+      "descricao": ""
+    },
+    {
+      "id": 5,
+      "nome": "Saxofone",
+      "descricao": ""
+    },
+    {
+      "id": 6,
+      "nome": "Bandolin",
+      "descricao": ""
+    },
+    {
+      "id": 7,
+      "nome": "Flauta Doce",
+      "descricao": ""
+    },
+    {
+      "id": 8,
+      "nome": "Teste 2",
+      "descricao": ""
+    },
+    {
+      "id": 9,
+      "nome": "Teste 3",
+      "descricao": ""
+    },
+    {
+      "id": 10,
+      "nome": "Teste 5",
+      "descricao": ""
+    },
+    {
+      "id": 12,
+      "nome": "Teste 101",
+      "descricao": ""
     }
   ]
 }

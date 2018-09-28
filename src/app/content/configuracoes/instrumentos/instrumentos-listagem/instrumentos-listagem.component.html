@@ -1,0 +1,123 @@
+<div class="mt-2 text-center">
+
+  <ngb-alert *ngIf="mensagemInstrumentoSucesso" id="mensagemInstrumentoSucesso" type="success" (close)="mensagemInstrumentoSucesso = null">{{ mensagemInstrumentoSucesso }}</ngb-alert>
+  <ngb-alert *ngIf="mensagemInstrumentoAlerta" id="mensagemInstrumentoAlerta" type="warning" (close)="mensagemInstrumentoAlerta = null">{{ mensagemInstrumentoAlerta }}</ngb-alert>
+  <ngb-alert *ngIf="mensagemInstrumentoErro" id="mensagemInstrumentoErro" type="error" (close)="mensagemInstrumentoErro = null">{{ mensagemInstrumentoErro }}</ngb-alert>
+
+<h1>Instrumentos</h1>
+
+</div>
+
+<div class="row mb-5 mt-3">
+  <div class="col-sm-8">
+    <div class="form-group-row ">
+        <form class="form-inline">
+            <input  
+            (keyup)="buscarTexto = $event.target.value" 
+            name="buscarTexto" class="form-control  col-sm-8 mr-1" 
+            type="search" placeholder="Filtrar Instrumento" aria-label="Search">
+          </form>
+    </div>
+  </div>
+
+  <div class="col-sm">
+        <button id="editar-disciplina-button" type="button" class="btn btn-primary" 
+            (click)="abrirEdicaoInstrumento()">
+            Adicionar Instrumento
+        </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-2 mb-3" *ngFor="let instrumento of instrumentos  | filter : buscarTexto">
+    <button type="button" (click)="buscarInstrumento(instrumento.id)"
+    class="btn btn-info btn-lg btn-block">{{instrumento.nome}}</button> 
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="instrumentoEdicaoModal" tabindex="-1" role="dialog" aria-labelledby="instrumentoEdicaoModalLabel" aria-hidden="true" data-dismiss="modal" #closeAddExpenseModal>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="instrumentoEdicaoModalLabel">{{tituloEdicaoInstrumento}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+          <form [formGroup]="instrumentoEdicaoForm" class="form mt-4" (submit)="enviarAlteracaoInstrumento()">
+          
+              <div class="form-group">
+                  <label for="nomeInstrumentoInput">Nome</label>
+                  <input
+                      formControlName="nome"
+                      type="text"
+                      id="nomeInstrumentoInput"
+                      class="form-control"
+                      placeholder="Nome do instrumento"
+                      size="5"
+                      autofocus>  
+              </div>
+
+              <div class="form-group">
+                <div class="form-row align-items-center justify-content-start">
+                    <div class="col">
+                        <label for="descricaoInstrumentoInput">Descrição</label>
+                        <textarea
+                            formControlName="descricao"
+                            id="descricaoInstrumentoInput"   
+                            class="form-control"
+                            placeholder="Descrição"></textarea>
+                    </div> 
+                </div>
+              </div>    
+ 
+              <div class="form-row">
+                <div class="col">
+                        <button
+                        *ngIf="isInstrumentoEdicao"
+                        type="button"
+                        data-toggle="modal" data-target="#confirmarExclusaoInstrumentoModal"
+                        class="btn btn-danger btn-block">
+                            Excluir
+                        </button>
+                </div>
+                <div class="col">
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-block">
+                            {{labelBotaoEdicaoInstrumento}}
+                        </button>
+                    </div>
+            </div>
+
+            <!-- Modal De exclusão-->
+            <div class="modal fade" id="confirmarExclusaoInstrumentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Exclusão de Instrumento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Deseja realmente excluir o instrumento?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <button type="button" (click)="excluirInstrumento();" class="btn btn-primary" data-dismiss="modal">Sim</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          </form>
+
+
+      </div>
+    </div>
+  </div>
+</div>

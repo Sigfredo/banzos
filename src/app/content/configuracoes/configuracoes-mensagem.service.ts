@@ -1,8 +1,6 @@
 import { Injectable, Output, EventEmitter } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Aluno } from "./aluno";
 import { Observable, throwError, Subject, BehaviorSubject } from "rxjs";
-import { map, catchError } from "rxjs/operators";
 
 
 
@@ -10,7 +8,7 @@ import { map, catchError } from "rxjs/operators";
 
 
 @Injectable()
-export class AlunosMensagemService {
+export class ConfiguracoesMensagemService {
 
     // private mensagemSucesso = "";
     // private mensagemAlerta = "";
@@ -20,15 +18,16 @@ export class AlunosMensagemService {
     private _erro = new BehaviorSubject<string>(null);
     private _alerta = new BehaviorSubject<string>(null);
 
-    public alunoMensagemSucesso() {
+    public instrumentoMensagemSucesso() {
         return this._sucesso;
     }
 
-    public alunoMensagemErro(){
+    public instrumentoMensagemErro(){
         return this._erro;
     }
 
-    public alunoMensagemAlerta(){
+    public instrumentoMensagemAlerta(){
         return this._alerta;
     }
+
 }

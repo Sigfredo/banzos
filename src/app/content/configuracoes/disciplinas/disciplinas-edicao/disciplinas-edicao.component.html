@@ -1,0 +1,215 @@
+<ngb-alert *ngIf="mensagemDisciplinaErro" type="error" (close)="mensagemDisciplinaErro = null">{{ mensagemDisciplinaErro }}</ngb-alert>
+<form [formGroup]="disciplinaEditarForm" class="form mt-4" (submit)="editarDisciplina()">
+    <div class="row" style="position: relative;">
+            <div class="col">
+                    <h2 class="text-center">{{tituloEdicaoDisciplina}}</h2>
+            </div>
+            
+            <div class="col-md-2 mt-2 float-right">    
+                        <button
+                        type="button"
+                        (click)="botaoVoltar();"
+                        class="btn btn-block">
+                        Voltar
+                        </button>     
+            </div>
+        </div>
+    <div class="form-group">
+        <label for="nomeDisciplinaInput">Nome</label>
+        <input
+            formControlName="nome"
+            type="text"
+            id="nomeDisciplinaInput"
+            class="form-control"
+            placeholder="Nome do disciplina"
+            autofocus>  
+    </div>
+
+    <div class="form-group">
+    <div class="form-row align-items-center justify-content-start">
+        <div class="col-3 mr-4">
+            <label for="telefoneDisciplinaInput">Telefone</label>
+            <input
+                formControlName="telefone"
+                id="telefoneDisciplinaInput"
+                type="text "
+                class="form-control"
+                placeholder="Telefone">
+        </div> 
+        
+        <div class="col">
+            
+            <mat-form-field>
+            <label for="nascimentoDisciplinaInput">Data de nascimento</label>
+            <input matInput id="nascimentoDisciplinaInput" formControlName="nascimento" [matDatepicker]="nascimento" placeholder="">
+            <mat-datepicker-toggle  matSuffix [for]="nascimento"></mat-datepicker-toggle>
+            <mat-datepicker #nascimento ></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="col-5">
+            <label for="emailDisciplinaInput">E-mail</label>
+            <input
+                formControlName="email"
+                id="emailDisciplinaInput"
+                type="text "
+                class="form-control"
+                placeholder="E-mail">
+        </div> 
+
+        
+        
+    </div>
+    </div>
+
+    <div class="form-row">
+    <div class="col-9">
+        <div class="form-group">
+            <label for="enderecoDisciplinaInput">Endereço</label>
+            <input
+                id="enderecoDisciplinaInput"
+                formControlName="endereco"
+                type="text"
+                class="form-control"
+                placeholder="Endereço">  
+            </div>
+    </div> 
+    <div class="col">
+        <div class="form-group">
+            <label for="cepDisciplinaInput">CEP</label>
+            <input
+                id="cepDisciplinaInput"
+                formControlName="cep"
+                type="text"
+                class="form-control"
+                placeholder="CEP">  
+        </div>
+    </div>                
+    </div>
+    
+    <div class="form-row">
+    <div class="col">
+        <div class="form-group">
+            <label for="cpfDisciplinaInput">CPF</label>
+            <input
+                id="cpfDisciplinaInput"
+                formControlName="cpf"
+                type="text"
+                class="form-control"
+                placeholder="Número do CPF">  
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-group">
+            <label for="rgDisciplinaInput">RG</label>
+            <input
+                id="rgDisciplinaInput"
+                formControlName="rg"
+                type="text"
+                class="form-control"
+                placeholder="Número do Rg">  
+        </div>
+    </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-7">
+            <div class="form-group">
+                <label for="bancoDisciplinaInput">Banco</label>
+                <input
+                    id="bancoDisciplinaInput"
+                    formControlName="banco"
+                    type="text"
+                    class="form-control"
+                    placeholder="Nome do Banco">  
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="tipoContaDisciplinaInput">Tipo da Conta</label>
+                <select
+                    id="tipoContaDisciplinaInput"
+                    formControlName="tipoConta"
+                    class="form-control">  
+                    <option *ngFor="let tipoConta of tiposConta" value= {{tipoConta.id}}>
+                        {{tipoConta.nome}}
+                      </option>
+                   </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col">
+            <div class="form-group">
+                <label for="numeroContaDisciplinaInput">Número da Conta</label>
+                <input
+                    id="numeroContaDisciplinaInput"
+                    formControlName="numeroConta"
+                    type="text"
+                    class="form-control"
+                    placeholder="Número da Conta">  
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="agenciaDisciplinaInput">Agência</label>
+                <input
+                    id="agenciaDisciplinaInput"
+                    formControlName="agencia"
+                    type="text"
+                    class="form-control"
+                    placeholder="Agência">  
+            </div>
+        </div>
+        <div class="col">
+            
+        </div>
+        <div class="col">
+           
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <div class="col">
+                <button
+                *ngIf="isDisciplinaEdicao"
+                type="button"
+                data-toggle="modal" data-target="#confirmarExclusaoDisciplinaModal"
+                class="btn btn-danger btn-block">
+                    Excluir
+                </button>
+        </div>
+        <div class="col">
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-block">
+                    {{labelBotaoEdicaoDisciplina}}
+                </button>
+            </div>
+    </div>
+
+    <!-- Modal De exclusão-->
+<div class="modal fade" id="confirmarExclusaoDisciplinaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Exclusão de Disciplina</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+               Deseja realmente excluir o disciplina?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+              <button type="button" (click)="excluirDisciplina();" class="btn btn-primary" data-dismiss="modal">Sim</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</form>
+

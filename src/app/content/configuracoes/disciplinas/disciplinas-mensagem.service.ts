@@ -1,34 +1,33 @@
 import { Injectable, Output, EventEmitter } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Aluno } from "./aluno";
 import { Observable, throwError, Subject, BehaviorSubject } from "rxjs";
-import { map, catchError } from "rxjs/operators";
-
-
 
 
 
 
 @Injectable()
-export class AlunosMensagemService {
-
-    // private mensagemSucesso = "";
-    // private mensagemAlerta = "";
-    // private mensagemErro = "";
+export class DisciplinasMensagemService {
 
     private _sucesso = new BehaviorSubject<string>(null);
     private _erro = new BehaviorSubject<string>(null);
     private _alerta = new BehaviorSubject<string>(null);
 
-    public alunoMensagemSucesso() {
+    public disciplinaMensagemSucesso() {
         return this._sucesso;
     }
 
-    public alunoMensagemErro(){
+    public disciplinaMensagemErro(){
         return this._erro;
     }
 
-    public alunoMensagemAlerta(){
+    public disciplinaMensagemAlerta(){
         return this._alerta;
+    }
+
+    setDisciplinasMensagemSucesso(mensagem){
+        this._sucesso = mensagem;
+    }
+
+    setDisciplinasMensagemAlerta(mensagem){
+        this._alerta = mensagem;
     }
 }

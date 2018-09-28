@@ -1,4 +1,5 @@
-import { Instrumento } from "../instrumentos/instrumento";
+import { Instrumento } from "../configuracoes/instrumentos/instrumento";
+
 
 export class Professor {
     id: number;
