@@ -8,6 +8,8 @@ import * as moment from 'moment';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import {Location} from '@angular/common';
 import { ViewChild, ElementRef} from '@angular/core';
+declare var jquery:any;
+declare var $ :any;
 
 @Component({
   selector: 'banzos-instrumentos-listagem',
@@ -16,7 +18,10 @@ import { ViewChild, ElementRef} from '@angular/core';
 })
 export class InstrumentosListagemComponent implements OnInit{
 
+  
   @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
+  @ViewChild('instrumentoEdicaoModal') instrumentoEdicaoModal: ElementRef;
+  
 
   instrumentos: Instrumento[];
 
@@ -27,16 +32,32 @@ export class InstrumentosListagemComponent implements OnInit{
   isInstrumentoEdicao: boolean;
   isInstrumentoExclusao: boolean;
 
+  mensagemInstrumentoSucesso: string;
+  mensagemInstrumentoAlerta: string;
+  mensagemInstrumentoErro: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private configuracoesService: ConfiguracoesService,
     private configuracoesMensagemService: ConfiguracoesMensagemService,
-    private route: ActivatedRoute,
-    private _location: Location,   
+    private route: ActivatedRoute, 
   ) { }
 
   ngOnInit(): void { 
-    
+
+    var self = this;
+    $(function() {
+      $('#instrumentoEdicaoModal').on('hide.bs.modal', function () {
+        self.limparFormulario();
+      });
+      $('#instrumentoEdicaoModal').on('shown.bs.modal', function () {
+        self.limparMensagens();
+      });
+    }); 
+    this.configuracoesMensagemService.instrumentoMensagemSucesso().subscribe((message) => {this.mensagemInstrumentoSucesso = message});
+    this.configuracoesMensagemService.instrumentoMensagemAlerta().subscribe((message) => {this.mensagemInstrumentoAlerta = message});
+    this.configuracoesMensagemService.instrumentoMensagemErro().subscribe((message) => {this.mensagemInstrumentoErro = message});
+
     this.configuracoesService.buscarInstrumentos()
     .subscribe(
       (result) => this.instrumentos = result
@@ -79,14 +100,14 @@ export class InstrumentosListagemComponent implements OnInit{
         .subscribe(
             () => {
               if (this.isInstrumentoEdicao) {
-                 this.configuracoesMensagemService.configuracoesMensagemSucesso().next('Instrumento salvo com sucesso');
+                 this.configuracoesMensagemService.instrumentoMensagemSucesso().next('Instrumento salvo com sucesso');
               } else {
-                this.configuracoesMensagemService.configuracoesMensagemSucesso().next('Instrumento cadastrado com sucesso');
+                this.configuracoesMensagemService.instrumentoMensagemSucesso().next('Instrumento cadastrado com sucesso');
               }
               this.voltar()
             },
             erro => {
-              this.configuracoesMensagemService.configuracoesMensagemErro().next('Algum dado está repetido ou inválido');
+              this.configuracoesMensagemService.instrumentoMensagemErro().next('Algum dado está repetido ou inválido');
             }
         );
     } else {
@@ -94,22 +115,23 @@ export class InstrumentosListagemComponent implements OnInit{
         .excluirInstrumento(id)
         .subscribe(
             () => {
-              this.configuracoesMensagemService.configuracoesMensagemAlerta().next('Instrumento excluído com sucesso');
+              this.configuracoesMensagemService.instrumentoMensagemAlerta().next('Instrumento excluído com sucesso');
                 this.instrumentoEdicaoForm.reset();
                 this.voltar();
             },
             erro => {
-              this.configuracoesMensagemService.configuracoesMensagemErro().next('Erro ao excluir o instrumento');
+              this.configuracoesMensagemService.instrumentoMensagemErro().next('Erro ao excluir o instrumento');
             }
         );
     }
   }
   
   buscarInstrumento(id) {
+    this.limparMensagens();
     this.tituloEdicaoInstrumento = "Instrumento";
     this.labelBotaoEdicaoInstrumento = "Salvar";
     this.isInstrumentoEdicao = true;
-    return this.configuracoesService.buscarInstrumento(id)
+    this.configuracoesService.buscarInstrumento(id)
     .subscribe(
       (instrumento) => {
         this.instrumentoSelecionado = instrumento;
@@ -120,9 +142,14 @@ export class InstrumentosListagemComponent implements OnInit{
         }
       }          
     );
+    this.abrirEdicaoInstrumento();
     
   }
 
+  abrirEdicaoInstrumento(){
+    this.isInstrumentoExclusao = false;
+    $('#instrumentoEdicaoModal').modal('show');
+  }
   excluirInstrumento() {
     this.isInstrumentoExclusao = true;
     this.enviarAlteracaoInstrumento();
@@ -134,18 +161,28 @@ export class InstrumentosListagemComponent implements OnInit{
   }
 
   limparMensagens(): any {
-     this.configuracoesMensagemService.configuracoesMensagemSucesso().next(null);
-     this.configuracoesMensagemService.configuracoesMensagemSucesso().next(null);
-     this.configuracoesMensagemService.configuracoesMensagemSucesso().next("");
+    this.mensagemInstrumentoSucesso = '';
+    this.mensagemInstrumentoAlerta = '';
+    this.mensagemInstrumentoErro = '';
   }
 
   voltar() {
     this.closeAddExpenseModal.nativeElement.click();
-    location.reload()
+    this.configuracoesService.buscarInstrumentos()
+    .subscribe(
+      (result) => this.instrumentos = result
+    );
+    this.limparFormulario();
+  }
+
+  limparFormulario(): any {
+    this.instrumentoEdicaoForm.controls['id'].setValue('');
+    this.instrumentoEdicaoForm.controls['nome'].setValue('');
+    this.instrumentoEdicaoForm.controls['descricao'].setValue('');
+    this.isInstrumentoEdicao = false
   }
 
   botaoVoltar() {
-    this.limparMensagens();
     this.closeAddExpenseModal.nativeElement.click();
     location.reload()
   }

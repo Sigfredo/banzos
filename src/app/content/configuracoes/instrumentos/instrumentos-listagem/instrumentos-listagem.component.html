@@ -1,8 +1,8 @@
 <div class="mt-2 text-center">
 
-  <!-- <ngb-alert *ngIf="mensagemInstrumentoSucesso" type="success" (close)="mensagemInstrumentoSucesso = null">{{ mensagemInstrumentoSucesso }}</ngb-alert>
-  <ngb-alert *ngIf="mensagemInstrumentoAlerta" type="warning" (close)="mensagemInstrumentoAlerta = null">{{ mensagemInstrumentoAlerta }}</ngb-alert>
-  <ngb-alert *ngIf="mensagemInstrumentoErro" type="error" (close)="mensagemInstrumentoErro = null">{{ mensagemInstrumentoErro }}</ngb-alert> -->
+  <ngb-alert *ngIf="mensagemInstrumentoSucesso" id="mensagemInstrumentoSucesso" type="success" (close)="mensagemInstrumentoSucesso = null">{{ mensagemInstrumentoSucesso }}</ngb-alert>
+  <ngb-alert *ngIf="mensagemInstrumentoAlerta" id="mensagemInstrumentoAlerta" type="warning" (close)="mensagemInstrumentoAlerta = null">{{ mensagemInstrumentoAlerta }}</ngb-alert>
+  <ngb-alert *ngIf="mensagemInstrumentoErro" id="mensagemInstrumentoErro" type="error" (close)="mensagemInstrumentoErro = null">{{ mensagemInstrumentoErro }}</ngb-alert>
 
 <h1>Instrumentos</h1>
 
@@ -22,15 +22,15 @@
 
   <div class="col-sm">
         <button id="editar-disciplina-button" type="button" class="btn btn-primary" 
-            data-toggle="modal" data-target="#instrumentoEdicaoModal">
+            (click)="abrirEdicaoInstrumento()">
             Adicionar Instrumento
         </button>
   </div>
 </div>
 
 <div class="row">
-  <div class="col mb-3" *ngFor="let instrumento of instrumentos">
-    <button type="button" (click)="buscarInstrumento(instrumento.id)" data-toggle="modal" data-target="#instrumentoEdicaoModal"
+  <div class="col-sm-2 mb-3" *ngFor="let instrumento of instrumentos  | filter : buscarTexto">
+    <button type="button" (click)="buscarInstrumento(instrumento.id)"
     class="btn btn-info btn-lg btn-block">{{instrumento.nome}}</button> 
   </div>
 </div>

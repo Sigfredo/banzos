@@ -31,12 +31,4 @@ export class AlunosMensagemService {
     public alunoMensagemAlerta(){
         return this._alerta;
     }
-
-    setAlunoMensagemSucesso(mensagem){
-        this._sucesso = mensagem;
-    }
-
-    setAlunoMensagemAlerta(mensagem){
-        this._alerta = mensagem;
-    }
 }

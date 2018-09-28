@@ -85,20 +85,6 @@
       "rgResponsavel": "1111111"
     },
     {
-      "id": 16,
-      "nome": "asdfasdf",
-      "instrumento": "",
-      "inicioPlano": "",
-      "fimPlano": "",
-      "nascimento": "",
-      "telefone": "",
-      "endereco": "",
-      "cep": "",
-      "nomeResponsavel": "",
-      "cpfResponsavel": "",
-      "rgResponsavel": ""
-    },
-    {
       "id": 17,
       "nome": "afsddddddddddddd",
       "instrumento": "",
@@ -302,7 +288,7 @@
     },
     {
       "id": 7,
-      "nome": "teste",
+      "nome": "Flauta Doce",
       "descricao": ""
     },
     {
@@ -317,7 +303,12 @@
     },
     {
       "id": 10,
-      "nome": "Teste 4",
+      "nome": "Teste 5",
+      "descricao": ""
+    },
+    {
+      "id": 12,
+      "nome": "Teste 101",
       "descricao": ""
     }
   ]

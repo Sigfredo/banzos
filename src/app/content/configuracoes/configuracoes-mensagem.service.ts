@@ -18,23 +18,16 @@ export class ConfiguracoesMensagemService {
     private _erro = new BehaviorSubject<string>(null);
     private _alerta = new BehaviorSubject<string>(null);
 
-    public configuracoesMensagemSucesso() {
+    public instrumentoMensagemSucesso() {
         return this._sucesso;
     }
 
-    public configuracoesMensagemErro(){
+    public instrumentoMensagemErro(){
         return this._erro;
     }
 
-    public configuracoesMensagemAlerta(){
+    public instrumentoMensagemAlerta(){
         return this._alerta;
     }
 
-    setConfiguracoesMensagemSucesso(mensagem){
-        this._sucesso = mensagem;
-    }
-
-    setConfiguracoesMensagemAlerta(mensagem){
-        this._alerta = mensagem;
-    }
 }
