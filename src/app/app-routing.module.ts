@@ -8,6 +8,7 @@ import { EditarComponent } from './content/alunos/editar/editar.component';
 import { ProfessoresEdicaoComponent } from './content/professores/professores-edicao/professores-edicao.component';
 import { DisciplinasComponent } from './content/configuracoes/disciplinas/disciplinas.component';
 import { InstrumentosListagemComponent } from './content/configuracoes/instrumentos/instrumentos-listagem/instrumentos-listagem.component';
+import { ConfiguracoesComponent } from './content/configuracoes/configuracoes.component';
 
 const routes: Routes = [
   {
@@ -49,8 +50,11 @@ const routes: Routes = [
   {
     path: 'instrumentos',
     component: InstrumentosListagemComponent
+  },
+  {
+    path: 'configuracoes',
+    component: ConfiguracoesComponent
   }
-  
 
 ];
 
