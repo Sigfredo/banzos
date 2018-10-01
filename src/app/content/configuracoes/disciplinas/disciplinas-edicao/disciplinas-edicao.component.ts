@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, Input, EventEmitter, Output } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
-
+import { ConfiguracoesService } from "../../configuracoes.service";
 import * as moment from 'moment';
 import { ViewChild, ElementRef} from '@angular/core';
 import { Disciplina } from '../disciplina';
@@ -9,6 +9,8 @@ import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import {Location} from '@angular/common';
 import { DisciplinasMensagemService } from '../disciplinas-mensagem.service';
 import { DisciplinasComponent } from '../disciplinas.component';
+import { Instrumento } from '../../instrumentos/instrumento';
+import { SelectItemsService } from '../../../../shared/select-items/select-items.service';
 
 
 @Component({
@@ -20,13 +22,32 @@ import { DisciplinasComponent } from '../disciplinas.component';
 })
 export class DisciplinasEdicaoComponent implements OnInit {
 
+  @Input() disciplina: Disciplina;
+  @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
+  @Output() mensagemSucessoDisciplina: EventEmitter<string> = new EventEmitter<string>();
 
+  disciplinaEditarForm: FormGroup;
+  DisciplinaSelecionado: Disciplina;
+  tituloEdicaoDisciplina: string;
+  labelBotaoEdicaoDisciplina: string;
+  isDisciplinaEdicao: boolean;
+  isDisciplinaExclusao: boolean;
+  instrumentos: Instrumento[];
 
   constructor(
+    private formBuilder: FormBuilder,
+    private configuracoesService: ConfiguracoesService,
+    private configuracoesMensagemService: DisciplinasMensagemService,
+    private route: ActivatedRoute,
+    private _location: Location,
+    private disciplinasComponent: DisciplinasComponent,
+    private selectItemsService: SelectItemsService
+    
 
   ) { }
 
-  ngOnInit(): void { }
+
+  ngOnInit(): void { 
 
     moment.locale('pt-BR');
    
@@ -35,17 +56,11 @@ export class DisciplinasEdicaoComponent implements OnInit {
     this.disciplinaEditarForm = this.formBuilder.group({
       id: ['', Validators.required],
       nome: ['', Validators.required],
-      nascimento: ['', Validators.required],
-      telefone: ['', Validators.required],
-      email: ['', Validators.required],
-      endereco: ['', Validators.required],
-      cep: ['', Validators.required],
-      banco: ['', Validators.required],
-      tipoConta: ['', Validators.required],
-      numeroConta: ['', Validators.required],
-      agencia: ['', Validators.required],
-      cpf: ['', Validators.required],
-      rg: ['', Validators.required]
+      instrumento: ['', Validators.required],
+      frequenciaMinima: ['', Validators.required],
+      notaMinima: ['', Validators.required],
+      teorica: ['', Validators.required]
+     
     });
 
     if (id != 0) {
@@ -61,9 +76,9 @@ export class DisciplinasEdicaoComponent implements OnInit {
       this.isDisciplinaEdicao = false;
     }
 
-    this.selectItemsService.buscarTipoContas()
+    this.selectItemsService.buscarInstrumentos()
         .subscribe(
-            (tipoConta) => this.tiposConta = tipoConta
+            (instrumentos) => this.instrumentos = instrumentos
         );
   }
 
@@ -71,73 +86,58 @@ export class DisciplinasEdicaoComponent implements OnInit {
 
     const id = this.disciplinaEditarForm.get('id').value;
     const nome = this.disciplinaEditarForm.get('nome').value;
-    const nascimento = this.disciplinaEditarForm.get('nascimento').value;
-    const telefone = this.disciplinaEditarForm.get('telefone').value;
-    const email = this.disciplinaEditarForm.get('email').value;
-    const endereco = this.disciplinaEditarForm.get('endereco').value;
-    const cep = this.disciplinaEditarForm.get('cep').value;
-    const banco = this.disciplinaEditarForm.get('banco').value;
-    const tipoConta = this.disciplinaEditarForm.get('tipoConta').value;
-    const numeroConta = this.disciplinaEditarForm.get('numeroConta').value;
-    const agencia = this.disciplinaEditarForm.get('agencia').value;
-    const cpf = this.disciplinaEditarForm.get('cpf').value;
-    const rg= this.disciplinaEditarForm.get('rg').value
+    const instrumento = this.disciplinaEditarForm.get('instrumento').value;
+    const frequenciaMinima = this.disciplinaEditarForm.get('frequenciaMinima').value;
+    const notaMinima = this.disciplinaEditarForm.get('notaMinima').value;
+    const teorica = this.disciplinaEditarForm.get('teorica').value;
 
     if (!this.isDisciplinaExclusao) {
 
       this.limparMensagens();
 
-      this.disciplinasService
-        .editarDisciplina({id, nome, nascimento, telefone, email,
-          endereco, cep, banco, tipoConta, numeroConta, agencia, cpf, rg})
+      this.configuracoesService
+        .editarDisciplina({id, nome, instrumento, frequenciaMinima, notaMinima, teorica})
         .subscribe(
             () => {
               if (this.isDisciplinaEdicao) {
-                 this.disciplinasMensagemService.disciplinaMensagemSucesso().next('Disciplina salvo com sucesso');
+                 this.configuracoesMensagemService.disciplinaMensagemSucesso().next('Disciplina salvo com sucesso');
               } else {
-                this.disciplinasMensagemService.disciplinaMensagemSucesso().next('Disciplina cadastrado com sucesso');
+                this.configuracoesMensagemService.disciplinaMensagemSucesso().next('Disciplina cadastrado com sucesso');
               }
               this.voltar()
             },
             erro => {
-              this.disciplinasMensagemService.disciplinaMensagemErro().next('Algum dado está repetido ou inválido');
+              this.configuracoesMensagemService.disciplinaMensagemErro().next('Algum dado está repetido ou inválido');
             }
         );
     } else {
-      this.disciplinasService
+      this.configuracoesService
         .excluirDisciplina(id)
         .subscribe(
             () => {
-              this.disciplinasMensagemService.disciplinaMensagemAlerta().next('Disciplina excluído com sucesso');
+              this.configuracoesMensagemService.disciplinaMensagemAlerta().next('Disciplina excluído com sucesso');
                 this.disciplinaEditarForm.reset();
                 this.voltar();
             },
             erro => {
-              this.disciplinasMensagemService.disciplinaMensagemErro().next('Erro ao excluir o disciplina');
+              this.configuracoesMensagemService.disciplinaMensagemErro().next('Erro ao excluir o disciplina');
             }
         );
     }
   }
   
   buscarDisciplina (id) {
-    return this.disciplinasService.getDisciplina(id)
+    return this.configuracoesService.buscarDisciplina(id)
     .pipe(
         map(disciplina => {
           this.disciplina = disciplina;
           if(id != 0){
             this.disciplinaEditarForm.controls['id'].setValue(disciplina.id);
             this.disciplinaEditarForm.controls['nome'].setValue(disciplina.nome);
-            this.disciplinaEditarForm.controls['nascimento'].setValue(disciplina.nascimento);
-            this.disciplinaEditarForm.controls['telefone'].setValue(disciplina.telefone);
-            this.disciplinaEditarForm.controls['email'].setValue(disciplina.email);
-            this.disciplinaEditarForm.controls['endereco'].setValue(disciplina.endereco);
-            this.disciplinaEditarForm.controls['cep'].setValue(disciplina.cep);
-            this.disciplinaEditarForm.controls['banco'].setValue(disciplina.banco);
-            this.disciplinaEditarForm.controls['tipoConta'].setValue(disciplina.tipoConta);
-            this.disciplinaEditarForm.controls['numeroConta'].setValue(disciplina.numeroConta);
-            this.disciplinaEditarForm.controls['agencia'].setValue(disciplina.agencia);
-            this.disciplinaEditarForm.controls['cpf'].setValue(disciplina.cpf);
-            this.disciplinaEditarForm.controls['rg'].setValue(disciplina.rg);
+            this.disciplinaEditarForm.controls['instrumento'].setValue(disciplina.instrumento);
+            this.disciplinaEditarForm.controls['frequenciaMinima'].setValue(disciplina.frequenciaMinima);
+            this.disciplinaEditarForm.controls['notaMinima'].setValue(disciplina.notaMinima);
+            this.disciplinaEditarForm.controls['teorica'].setValue(disciplina.teorica);
 
           }
         })
@@ -156,9 +156,9 @@ export class DisciplinasEdicaoComponent implements OnInit {
   }
 
   limparMensagens(): any {
-     this.disciplinasMensagemService.disciplinaMensagemSucesso().next(null);
-     this.disciplinasMensagemService.disciplinaMensagemAlerta().next(null);
-     this.disciplinasMensagemService.disciplinaMensagemErro().next("");
+     this.configuracoesMensagemService.disciplinaMensagemSucesso().next(null);
+     this.configuracoesMensagemService.disciplinaMensagemAlerta().next(null);
+     this.configuracoesMensagemService.disciplinaMensagemErro().next("");
   }
 
   voltar() {

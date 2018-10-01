@@ -6,8 +6,8 @@ import { Instrumento } from "./instrumentos/instrumento";
 
 
 
-const INSTRUMENTOS_BASE_URL = 'http://localhost:3000/instrumentos/';
-const DISCIPLINAS_BASE_URL = 'http://localhost:3000/disciplinas/';
+const INSTRUMENTOS_BASE_URL = 'http://192.168.25.235:3000/instrumentos/';
+const DISCIPLINAS_BASE_URL = 'http://192.168.25.235:3000/disciplinas/';
 
 @Injectable()
 export class ConfiguracoesService {
@@ -50,6 +50,35 @@ export class ConfiguracoesService {
 
     buscarDisciplinas(): Observable<Disciplina[]>  {
         return this.http.get<Disciplina[]>(DISCIPLINAS_BASE_URL);
+    }
+
+    editarDisciplina(disciplina) {
+        if (disciplina.id == 0){
+            return this.http.post( DISCIPLINAS_BASE_URL,
+                disciplina,
+                {
+                    headers: new HttpHeaders()
+                      .set('Content-Type', 'application/json')
+                  }
+                );
+        } else {
+            return this.http.put( DISCIPLINAS_BASE_URL+disciplina.id,
+                disciplina,
+                {
+                    headers: new HttpHeaders()
+                      .set('Content-Type', 'application/json')
+                  }
+                );
+        }
+       
+    }
+
+    excluirDisciplina(id) {
+        return this.http.delete(DISCIPLINAS_BASE_URL+id);
+    }
+
+    buscarDisciplina(id:number): Observable<Disciplina> {
+        return this.http.get<Disciplina>(DISCIPLINAS_BASE_URL+id)
     }
 
 }
