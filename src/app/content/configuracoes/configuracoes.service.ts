@@ -6,8 +6,8 @@ import { Instrumento } from "./instrumentos/instrumento";
 
 
 
-const INSTRUMENTOS_BASE_URL = 'http://192.168.25.235:3000/instrumentos/';
-const DISCIPLINAS_BASE_URL = 'http://192.168.25.235:3000/disciplinas/';
+const INSTRUMENTOS_BASE_URL = 'http://localhost:3000/instrumentos/';
+const DISCIPLINAS_BASE_URL = 'http://localhost:3000/disciplinas/';
 
 @Injectable()
 export class ConfiguracoesService {

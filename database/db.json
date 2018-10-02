@@ -214,17 +214,34 @@
     {
       "id": 1,
       "nome": "Canto",
-      "instrumento": "1"
+      "instrumento": "1",
+      "frequenciaMinima": "",
+      "notaMinima": "",
+      "teorica": "false"
     },
     {
       "id": 2,
       "nome": "Violão",
-      "instrumento": "2"
+      "instrumento": "2",
+      "frequenciaMinima": "",
+      "notaMinima": "",
+      "teorica": "false"
     },
     {
       "id": 3,
       "nome": "Piano",
-      "instrumento": "3"
+      "instrumento": "3",
+      "frequenciaMinima": "",
+      "notaMinima": "",
+      "teorica": "false"
+    },
+    {
+      "id": 4,
+      "nome": "Teoria 1",
+      "instrumento": "",
+      "frequenciaMinima": "75",
+      "notaMinima": "5",
+      "teorica": true
     }
   ],
   "instrumentos": [

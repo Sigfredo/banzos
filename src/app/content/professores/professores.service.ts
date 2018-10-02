@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Professor } from "./professor";
 import { Observable, throwError } from "rxjs";
 
-const PROFESSORES_BASE_URL = 'http://192.168.25.235:3000/Professores/';
+const PROFESSORES_BASE_URL = 'http://localhost:3000/Professores/';
 
 @Injectable()
 export class ProfessoresService {

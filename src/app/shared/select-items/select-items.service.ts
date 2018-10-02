@@ -13,10 +13,10 @@ export class SelectItemsService {
     constructor(private http: HttpClient){}
 
     buscarTipoContas(): Observable<TipoConta[]>  {
-        return this.http.get<TipoConta[]>('http://192.168.25.235:3000/tipo_conta/');
+        return this.http.get<TipoConta[]>('http://localhost:3000/tipo_conta/');
     }
     buscarInstrumentos(): Observable<Instrumento[]>  {
-        return this.http.get<Instrumento[]>('http://192.168.25.235:3000/instrumentos/');
+        return this.http.get<Instrumento[]>('http://localhost:3000/instrumentos/');
     }
 
 }

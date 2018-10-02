@@ -4,7 +4,7 @@ import { Aluno } from "./aluno";
 import { Observable, throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 
-const ALUNOS_BASE_URL = 'http://192.168.25.235:3000/alunos/';
+const ALUNOS_BASE_URL = 'http://localhost:3000/alunos/';
 
 @Injectable()
 export class AlunosService {

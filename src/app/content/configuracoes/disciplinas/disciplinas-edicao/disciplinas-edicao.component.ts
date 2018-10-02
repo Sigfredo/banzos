@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 import { ConfiguracoesService } from "../../configuracoes.service";
 import * as moment from 'moment';
@@ -33,6 +33,7 @@ export class DisciplinasEdicaoComponent implements OnInit {
   isDisciplinaEdicao: boolean;
   isDisciplinaExclusao: boolean;
   instrumentos: Instrumento[];
+  isTeorica: boolean; 
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +42,8 @@ export class DisciplinasEdicaoComponent implements OnInit {
     private route: ActivatedRoute,
     private _location: Location,
     private disciplinasComponent: DisciplinasComponent,
-    private selectItemsService: SelectItemsService
+    private selectItemsService: SelectItemsService,
+    private cdRef:ChangeDetectorRef
     
 
   ) { }
@@ -50,6 +52,8 @@ export class DisciplinasEdicaoComponent implements OnInit {
   ngOnInit(): void { 
 
     moment.locale('pt-BR');
+
+    this.isTeorica = false;
    
     const id = +this.route.snapshot.paramMap.get('id');
 
@@ -138,7 +142,8 @@ export class DisciplinasEdicaoComponent implements OnInit {
             this.disciplinaEditarForm.controls['frequenciaMinima'].setValue(disciplina.frequenciaMinima);
             this.disciplinaEditarForm.controls['notaMinima'].setValue(disciplina.notaMinima);
             this.disciplinaEditarForm.controls['teorica'].setValue(disciplina.teorica);
-
+            this.setTipoAula(disciplina.teorica)
+            this.cdRef.detectChanges();
           }
         })
     );
@@ -170,5 +175,8 @@ export class DisciplinasEdicaoComponent implements OnInit {
     this._location.back()
   }
 
+  setTipoAula(teorica){
+    this.isTeorica = teorica;
+  }
   
 }
