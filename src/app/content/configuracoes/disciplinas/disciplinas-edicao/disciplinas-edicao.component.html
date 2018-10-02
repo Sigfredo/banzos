@@ -31,14 +31,21 @@
                     <label for="teoricaDisciplinaInput">Aula teórica?</label>
                 </div> 
                 <div class="row">
-                    <label class="checkbox-inline"><input 
-                        type="checkbox" 
-                        value="{{disciplina.teorica}}">
+                    <label class="checkbox-inline mr-3"><input 
+                        formControlName="teorica"
+                        type="radio" 
+                        [(ngModel)]="teorica"
+                        [checked]="teorica"
+                        [value]="true">
                         Sim
                     </label>
                     <label class="checkbox-inline"><input 
-                        type="checkbox" 
-                        value="{{!disciplina.teorica}}">
+                        formControlName="teorica"
+                        type="radio" 
+                        [(ngModel)]="teorica"
+                        [checked]="!teorica"
+                        [value]="false"
+                        checked>
                         Não
                     </label>
 

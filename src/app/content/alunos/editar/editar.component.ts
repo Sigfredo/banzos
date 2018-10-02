@@ -17,6 +17,7 @@ import { AlunosComponent } from '../alunos.component';
   providers: [
   ],
 })
+
 export class EditarComponent implements OnInit {
   @Input() aluno: Aluno;
   @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;

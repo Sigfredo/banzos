@@ -59,7 +59,7 @@ export class DisciplinasEdicaoComponent implements OnInit {
       instrumento: ['', Validators.required],
       frequenciaMinima: ['', Validators.required],
       notaMinima: ['', Validators.required],
-      teorica: ['', Validators.required]
+      teorica: [false, Validators.required]
      
     });
 
