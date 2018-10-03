@@ -11,13 +11,17 @@ import { DisciplinasMensagemService } from "../disciplinas-mensagem.service";
 })
 export class DisciplinasListagemComponent {
   
-  // @Input()
-  // disciplinas = [];
+  constructor(
+    private disciplinasMensagemService: DisciplinasMensagemService
+  ){ }
 
-  // disciplinaTeste: Disciplina;
+  @Input()
+  disciplinas = [];
 
-  // buscarIdade(nascimento: Date){
-    
-  //   return moment(new Date(nascimento)).locale('pt-br').fromNow(true);
-  // }
+  limparMensagens(){
+     this.disciplinasMensagemService.disciplinaMensagemSucesso().next(null);
+     this.disciplinasMensagemService.disciplinaMensagemAlerta().next(null);
+     this.disciplinasMensagemService.disciplinaMensagemErro().next(null);
+  }
+  
 }

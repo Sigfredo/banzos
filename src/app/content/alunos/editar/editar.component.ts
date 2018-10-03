@@ -17,6 +17,7 @@ import { AlunosComponent } from '../alunos.component';
   providers: [
   ],
 })
+
 export class EditarComponent implements OnInit {
   @Input() aluno: Aluno;
   @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
@@ -164,7 +165,7 @@ export class EditarComponent implements OnInit {
   limparMensagens(): any {
      this.alunosMensagemService.alunoMensagemSucesso().next(null);
      this.alunosMensagemService.alunoMensagemAlerta().next(null);
-     this.alunosMensagemService.alunoMensagemErro().next("");
+     this.alunosMensagemService.alunoMensagemErro().next(null);
   }
 
   voltar() {

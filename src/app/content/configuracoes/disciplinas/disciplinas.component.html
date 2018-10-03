@@ -1,35 +1,12 @@
 <div class="mt-2 text-center">
 
-  <ngb-alert *ngIf="mensagemDisciplinaSucesso" type="success" (close)="mensagemDisciplinaSucesso = null">{{ mensagemDisciplinaSucesso }}</ngb-alert>
-  <ngb-alert *ngIf="mensagemDisciplinaAlerta" type="warning" (close)="mensagemDisciplinaAlerta = null">{{ mensagemDisciplinaAlerta }}</ngb-alert>
-  <ngb-alert *ngIf="mensagemDisciplinaErro" type="error" (close)="mensagemDisciplinaErro = null">{{ mensagemDisciplinaErro }}</ngb-alert>
+    <ngb-alert *ngIf="mensagemDisciplinaSucesso" type="success" (close)="mensagemDisciplinaSucesso = null">{{ mensagemDisciplinaSucesso }}</ngb-alert>
+    <ngb-alert *ngIf="mensagemDisciplinaAlerta" type="warning" (close)="mensagemDisciplinaAlerta = null">{{ mensagemDisciplinaAlerta }}</ngb-alert>
+    <ngb-alert *ngIf="mensagemDisciplinaErro" type="error" (close)="mensagemDisciplinaErro = null">{{ mensagemDisciplinaErro }}</ngb-alert>
 
-<h1>Configurações</h1>
+<h1>Disciplinas</h1>
 
 </div>
 
-<div class="row">
-  <div class="col">
-    <div class="card" style="width:300px">
-      <img class="card-img-top" src="/src/imagens/configuracoes/instrumentos_card.jpg" alt="Card image">
-      <div class="card-body">
-        <h4 class="card-title">Instrumentos</h4>
-        <p class="card-text">Cadastro de instrumentos usados na escola</p>
-        <a href="instrumentos" class="btn btn-primary">Gerenciar</a>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card" style="width:300px">
-      <img class="card-img-top" src="/src/imagens/configuracoes/disciplinas_card.jpg" alt="Card image">
-      <div class="card-body">
-        <h4 class="card-title">Disciplinas</h4>
-        <br>
-        <p class="card-text">Disciplinas oferecidas pela escola</p>
-        <a href="disciplinas" class="btn btn-primary">Gerenciar</a>
-      </div>
-    </div>
-  </div>
-</div>
 
-
+<banzos-disciplinas-listagem [disciplinas] = "disciplinas"></banzos-disciplinas-listagem>

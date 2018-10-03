@@ -16,7 +16,7 @@
     },
     {
       "id": 2,
-      "nome": "João 2",
+      "nome": "João ",
       "instrumento": "Violão",
       "inicioPlano": "2018-09-05T03:00:00.000Z",
       "fimPlano": "2018-09-07T03:00:00.000Z",
@@ -86,7 +86,7 @@
     },
     {
       "id": 17,
-      "nome": "afsddddddddddddd",
+      "nome": "afsddddddddd",
       "instrumento": "",
       "inicioPlano": "",
       "fimPlano": "",
@@ -143,34 +143,6 @@
     {
       "id": 21,
       "nome": "asddfsdfsa",
-      "instrumento": "",
-      "inicioPlano": "",
-      "fimPlano": "",
-      "nascimento": "",
-      "telefone": "",
-      "endereco": "",
-      "cep": "",
-      "nomeResponsavel": "",
-      "cpfResponsavel": "",
-      "rgResponsavel": ""
-    },
-    {
-      "id": 22,
-      "nome": "asdfsadfadsfadfdf",
-      "instrumento": "",
-      "inicioPlano": "",
-      "fimPlano": "",
-      "nascimento": "",
-      "telefone": "",
-      "endereco": "",
-      "cep": "",
-      "nomeResponsavel": "",
-      "cpfResponsavel": "",
-      "rgResponsavel": ""
-    },
-    {
-      "id": 23,
-      "nome": "asfdadsadsffds",
       "instrumento": "",
       "inicioPlano": "",
       "fimPlano": "",
@@ -242,17 +214,34 @@
     {
       "id": 1,
       "nome": "Canto",
-      "instrumento": "1"
+      "instrumento": "1",
+      "frequenciaMinima": "",
+      "notaMinima": "",
+      "teorica": false
     },
     {
       "id": 2,
       "nome": "Violão",
-      "instrumento": "2"
+      "instrumento": "2",
+      "frequenciaMinima": "",
+      "notaMinima": "",
+      "teorica": false
     },
     {
       "id": 3,
       "nome": "Piano",
-      "instrumento": "3"
+      "instrumento": "3",
+      "frequenciaMinima": "",
+      "notaMinima": "",
+      "teorica": false
+    },
+    {
+      "id": 4,
+      "nome": "Teoria 1",
+      "instrumento": "",
+      "frequenciaMinima": "75",
+      "notaMinima": "5",
+      "teorica": true
     }
   ],
   "instrumentos": [

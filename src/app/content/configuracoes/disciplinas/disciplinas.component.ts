@@ -9,7 +9,7 @@ import { DisciplinasMensagemService } from './disciplinas-mensagem.service';
 })
 export class DisciplinasComponent implements OnInit {
 
-  disciplinas = [];
+disciplinas = [];
  mensagemDisciplinaSucesso: string;
  mensagemDisciplinaAlerta: string;
  mensagemDisciplinaErro: string;
