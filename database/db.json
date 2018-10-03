@@ -125,34 +125,6 @@
       "nomeResponsavel": "",
       "cpfResponsavel": "",
       "rgResponsavel": ""
-    },
-    {
-      "id": 20,
-      "nome": "testeetsesttsetsetsete",
-      "instrumento": "",
-      "inicioPlano": "",
-      "fimPlano": "",
-      "nascimento": "",
-      "telefone": "",
-      "endereco": "",
-      "cep": "",
-      "nomeResponsavel": "",
-      "cpfResponsavel": "",
-      "rgResponsavel": ""
-    },
-    {
-      "id": 21,
-      "nome": "asddfsdfsa",
-      "instrumento": "",
-      "inicioPlano": "",
-      "fimPlano": "",
-      "nascimento": "",
-      "telefone": "",
-      "endereco": "",
-      "cep": "",
-      "nomeResponsavel": "",
-      "cpfResponsavel": "",
-      "rgResponsavel": ""
     }
   ],
   "professores": [
@@ -242,6 +214,22 @@
       "frequenciaMinima": "75",
       "notaMinima": "5",
       "teorica": true
+    },
+    {
+      "id": 5,
+      "nome": "teste",
+      "instrumento": "5",
+      "frequenciaMinima": "",
+      "notaMinima": "",
+      "teorica": false
+    },
+    {
+      "id": 6,
+      "nome": "testt",
+      "instrumento": "4",
+      "frequenciaMinima": "",
+      "notaMinima": "",
+      "teorica": false
     }
   ],
   "instrumentos": [
