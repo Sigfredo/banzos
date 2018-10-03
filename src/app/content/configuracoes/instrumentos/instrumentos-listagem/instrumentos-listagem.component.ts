@@ -90,10 +90,9 @@ export class InstrumentosListagemComponent implements OnInit{
     const nome = this.instrumentoEdicaoForm.get('nome').value;
     const descricao = this.instrumentoEdicaoForm.get('descricao').value;
 
-
+    this.limparMensagens();
+    
     if (!this.isInstrumentoExclusao) {
-
-      this.limparMensagens();
 
       this.configuracoesService
         .editarInstrumento({id, nome, descricao})

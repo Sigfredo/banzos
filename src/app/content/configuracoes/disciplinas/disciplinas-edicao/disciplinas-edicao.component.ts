@@ -63,7 +63,7 @@ export class DisciplinasEdicaoComponent implements OnInit {
       instrumento: ['', Validators.required],
       frequenciaMinima: ['', Validators.required],
       notaMinima: ['', Validators.required],
-      teorica: ['', Validators.required]
+      teorica: [false, Validators.required]
      
     });
 
@@ -94,10 +94,11 @@ export class DisciplinasEdicaoComponent implements OnInit {
     const frequenciaMinima = this.disciplinaEditarForm.get('frequenciaMinima').value;
     const notaMinima = this.disciplinaEditarForm.get('notaMinima').value;
     const teorica = this.disciplinaEditarForm.get('teorica').value;
+    console.log(this.disciplinaEditarForm.get('teorica').value)
 
     
     this.limparMensagens();
-    
+
     if (!this.isDisciplinaExclusao) {
 
       this.configuracoesService
@@ -169,6 +170,12 @@ export class DisciplinasEdicaoComponent implements OnInit {
     this._location.back()
   }
 
+  
+  botaoVoltar() {
+    this.limparMensagens();
+    this._location.back()
+  }
+  
   ngAfterViewInit() {
     this.cdRef.detectChanges();
   }

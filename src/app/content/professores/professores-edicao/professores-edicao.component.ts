@@ -99,9 +99,9 @@ export class ProfessoresEdicaoComponent implements OnInit {
     const cpf = this.professorEditarForm.get('cpf').value;
     const rg= this.professorEditarForm.get('rg').value
 
+    this.limparMensagens();
+    
     if (!this.isProfessorExclusao) {
-
-      this.limparMensagens();
 
       this.professoresService
         .editarProfessor({id, nome, nascimento, telefone, email,

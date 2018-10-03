@@ -91,9 +91,9 @@ export class EditarComponent implements OnInit {
     const cpfResponsavel = this.alunoEditarForm.get('cpfResponsavel').value;
     const rgResponsavel = this.alunoEditarForm.get('rgResponsavel').value
 
+    this.limparMensagens();
+    
     if (!this.isAlunoExclusao) {
-
-      this.limparMensagens();
 
       this.alunosService
         .editarAluno({id, nome, instrumento, inicioPlano, fimPlano ,nascimento, telefone, 

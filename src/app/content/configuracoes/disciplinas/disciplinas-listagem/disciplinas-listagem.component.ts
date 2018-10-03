@@ -11,17 +11,7 @@ import { DisciplinasMensagemService } from "../disciplinas-mensagem.service";
 })
 export class DisciplinasListagemComponent {
   
-  constructor(
-    private disciplinasMensagemService: DisciplinasMensagemService
-  ){ }
-
   @Input()
   disciplinas = [];
-
-  limparMensagens(){
-     this.disciplinasMensagemService.disciplinaMensagemSucesso().next(null);
-     this.disciplinasMensagemService.disciplinaMensagemAlerta().next(null);
-     this.disciplinasMensagemService.disciplinaMensagemErro().next(null);
-  }
   
 }
