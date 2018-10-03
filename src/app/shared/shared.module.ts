@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BanzosFilterPipe } from './banzos-filter.pipe';
 import { SelectItemsService } from './select-items/select-items.service';
+import { BanzosUtils } from './banzos-util';
 
 @NgModule({
   imports: [
@@ -31,10 +32,11 @@ import { SelectItemsService } from './select-items/select-items.service';
     FormsModule, 
     ReactiveFormsModule,
     BanzosFilterPipe,
-  
+    
   ],
   providers: [
-    SelectItemsService
+    SelectItemsService,
+    BanzosUtils
   ]
 })
 export class SharedModule { }

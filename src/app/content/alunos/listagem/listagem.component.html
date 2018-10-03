@@ -23,17 +23,47 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col">Id</th>
-      <th scope="col">Nome</th>
-      <th scope="col">instrumento</th>
-      <th scope="col">Idade</th>
-      <th scope="col">Início do Plano</th>
-      <th scope="col">Fim do Plano</th>
+      <th scope="col">
+        <div class="banzos-th">
+            <a class="banzos-th" href="#" (click)="ordenarAlunos('nome')">
+                Nome  <i class="fas fa-sort"></i>
+              </a>
+        </div> 
+      </th>    
+      <th scope="col">
+          <div class="banzos-th">
+              <a class="banzos-th" href="#" (click)="ordenarAlunos('instrumento')">
+                  Instrumento  <i class="fas fa-sort"></i>
+                </a>
+          </div> 
+      </th>
+      <th scope="col">
+          <div class="banzos-th">
+              <a class="banzos-th" href="#" (click)="ordenarAlunos('nascimento')">
+                  Idade  <i class="fas fa-sort"></i>
+                </a>
+          </div> 
+      </th>
+      <th scope="col">
+          <div class="banzos-th">
+              <a class="banzos-th" href="#" (click)="ordenarAlunos('inicioPlano')">
+                  Início  <i class="fas fa-sort"></i>
+                </a>
+          </div> 
+      </th>
+      <th scope="col">
+          <div class="banzos-th">
+              <a class="banzos-th" href="#" (click)="ordenarAlunos('fimPlano')">
+                  Fim  <i class="fas fa-sort"></i>
+                </a>
+          </div> 
+      </th>
       <th scope="col">Editar</th>
     </tr>
   </thead>
   <tbody>
 
-        <tr *ngFor="let aluno of alunos | filter : buscarTexto">
+        <tr *ngFor="let aluno of alunos">
             <th scope="row">{{aluno.id}}</th>
             <td>{{aluno.nome}}</td>
             <td>{{aluno.instrumento}}</td>

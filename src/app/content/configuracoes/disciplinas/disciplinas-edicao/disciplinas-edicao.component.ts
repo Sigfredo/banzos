@@ -38,10 +38,9 @@ export class DisciplinasEdicaoComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private configuracoesService: ConfiguracoesService,
-    private disciplinasMensagemService: DisciplinasMensagemService,
+    private configuracoesMensagemService: DisciplinasMensagemService,
     private route: ActivatedRoute,
     private _location: Location,
-    private disciplinasComponent: DisciplinasComponent,
     private selectItemsService: SelectItemsService,
     private cdRef:ChangeDetectorRef
     
@@ -94,26 +93,24 @@ export class DisciplinasEdicaoComponent implements OnInit {
     const frequenciaMinima = this.disciplinaEditarForm.get('frequenciaMinima').value;
     const notaMinima = this.disciplinaEditarForm.get('notaMinima').value;
     const teorica = this.disciplinaEditarForm.get('teorica').value;
-    console.log(this.disciplinaEditarForm.get('teorica').value)
-
-    
-    this.limparMensagens();
 
     if (!this.isDisciplinaExclusao) {
+
+      this.limparMensagens();
 
       this.configuracoesService
         .editarDisciplina({id, nome, instrumento, frequenciaMinima, notaMinima, teorica})
         .subscribe(
             () => {
               if (this.isDisciplinaEdicao) {
-                 this.disciplinasMensagemService.disciplinaMensagemSucesso().next('Disciplina salva com sucesso');
+                 this.configuracoesMensagemService.disciplinaMensagemSucesso().next('Disciplina salvo com sucesso');
               } else {
-                this.disciplinasMensagemService.disciplinaMensagemSucesso().next('Disciplina cadastrada com sucesso');
+                this.configuracoesMensagemService.disciplinaMensagemSucesso().next('Disciplina cadastrado com sucesso');
               }
               this.voltar()
             },
             erro => {
-              this.disciplinasMensagemService.disciplinaMensagemErro().next('Algum dado está repetido ou inválido');
+              this.configuracoesMensagemService.disciplinaMensagemErro().next('Algum dado está repetido ou inválido');
             }
         );
     } else {
@@ -121,12 +118,12 @@ export class DisciplinasEdicaoComponent implements OnInit {
         .excluirDisciplina(id)
         .subscribe(
             () => {
-              this.disciplinasMensagemService.disciplinaMensagemAlerta().next('Disciplina excluída com sucesso');
+              this.configuracoesMensagemService.disciplinaMensagemAlerta().next('Disciplina excluído com sucesso');
                 this.disciplinaEditarForm.reset();
                 this.voltar();
             },
             erro => {
-              this.disciplinasMensagemService.disciplinaMensagemErro().next('Erro ao excluir a disciplina');
+              this.configuracoesMensagemService.disciplinaMensagemErro().next('Erro ao excluir o disciplina');
             }
         );
     }
@@ -144,6 +141,8 @@ export class DisciplinasEdicaoComponent implements OnInit {
             this.disciplinaEditarForm.controls['frequenciaMinima'].setValue(disciplina.frequenciaMinima);
             this.disciplinaEditarForm.controls['notaMinima'].setValue(disciplina.notaMinima);
             this.disciplinaEditarForm.controls['teorica'].setValue(disciplina.teorica);
+            this.setTipoAula(disciplina.teorica)
+            this.cdRef.detectChanges();
           }
         })
     );
@@ -161,23 +160,22 @@ export class DisciplinasEdicaoComponent implements OnInit {
   }
 
   limparMensagens(): any {
-     this.disciplinasMensagemService.disciplinaMensagemSucesso().next(null);
-     this.disciplinasMensagemService.disciplinaMensagemAlerta().next(null);
-     this.disciplinasMensagemService.disciplinaMensagemErro().next(null);
+     this.configuracoesMensagemService.disciplinaMensagemSucesso().next(null);
+     this.configuracoesMensagemService.disciplinaMensagemAlerta().next(null);
+     this.configuracoesMensagemService.disciplinaMensagemErro().next("");
   }
 
   voltar() {
     this._location.back()
   }
 
-  
   botaoVoltar() {
     this.limparMensagens();
     this._location.back()
   }
-  
-  ngAfterViewInit() {
-    this.cdRef.detectChanges();
+
+  setTipoAula(teorica){
+    this.isTeorica = teorica;
   }
   
 }
