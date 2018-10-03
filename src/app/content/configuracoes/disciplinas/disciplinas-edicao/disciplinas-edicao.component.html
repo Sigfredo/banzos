@@ -8,7 +8,7 @@
             <div class="col-md-2 mt-2 float-right">    
                         <button
                         type="button"
-                        (click)="botaoVoltar();"
+                        (click)="voltar();"
                         class="btn btn-block">
                         Voltar
                         </button>     
@@ -32,19 +32,19 @@
                 </div> 
                 <div class="row">
                     <label class="checkbox-inline mr-3"><input 
+                        #Teorica
                         formControlName="teorica"
                         type="radio"
                         [checked]="teorica"
-                        [value]="true"
-                        (click)="setTipoAula(true)">
+                        [value]="true">
                         Sim
                     </label>
                     <label class="checkbox-inline"><input 
+                        #NotTeorica
                         formControlName="teorica"
                         type="radio" 
                         [checked]="!teorica"
-                        [value]="false"
-                        (click)="setTipoAula(false)">
+                        [value]="false">
                         Não
                     </label>
 
@@ -56,7 +56,7 @@
     <div class="form-group">
         <div class="form-row align-items-center justify-content-start">
             
-            <div *ngIf="!isTeorica" class="col-6">
+            <div *ngIf="NotTeorica.checked" class="col-6">
                     <label for="instrumentoDisciplinaInput">Instrumento</label>
                     <select
                         id="instrumentoDisciplinaInput"
@@ -68,7 +68,7 @@
                     </select>
             </div>
             
-            <div *ngIf="isTeorica" class="col-3 mr-2">
+            <div *ngIf="Teorica.checked" class="col-3 mr-2">
                 <label for="frequenciaMinimaDisciplinaInput">Frequência Mínima</label>
                 <input
                     formControlName="frequenciaMinima"
@@ -79,7 +79,7 @@
             
             </div>
 
-            <div *ngIf="isTeorica" class="col-3">
+            <div *ngIf="Teorica.checked" class="col-3">
                 <label for="notaMinimaDisciplinaInput">Nota Mínima</label>
                 <input
                     formControlName="notaMinima"

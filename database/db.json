@@ -217,7 +217,7 @@
       "instrumento": "1",
       "frequenciaMinima": "",
       "notaMinima": "",
-      "teorica": "false"
+      "teorica": false
     },
     {
       "id": 2,
@@ -225,7 +225,7 @@
       "instrumento": "2",
       "frequenciaMinima": "",
       "notaMinima": "",
-      "teorica": "false"
+      "teorica": false
     },
     {
       "id": 3,
@@ -233,7 +233,7 @@
       "instrumento": "3",
       "frequenciaMinima": "",
       "notaMinima": "",
-      "teorica": "false"
+      "teorica": false
     },
     {
       "id": 4,

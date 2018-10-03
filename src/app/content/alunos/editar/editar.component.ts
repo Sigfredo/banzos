@@ -165,7 +165,7 @@ export class EditarComponent implements OnInit {
   limparMensagens(): any {
      this.alunosMensagemService.alunoMensagemSucesso().next(null);
      this.alunosMensagemService.alunoMensagemAlerta().next(null);
-     this.alunosMensagemService.alunoMensagemErro().next("");
+     this.alunosMensagemService.alunoMensagemErro().next(null);
   }
 
   voltar() {

@@ -12,7 +12,7 @@
 
   <div class="col-sm">
       <a routerLink="/nova-disciplina">
-        <button id="editar-disciplina-button" type="button" class="btn btn-primary">
+        <button id="editar-disciplina-button" type="button" class="btn btn-primary" (click)="limparMensagens()">
             Adicionar Disciplina
         </button>
       </a>
@@ -24,6 +24,7 @@
     <tr>
       <th scope="col">Id</th>
       <th scope="col">Nome</th>
+      <th scope="col"><span class="pl-2">Tipo</span></th>
       <th scope="col">Editar</th>
     </tr>
   </thead>
@@ -31,15 +32,21 @@
 
         <tr *ngFor="let disciplina of disciplinas | filter : buscarTexto">
             <th scope="row">{{disciplina.id}}</th>
-            <td>{{disciplina.nome}}</td>
-            <td> 
-                <a routerLink="/disciplina/{{disciplina.id}}">
-                  
-                    <i class="material-icons">
-                      edit
-                      </i>
-                </a>
-            </td>
+              <td>{{disciplina.nome}}</td>
+              <td *ngIf="disciplina.teorica">
+                  <h5><span class="badge badge-pill badge-teorica">Teórica</span></h5>
+              </td>
+              <td *ngIf="!disciplina.teorica">
+                  <h5><span class="badge badge-pill badge-pratica">Prática</span></h5>
+              </td>
+              <td> 
+                  <a routerLink="/disciplina/{{disciplina.id}}">
+                    
+                      <i class="material-icons">
+                        edit
+                        </i>
+                  </a>
+              </td>
           </tr>
  
    
