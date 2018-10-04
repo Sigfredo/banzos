@@ -10,7 +10,11 @@ import { BanzosUtils } from "../../../shared/banzos-util";
   templateUrl: './listagem.component.html',
   styleUrls: ['./listagem.component.scss']
 })
-export class ListagemComponent {
+export class ListagemComponent implements OnInit {
+
+  ngOnInit(): void {
+     this.arrayAlunoSort['nome'] = 2;
+  }
 
   constructor(
     private banzosUtils: BanzosUtils
@@ -19,16 +23,21 @@ export class ListagemComponent {
   @Input()
   alunos = [];
 
+  arrayAlunoSort = [];
 
-  alunoTeste: Aluno;
-
+ 
   buscarIdade(nascimento: Date){
     
     return moment(new Date(nascimento)).locale('pt-br').fromNow(true);
   }
 
   ordenarAlunos(coluna){
-    this.alunos = this.banzosUtils.filter(this.alunos,coluna,false)
+    this.alunos = this.banzosUtils.filter(this.alunos,coluna,this.arrayAlunoSort['nome']==1?true:false)
+    if (this.arrayAlunoSort['nome'] == 1){
+      this.arrayAlunoSort['nome'] = 0
+    } else {
+      this.arrayAlunoSort['nome'] = 1
+    }
   }
 
 }

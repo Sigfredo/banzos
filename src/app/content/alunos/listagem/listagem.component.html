@@ -25,9 +25,15 @@
       <th scope="col">Id</th>
       <th scope="col">
         <div class="banzos-th">
-            <a class="banzos-th" href="#" (click)="ordenarAlunos('nome')">
+            <a  *ngIf="arrayAlunoSort['nome']===undifined" id="nomeAlunoSort" class="banzos-th" href="#" (click)="ordenarAlunos('nome')">
                 Nome  <i class="fas fa-sort"></i>
-              </a>
+            </a>
+            <a  *ngIf="arrayAlunoSort['nome']===1" id="nomeAlunoSort" class="banzos-th" href="#" (click)="ordenarAlunos('nome')">
+                Nome  <i class="fas fa-sort-up"></i>
+            </a>
+            <a  *ngIf="arrayAlunoSort['nome']===0" id="nomeAlunoSort" class="banzos-th" href="#" (click)="ordenarAlunos('nome')">
+                Nome  <i class="fas fa-sort-down"></i>
+            </a>
         </div> 
       </th>    
       <th scope="col">
