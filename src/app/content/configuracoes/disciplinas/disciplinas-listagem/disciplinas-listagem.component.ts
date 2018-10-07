@@ -1,8 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
-import * as moment from 'moment';
-
-import { Disciplina } from "../disciplina";
-import { DisciplinasMensagemService } from "../disciplinas-mensagem.service";
+import { Component, Input } from "@angular/core";
+import { BanzosUtils } from "../../../../shared/banzos-util";
 
 @Component({
   selector: 'banzos-disciplinas-listagem',
@@ -14,4 +11,18 @@ export class DisciplinasListagemComponent {
   @Input()
   disciplinas = [];
   
+  arrayDisciplinaSort = [];
+
+  constructor(
+    private banzosUtils: BanzosUtils
+  ){}
+
+  ordenarDisciplinas(coluna){
+    this.disciplinas = this.banzosUtils.filter(this.disciplinas,coluna,this.arrayDisciplinaSort[coluna]==1?true:false)
+    if (this.arrayDisciplinaSort[coluna] == 1){
+      this.arrayDisciplinaSort[coluna] = 0
+    } else {
+      this.arrayDisciplinaSort[coluna] = 1
+    }
+  }
 }
