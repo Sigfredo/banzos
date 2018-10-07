@@ -1,6 +1,7 @@
 import { Component, OnInit, ApplicationRef } from '@angular/core';
 import { AlunosService } from './alunos.service';
 import { AlunosMensagemService } from './alunos-mensagem.service';
+import { BanzosUtils } from '../../shared/banzos-util';
 
 
 @Component({

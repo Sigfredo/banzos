@@ -23,11 +23,61 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col">Id</th>
-      <th scope="col">Nome</th>
-      <th scope="col">instrumento</th>
-      <th scope="col">Idade</th>
-      <th scope="col">Início do Plano</th>
-      <th scope="col">Fim do Plano</th>
+      <th scope="col">
+        <div class="banzos-th">
+            <a id="nomeAlunoSort" class="banzos-th" href="#" (click)="ordenarAlunos('nome')">
+                Nome  <span [ngSwitch]="arrayAlunoSort['nome']">
+                        <i *ngSwitchCase="1" class="fas fa-sort-up"></i>
+                        <i *ngSwitchCase="0" class="fas fa-sort-down"></i>
+                        <i *ngSwitchDefault class="fas fa-sort"></i>
+                </span>
+            </a>
+        </div> 
+      </th>    
+      <th scope="col">
+          <div class="banzos-th">
+              <a class="banzos-th" href="#" (click)="ordenarAlunos('instrumento')">
+                  Instrumento  <span [ngSwitch]="arrayAlunoSort['instrumento']">
+                    <i *ngSwitchCase="1" class="fas fa-sort-up"></i>
+                    <i *ngSwitchCase="0" class="fas fa-sort-down"></i>
+                    <i *ngSwitchDefault class="fas fa-sort"></i>
+            </span>
+                </a>
+          </div> 
+      </th>
+      <th scope="col">
+          <div class="banzos-th">
+              <a class="banzos-th" href="#" (click)="ordenarAlunos('nascimento')">
+                  Idade  <span [ngSwitch]="arrayAlunoSort['nascimento']">
+                    <i *ngSwitchCase="1" class="fas fa-sort-up"></i>
+                    <i *ngSwitchCase="0" class="fas fa-sort-down"></i>
+                    <i *ngSwitchDefault class="fas fa-sort"></i>
+            </span>
+                </a>
+          </div> 
+      </th>
+      <th scope="col">
+          <div class="banzos-th">
+              <a class="banzos-th" href="#" (click)="ordenarAlunos('inicioPlano')">
+                  Início  <span [ngSwitch]="arrayAlunoSort['inicioPlano']">
+                    <i *ngSwitchCase="1" class="fas fa-sort-up"></i>
+                    <i *ngSwitchCase="0" class="fas fa-sort-down"></i>
+                    <i *ngSwitchDefault class="fas fa-sort"></i>
+            </span>
+                </a>
+          </div> 
+      </th>
+      <th scope="col">
+          <div class="banzos-th">
+              <a class="banzos-th" href="#" (click)="ordenarAlunos('fimPlano')">
+                  Fim  <span [ngSwitch]="arrayAlunoSort['fimPlano']">
+                    <i *ngSwitchCase="1" class="fas fa-sort-up"></i>
+                    <i *ngSwitchCase="0" class="fas fa-sort-down"></i>
+                    <i *ngSwitchDefault class="fas fa-sort"></i>
+            </span>
+                </a>
+          </div> 
+      </th>
       <th scope="col">Editar</th>
     </tr>
   </thead>

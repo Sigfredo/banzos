@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import * as moment from 'moment';
-import { ProfessoresEdicaoComponent } from "../professores-edicao/professores-edicao.component"
-import { Professor } from "../professor";
-import { ProfessoresMensagemService } from "../professores-mensagem.service";
+import { BanzosUtils } from "../../../shared/banzos-util";
 
 @Component({
   selector: 'banzos-professores-listagem',
@@ -14,10 +12,24 @@ export class ProfessoresListagemComponent {
   @Input()
   professores = [];
 
-  professorTeste: Professor;
+  arrayProfessorSort = [];
+
+  constructor(
+    private banzosUtils: BanzosUtils
+  ){}
 
   buscarIdade(nascimento: Date){
     
     return moment(new Date(nascimento)).locale('pt-br').fromNow(true);
   }
+
+  ordenarProfessores(coluna){
+    this.professores = this.banzosUtils.filter(this.professores,coluna,this.arrayProfessorSort[coluna]==1?true:false)
+    if (this.arrayProfessorSort[coluna] == 1){
+      this.arrayProfessorSort[coluna] = 0
+    } else {
+      this.arrayProfessorSort[coluna] = 1
+    }
+  }
+
 }

@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import {Location} from '@angular/common';
 import { ViewChild, ElementRef} from '@angular/core';
+import { BanzosUtils } from "../../../../shared/banzos-util";
 declare var jquery:any;
 declare var $ :any;
 
@@ -41,6 +42,7 @@ export class InstrumentosListagemComponent implements OnInit{
     private configuracoesService: ConfiguracoesService,
     private configuracoesMensagemService: ConfiguracoesMensagemService,
     private route: ActivatedRoute, 
+    private banzosUtils: BanzosUtils
   ) { }
 
   ngOnInit(): void { 
@@ -60,7 +62,7 @@ export class InstrumentosListagemComponent implements OnInit{
 
     this.configuracoesService.buscarInstrumentos()
     .subscribe(
-      (result) => this.instrumentos = result
+      (result) => this.instrumentos = this.banzosUtils.filter(result,'nome',false)
     );
 
     moment.locale('pt-BR');
