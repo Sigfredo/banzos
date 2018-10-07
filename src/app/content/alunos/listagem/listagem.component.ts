@@ -13,7 +13,7 @@ import { BanzosUtils } from "../../../shared/banzos-util";
 export class ListagemComponent implements OnInit {
 
   ngOnInit(): void {
-     this.arrayAlunoSort['nome'] = 2;
+
   }
 
   constructor(
@@ -32,11 +32,14 @@ export class ListagemComponent implements OnInit {
   }
 
   ordenarAlunos(coluna){
-    this.alunos = this.banzosUtils.filter(this.alunos,coluna,this.arrayAlunoSort['nome']==1?true:false)
-    if (this.arrayAlunoSort['nome'] == 1){
-      this.arrayAlunoSort['nome'] = 0
+    if(typeof this.arrayAlunoSort[coluna]==='undefined'){
+      this.arrayAlunoSort = [];
+    }
+    this.alunos = this.banzosUtils.filter(this.alunos,coluna,this.arrayAlunoSort[coluna]==1?true:false)
+    if (this.arrayAlunoSort[coluna] == 1){
+      this.arrayAlunoSort[coluna] = 0
     } else {
-      this.arrayAlunoSort['nome'] = 1
+      this.arrayAlunoSort[coluna] = 1
     }
   }
 
