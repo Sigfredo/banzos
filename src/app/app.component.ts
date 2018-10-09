@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDatepicker } from "@angular/material";
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,8 @@ import { MatDatepicker } from "@angular/material";
 })
 export class AppComponent {
   title = 'banzos';
+
+  constructor(db: AngularFirestore) {
+  }
+
 }

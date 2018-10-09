@@ -8,11 +8,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { ContentModule } from "./content/content.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AlunosService } from './content/alunos/alunos.service';
 
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { ChamadaComponent } from './content/turma/chamada/chamada.component';
 import { SharedModule } from './shared/shared.module';
+
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @NgModule({
@@ -27,12 +30,14 @@ import { SharedModule } from './shared/shared.module';
     CoreModule,
     ContentModule,
     NoopAnimationsModule,
-    SharedModule
+    SharedModule,
+    AngularFireModule.initializeApp(environment.firebase)
 
   ],
   providers: [
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFirestore
     
   ],
   bootstrap: [AppComponent]
