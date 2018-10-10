@@ -28,7 +28,8 @@ export class ListagemComponent implements OnInit {
  
   buscarIdade(nascimento: Date){
     
-    return moment(new Date(nascimento)).locale('pt-br').fromNow(true);
+    console.log(nascimento)
+    return moment(nascimento).locale('pt-br').fromNow(true);
   }
 
   ordenarAlunos(coluna){

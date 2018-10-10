@@ -1,10 +1,10 @@
 export class Aluno {
-    id: number;
+    id: string;
     nome: string;
     instrumento: string;
-    inicioPlano: Date;
-    fimPlano: Date;
-    nascimento: Date;
+    inicioPlano: string;
+    fimPlano: string;
+    nascimento: string;
     telefone: string;
     endereco: string;
     cep: string;

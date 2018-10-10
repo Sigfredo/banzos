@@ -98,7 +98,7 @@ export class EditarComponent implements OnInit {
       this.alunosService
         .editarAluno({id, nome, instrumento, inicioPlano, fimPlano ,nascimento, telefone, 
           endereco, cep, nomeResponsavel, cpfResponsavel, rgResponsavel})
-        .subscribe(
+        .then(
             () => {
               if (this.isAlunoEdicao) {
                  this.alunosMensagemService.alunoMensagemSucesso().next('Aluno salvo com sucesso');

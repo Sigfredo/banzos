@@ -26,26 +26,37 @@ export class AlunosService {
         return this.http.get<Aluno>(ALUNOS_BASE_URL+id)
     }
 
-    editarAluno(aluno) {
-        if (aluno.id == 0){
-            return this.http.post( ALUNOS_BASE_URL,
-                aluno,
-                {
-                    headers: new HttpHeaders()
-                      .set('Content-Type', 'application/json')
-                  }
-                );
+    editarAluno(aluno: Aluno) {
+        if (aluno.id === ""){    
+            return this.db.collection("aluno").add(aluno)
+            .then(
+                () => {return null}
+            )
         } else {
-            return this.http.put( ALUNOS_BASE_URL+aluno.id,
-                aluno,
-                {
-                    headers: new HttpHeaders()
-                      .set('Content-Type', 'application/json')
-                  }
-                );
+            return this.db.collection("aluno").doc(aluno.id).set(aluno)
         }
-       
     }
+
+    // editarAluno(aluno) {
+    //     if (aluno.id == 0){
+    //         return this.http.post( ALUNOS_BASE_URL,
+    //             aluno,
+    //             {
+    //                 headers: new HttpHeaders()
+    //                   .set('Content-Type', 'application/json')
+    //               }
+    //             );
+    //     } else {
+    //         return this.http.put( ALUNOS_BASE_URL+aluno.id,
+    //             aluno,
+    //             {
+    //                 headers: new HttpHeaders()
+    //                   .set('Content-Type', 'application/json')
+    //               }
+    //             );
+    //     }
+       
+    // }
 
     excluirAluno(id) {
         return this.http.delete(ALUNOS_BASE_URL+id);
