@@ -4,6 +4,7 @@ import { EditarComponent } from "../editar/editar.component";
 import { Aluno } from "../aluno";
 import { AlunosMensagemService } from "../alunos-mensagem.service";
 import { BanzosUtils } from "../../../shared/banzos-util";
+import { Timestamp } from "rxjs/internal/operators/timestamp";
 
 @Component({
   selector: 'banzos-aluno-listagem',
@@ -26,10 +27,8 @@ export class ListagemComponent implements OnInit {
   arrayAlunoSort = [];
 
  
-  buscarIdade(nascimento: Date){
-    
-    console.log(nascimento)
-    return moment(nascimento).locale('pt-br').fromNow(true);
+  buscarIdade(nascimento: Timestamp<any>){
+     return moment(new Date(nascimento['seconds'])).locale('pt-br').fromNow(true);
   }
 
   ordenarAlunos(coluna){

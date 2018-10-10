@@ -129,26 +129,32 @@ export class EditarComponent implements OnInit {
   
   buscarAluno (id) {
     return this.alunosService.getAluno(id)
-    .pipe(
-        map(aluno => {
-          this.aluno = aluno;
-          if(id != 0){
-            this.alunoEditarForm.controls['id'].setValue(aluno.id);
-            this.alunoEditarForm.controls['nome'].setValue(aluno.nome);
-            this.alunoEditarForm.controls['instrumento'].setValue(aluno.instrumento);
-            this.alunoEditarForm.controls['inicioPlano'].setValue(aluno.inicioPlano);
-            this.alunoEditarForm.controls['fimPlano'].setValue(aluno.fimPlano);
-            this.alunoEditarForm.controls['nascimento'].setValue(aluno.nascimento);
-            this.alunoEditarForm.controls['telefone'].setValue(aluno.telefone);
-            this.alunoEditarForm.controls['endereco'].setValue(aluno.endereco);
-            this.alunoEditarForm.controls['cep'].setValue(aluno.cep);
-            this.alunoEditarForm.controls['nomeResponsavel'].setValue(aluno.nomeResponsavel);
-            this.alunoEditarForm.controls['cpfResponsavel'].setValue(aluno.cpfResponsavel);
-            this.alunoEditarForm.controls['rgResponsavel'].setValue(aluno.rgResponsavel);
+    // .pipe(
+    //     map(aluno => {
+      .subscribe(
+        (aluno) => console.log(aluno)
+      )
+        
+      
+          
+          // this.aluno = aluno;
+          // if(id != 0){
+          //   this.alunoEditarForm.controls['id'].setValue(aluno.id);
+          //   this.alunoEditarForm.controls['nome'].setValue(aluno.nome);
+          //   this.alunoEditarForm.controls['instrumento'].setValue(aluno.instrumento);
+          //   this.alunoEditarForm.controls['inicioPlano'].setValue(aluno.inicioPlano);
+          //   this.alunoEditarForm.controls['fimPlano'].setValue(aluno.fimPlano);
+          //   this.alunoEditarForm.controls['nascimento'].setValue(aluno.nascimento);
+          //   this.alunoEditarForm.controls['telefone'].setValue(aluno.telefone);
+          //   this.alunoEditarForm.controls['endereco'].setValue(aluno.endereco);
+          //   this.alunoEditarForm.controls['cep'].setValue(aluno.cep);
+          //   this.alunoEditarForm.controls['nomeResponsavel'].setValue(aluno.nomeResponsavel);
+          //   this.alunoEditarForm.controls['cpfResponsavel'].setValue(aluno.cpfResponsavel);
+          //   this.alunoEditarForm.controls['rgResponsavel'].setValue(aluno.rgResponsavel);
 
-          }
-        })
-    );
+          // }
+        // })
+    // );
     
   }
 
