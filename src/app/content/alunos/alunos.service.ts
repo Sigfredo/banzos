@@ -17,14 +17,22 @@ export class AlunosService {
 
                 }
 
-    todosAlunos(): Observable<{}[]>  {
-        // return this.http.get<Aluno[]>(ALUNOS_BASE_URL);
-        return this.db.collection('aluno').valueChanges()
-    }
+    // todosAlunos(): Observable<{}[]>  {
+    //     // return this.http.get<Aluno[]>(ALUNOS_BASE_URL);
+    //     // console.log("Ei, :" + this.db.collection('aluno').doc('ZpaTuYeSkG8Y93AWBKzx').snapshotChanges())
+    //     // return this.db.collection('aluno').valueChanges()
+    // }
 
     getAluno(id:string): any {
         // return this.http.get<Aluno>(ALUNOS_BASE_URL+id)
-        return this.db.collection("aluno").doc("S3Fd5RCpqAZrn9naHUdM");
+        // return this.db.collection("aluno").doc("S3Fd5RCpqAZrn9naHUdM").get().then(function(doc) {
+        //     if (doc.exists) {
+        //         console.log("Document data:", doc.data());
+        //     } else {
+        //         // doc.data() will be undefined in this case
+        //         console.log("No such document!");
+        //     }
+        // })
     }
 
     editarAluno(aluno: Aluno) {

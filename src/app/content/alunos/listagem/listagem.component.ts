@@ -27,8 +27,9 @@ export class ListagemComponent implements OnInit {
   arrayAlunoSort = [];
 
  
-  buscarIdade(nascimento: Timestamp<any>){
-     return moment(new Date(nascimento['seconds'])).locale('pt-br').fromNow(true);
+  buscarIdade(nascimento: Date){
+    console.log(nascimento)
+     return moment(new Date(nascimento)).locale('pt-br').fromNow(true);
   }
 
   ordenarAlunos(coluna){
