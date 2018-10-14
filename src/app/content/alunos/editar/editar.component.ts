@@ -9,17 +9,21 @@ import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import {Location} from '@angular/common';
 import { AlunosMensagemService } from '../alunos-mensagem.service';
 import { AlunosComponent } from '../alunos.component';
+import { DocumentSnapshot } from '@angular/fire/firestore';
+import { BanzosUtils } from 'src/app/shared/banzos-util';
+import { Instrumento } from '../../configuracoes/instrumentos/instrumento';
+
+
 
 @Component({
   selector: 'banzos-aluno-editar',
   templateUrl: './editar.component.html',
   styleUrls: ['./editar.component.scss'],
-  providers: [
+  providers: [ 
   ],
 })
 
 export class EditarComponent implements OnInit {
-  @Input() aluno: Aluno;
   @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
   @Output() mensagemSucessoAluno: EventEmitter<string> = new EventEmitter<string>();
 
@@ -36,7 +40,8 @@ export class EditarComponent implements OnInit {
     private alunosMensagemService: AlunosMensagemService,
     private route: ActivatedRoute,
     private _location: Location,
-    private alunoComponent: AlunosComponent
+    private alunoComponent: AlunosComponent,
+    private banzosUtils: BanzosUtils
     
 
   ) { }
@@ -45,7 +50,7 @@ export class EditarComponent implements OnInit {
 
     moment.locale('pt-BR');
    
-    const id = +this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
 
     this.alunoEditarForm = this.formBuilder.group({
       id: ['', Validators.required],
@@ -62,13 +67,11 @@ export class EditarComponent implements OnInit {
       rgResponsavel: ['', Validators.required]
     });
 
-    if (id != 0) {
+    if (id != null) {
       this.tituloEdicaoAluno = "Aluno";
       this.labelBotaoEdicaoAluno = "Salvar";
       this.isAlunoEdicao = true;
-      this.buscarAluno(id).subscribe(retorno =>
-        {}
-      )
+      this.buscarAluno(id)
     } else {
       this.tituloEdicaoAluno = "Adicionar Aluno";
       this.labelBotaoEdicaoAluno = "Cadastrar"
@@ -114,7 +117,7 @@ export class EditarComponent implements OnInit {
     } else {
       this.alunosService
         .excluirAluno(id)
-        .subscribe(
+        .then(
             () => {
               this.alunosMensagemService.alunoMensagemAlerta().next('Aluno excluído com sucesso');
                 this.alunoEditarForm.reset();
@@ -128,30 +131,27 @@ export class EditarComponent implements OnInit {
   }
   
   buscarAluno (id) {
-    return this.alunosService.getAluno(id)
+    this.alunosService.getAluno(id)
     // .pipe(
     //     map(aluno => {
       .subscribe(
-        (aluno) => console.log(aluno)
-      )
-        
-      
-          
-          // this.aluno = aluno;
-          // if(id != 0){
-          //   this.alunoEditarForm.controls['id'].setValue(aluno.id);
-          //   this.alunoEditarForm.controls['nome'].setValue(aluno.nome);
-          //   this.alunoEditarForm.controls['instrumento'].setValue(aluno.instrumento);
-          //   this.alunoEditarForm.controls['inicioPlano'].setValue(aluno.inicioPlano);
-          //   this.alunoEditarForm.controls['fimPlano'].setValue(aluno.fimPlano);
-          //   this.alunoEditarForm.controls['nascimento'].setValue(aluno.nascimento);
-          //   this.alunoEditarForm.controls['telefone'].setValue(aluno.telefone);
-          //   this.alunoEditarForm.controls['endereco'].setValue(aluno.endereco);
-          //   this.alunoEditarForm.controls['cep'].setValue(aluno.cep);
-          //   this.alunoEditarForm.controls['nomeResponsavel'].setValue(aluno.nomeResponsavel);
-          //   this.alunoEditarForm.controls['cpfResponsavel'].setValue(aluno.cpfResponsavel);
-          //   this.alunoEditarForm.controls['rgResponsavel'].setValue(aluno.rgResponsavel);
+        (aluno) => 
+                  {
+                      this.alunoEditarForm.controls['id'].setValue(aluno.get('id'));
+                      this.alunoEditarForm.controls['nome'].setValue(aluno.get('nome'));
+                      this.alunoEditarForm.controls['instrumento'].setValue(aluno.get('instrumento'));
+                      this.alunoEditarForm.controls['inicioPlano'].setValue(this.banzosUtils.extrairData(aluno.get('inicioPlano')));
+                      this.alunoEditarForm.controls['fimPlano'].setValue(this.banzosUtils.extrairData(aluno.get('fimPlano')));
+                      this.alunoEditarForm.controls['nascimento'].setValue(this.banzosUtils.extrairData(aluno.get('nascimento')));
+                      this.alunoEditarForm.controls['telefone'].setValue(aluno.get('telefone'));
+                      this.alunoEditarForm.controls['endereco'].setValue(aluno.get('endereco'));
+                      this.alunoEditarForm.controls['cep'].setValue(aluno.get('cep'));
+                      this.alunoEditarForm.controls['nomeResponsavel'].setValue(aluno.get('nomeResponsavel'));
+                      this.alunoEditarForm.controls['cpfResponsavel'].setValue(aluno.get('cpfResponsavel'));
+                      this.alunoEditarForm.controls['rgResponsavel'].setValue(aluno.get('rgResponsavel'));
 
+                  }
+      );  
           // }
         // })
     // );

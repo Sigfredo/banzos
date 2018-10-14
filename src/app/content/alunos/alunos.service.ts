@@ -1,74 +1,38 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Aluno } from "./aluno";
-import { Observable, throwError } from "rxjs";
-import { map, catchError } from "rxjs/operators";
-import { AngularFirestore, QuerySnapshot } from '@angular/fire/firestore';
+import { AngularFirestore, QuerySnapshot, DocumentReference, DocumentSnapshot } from '@angular/fire/firestore';
 
-const ALUNOS_BASE_URL = 'http://localhost:3000/alunos/';
 
 @Injectable()
 export class AlunosService {
 
     aluno: Aluno;
 
-    constructor(private http: HttpClient,
-                private db: AngularFirestore){
+    constructor(private db: AngularFirestore){
 
                 }
 
-    // todosAlunos(): Observable<{}[]>  {
-    //     // return this.http.get<Aluno[]>(ALUNOS_BASE_URL);
-    //     // console.log("Ei, :" + this.db.collection('aluno').doc('ZpaTuYeSkG8Y93AWBKzx').snapshotChanges())
-    //     // return this.db.collection('aluno').valueChanges()
-    // }
-
-    getAluno(id:string): any {
-        // return this.http.get<Aluno>(ALUNOS_BASE_URL+id)
-        // return this.db.collection("aluno").doc("S3Fd5RCpqAZrn9naHUdM").get().then(function(doc) {
-        //     if (doc.exists) {
-        //         console.log("Document data:", doc.data());
-        //     } else {
-        //         // doc.data() will be undefined in this case
-        //         console.log("No such document!");
-        //     }
-        // })
+    getAlunos(){
+       return this.db.collection('aluno').snapshotChanges()
     }
 
-    editarAluno(aluno: Aluno) {
+    getAluno(id:string) {
+        return this.db.collection("aluno").doc(id).get()
+    }
+
+    editarAluno(aluno) {
         if (aluno.id === ""){    
             return this.db.collection("aluno").add(aluno)
             .then(
                 () => {return null}
             )
         } else {
-            return this.db.collection("aluno").doc(aluno.id).set(aluno)
+            return this.db.collection("aluno").doc(aluno.id).set(aluno.get())
         }
     }
 
-    // editarAluno(aluno) {
-    //     if (aluno.id == 0){
-    //         return this.http.post( ALUNOS_BASE_URL,
-    //             aluno,
-    //             {
-    //                 headers: new HttpHeaders()
-    //                   .set('Content-Type', 'application/json')
-    //               }
-    //             );
-    //     } else {
-    //         return this.http.put( ALUNOS_BASE_URL+aluno.id,
-    //             aluno,
-    //             {
-    //                 headers: new HttpHeaders()
-    //                   .set('Content-Type', 'application/json')
-    //               }
-    //             );
-    //     }
-       
-    // }
-
     excluirAluno(id) {
-        return this.http.delete(ALUNOS_BASE_URL+id);
+        return this.db.collection("aluno").doc(id).delete();
     }
 
 }

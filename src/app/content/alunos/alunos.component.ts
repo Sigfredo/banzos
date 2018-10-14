@@ -2,8 +2,11 @@ import { Component, OnInit, ApplicationRef } from '@angular/core';
 import { AlunosService } from './alunos.service';
 import { AlunosMensagemService } from './alunos-mensagem.service';
 import { BanzosUtils } from '../../shared/banzos-util';
-import { AngularFirestore, DocumentSnapshot, DocumentChangeAction } from '@angular/fire/firestore';
 import { Aluno } from './aluno';
+import { AngularFirestoreCollection, AngularFirestore } from "@angular/fire/firestore";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { AlunoId } from "./alunoId"
 
 @Component({
   selector: 'app-alunos',
@@ -12,19 +15,34 @@ import { Aluno } from './aluno';
 })
 export class AlunosComponent implements OnInit {
 
- alunos = [];
  mensagemAlunoSucesso: string;
  mensagemAlunoAlerta: string;
  mensagemAlunoErro: string;
- 
- teste: DocumentChangeAction<any>;
+//  instrumentos = [];
+ private alunoCollection: AngularFirestoreCollection<Aluno>;
+//  alunos: Observable<AlunoId[]>;
   
 
   constructor(
     private alunosService: AlunosService,
     private alunosMensagemService: AlunosMensagemService,
-    private db: AngularFirestore
-    ) { }
+    private banzosUtils: BanzosUtils,
+    private readonly afs: AngularFirestore
+    ) {
+      // this.alunoCollection = afs.collection<Aluno>('aluno');
+      // .snapshotChanges() returns a DocumentChangeAction[], which contains
+      // a lot of information about "what happened" with each change. If you want to
+      // get the data and the id use the map operator.
+      // this.alunos = this.alunoCollection.snapshotChanges().pipe(
+      //   map(actions => actions.map(a => {
+      //     const data = a.payload.doc.data() as Aluno;
+      //     const id = a.payload.doc.id;
+      //     return { id, ...data };
+      //   }))
+      // );
+  
+    }
+     
 
   ngOnInit() {
 
@@ -33,11 +51,10 @@ export class AlunosComponent implements OnInit {
      this.alunosMensagemService.alunoMensagemAlerta().subscribe((message) => {this.mensagemAlunoAlerta = message});
      this.alunosMensagemService.alunoMensagemErro().subscribe((message) => {this.mensagemAlunoErro = message});
 
-     this.db.collection('aluno').snapshotChanges()
-     .subscribe(
-        (response) => {this.alunos = response, this.teste = this.alunos[0], console.log(this.teste.payload.doc.get('nascimento'))},
-       (error) => {console.log(error)}
-     );
+    //  this.banzosUtils.getInstrumentos()
+    //  .subscribe(
+    //    (instrumentos) => {this.instrumentos = instrumentos, console.log(this.instrumentos.payload)}
+    //  );
   }
 
 }

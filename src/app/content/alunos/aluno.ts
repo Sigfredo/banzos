@@ -1,10 +1,9 @@
-export class Aluno {
-    id: string;
+export interface Aluno {
     nome: string;
     instrumento: string;
-    inicioPlano: string;
-    fimPlano: string;
-    nascimento: string;
+    inicioPlano: Date;
+    fimPlano: Date;
+    nascimento: Date;
     telefone: string;
     endereco: string;
     cep: string;
