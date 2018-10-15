@@ -6,7 +6,7 @@ import { AlunosMensagemService } from "../alunos-mensagem.service";
 import { BanzosUtils } from "../../../shared/banzos-util";
 import { AngularFirestoreCollection, AngularFirestore } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+
 import { AlunoId } from "../alunoId";
 import * as moment from 'moment';
 import {firestore} from 'firebase/app';
@@ -27,25 +27,20 @@ export class ListagemComponent implements OnInit {
     private banzosUtils: BanzosUtils,
     private readonly afs: AngularFirestore
   ){
-    console.log("Entrei");
     this.alunoCollection = afs.collection<Aluno>('aluno');
     // .snapshotChanges() returns a DocumentChangeAction[], which contains
     // a lot of information about "what happened" with each change. If you want to
     // get the data and the id use the map operator.
     this.alunoCollection.snapshotChanges().subscribe(
       actions => actions.map(a => {
-        const data = a.payload.doc.data() as Aluno;
-        const id = a.payload.doc.id;
-        this.alunos.push({ id, ...data });
-        console.log(this.alunos)
+        const data = a.payload.doc.data() as AlunoId;
+        data.id = a.payload.doc.id;
+        this.alunos.push(data);
       })
     );
    
 
   }
-  
-  // @Input()
-  // alunos = [];
 
   @Input()
   instrumentos = [];
