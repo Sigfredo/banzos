@@ -58,11 +58,15 @@
             <div class="col mr-4">
             <div class="form-group">
                 <label for="instrumentoAlunoInput">Instrumento</label>
-                <input
+                    <select
+                    id="instrumentoAlunoInput"
                     formControlName="instrumento"
-                    type="email"
-                    class="form-control"
-                    placeholder="Instrumento do aluno">
+                    class="form-control">  
+                    <option *ngFor="let instrumento of instrumentos" value= {{instrumento.id}}>
+                        {{instrumento.nome}}
+                    </option>
+                </select>
+                
             </div>
             </div>
     

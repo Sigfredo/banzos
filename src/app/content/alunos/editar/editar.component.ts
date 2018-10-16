@@ -12,6 +12,7 @@ import { DocumentSnapshot, AngularFirestore, AngularFirestoreDocument, AngularFi
 import { BanzosUtils } from 'src/app/shared/banzos-util';
 import { Instrumento } from '../../configuracoes/instrumentos/instrumento';
 import { AlunoId } from '../alunoId';
+import { InstrumentoId } from '../../configuracoes/instrumentos/instrumentoId';
 
 
 
@@ -34,8 +35,9 @@ export class EditarComponent implements OnInit {
   labelBotaoEdicaoAluno: string;
   isAlunoEdicao: boolean;
   isAlunoExclusao: boolean;
-  private alunoCollection: AngularFirestoreCollection;
-  id = null
+  private db: AngularFirestoreCollection;
+  id = null;
+  instrumentos: Instrumento[]
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,11 +52,11 @@ export class EditarComponent implements OnInit {
 
       this.id = this.route.snapshot.paramMap.get('id');
 
-        
-      this.alunoCollection = afs.collection<Aluno>('aluno');
+      //busca aluno        
+      this.db = afs.collection<Aluno>('aluno');
 
       if(this.id != null){
-        this.alunoCollection.doc(this.id).get().subscribe(
+        this.db.doc(this.id).get().subscribe(
           a => {
             
             const data = a.data() as AlunoId;
@@ -76,6 +78,16 @@ export class EditarComponent implements OnInit {
           }
         );
       }
+
+      //busca os instrumentos
+
+      this.db.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
+        actions => actions.map(a => {
+          const data = a.payload.doc.data() as InstrumentoId;
+          data.id = a.payload.doc.id;
+          this.instrumentos.push(data);
+        })
+      );
       
     }
 
@@ -128,7 +140,7 @@ export class EditarComponent implements OnInit {
     if (!this.isAlunoExclusao) {
       //Se for adição
       if(this.id == null){
-        this.alunoCollection
+        this.db
         .add({nome, instrumento, inicioPlano, fimPlano ,nascimento, telefone, 
           endereco, cep, nomeResponsavel, cpfResponsavel, rgResponsavel} as Aluno)
         .then(
@@ -142,7 +154,7 @@ export class EditarComponent implements OnInit {
         );
       // Então é edição
       }else {
-        this.alunoCollection.doc(this.id)
+        this.db.doc(this.id)
         .update({nome, instrumento, inicioPlano, fimPlano ,nascimento, telefone, 
           endereco, cep, nomeResponsavel, cpfResponsavel, rgResponsavel})
         .then(
@@ -157,7 +169,7 @@ export class EditarComponent implements OnInit {
       }
     //Exclusão
     } else {
-      this.alunoCollection.doc(this.id).delete()
+      this.db.doc(this.id).delete()
         .then(
             () => {
               this.alunosMensagemService.alunoMensagemAlerta().next('Aluno excluído com sucesso');
