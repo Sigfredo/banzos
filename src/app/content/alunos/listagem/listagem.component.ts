@@ -49,6 +49,9 @@ export class ListagemComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log(this.instrumentos)
+    let obj = this.instrumentos.find(o => o.nome == 'Gaita')
+    console.log(obj)
   }
 
   ordenarAlunos(coluna){

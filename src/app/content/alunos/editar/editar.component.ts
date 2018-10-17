@@ -35,9 +35,9 @@ export class EditarComponent implements OnInit {
   labelBotaoEdicaoAluno: string;
   isAlunoEdicao: boolean;
   isAlunoExclusao: boolean;
-  private db: AngularFirestoreCollection;
+  private dbCollection: AngularFirestoreCollection;
   id = null;
-  instrumentos: Instrumento[]
+  instrumentos: InstrumentoId[] = []
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,10 +53,10 @@ export class EditarComponent implements OnInit {
       this.id = this.route.snapshot.paramMap.get('id');
 
       //busca aluno        
-      this.db = afs.collection<Aluno>('aluno');
+      this.dbCollection = afs.collection<Aluno>('aluno');
 
       if(this.id != null){
-        this.db.doc(this.id).get().subscribe(
+        this.dbCollection.doc(this.id).get().subscribe(
           a => {
             
             const data = a.data() as AlunoId;
@@ -81,7 +81,7 @@ export class EditarComponent implements OnInit {
 
       //busca os instrumentos
 
-      this.db.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
+      this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
         actions => actions.map(a => {
           const data = a.payload.doc.data() as InstrumentoId;
           data.id = a.payload.doc.id;
@@ -140,7 +140,7 @@ export class EditarComponent implements OnInit {
     if (!this.isAlunoExclusao) {
       //Se for adição
       if(this.id == null){
-        this.db
+        this.dbCollection
         .add({nome, instrumento, inicioPlano, fimPlano ,nascimento, telefone, 
           endereco, cep, nomeResponsavel, cpfResponsavel, rgResponsavel} as Aluno)
         .then(
@@ -154,7 +154,7 @@ export class EditarComponent implements OnInit {
         );
       // Então é edição
       }else {
-        this.db.doc(this.id)
+        this.dbCollection.doc(this.id)
         .update({nome, instrumento, inicioPlano, fimPlano ,nascimento, telefone, 
           endereco, cep, nomeResponsavel, cpfResponsavel, rgResponsavel})
         .then(
@@ -169,7 +169,7 @@ export class EditarComponent implements OnInit {
       }
     //Exclusão
     } else {
-      this.db.doc(this.id).delete()
+      this.dbCollection.doc(this.id).delete()
         .then(
             () => {
               this.alunosMensagemService.alunoMensagemAlerta().next('Aluno excluído com sucesso');

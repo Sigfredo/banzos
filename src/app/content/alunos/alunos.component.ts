@@ -7,6 +7,8 @@ import { AngularFirestoreCollection, AngularFirestore } from "@angular/fire/fire
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { AlunoId } from "./alunoId"
+import { InstrumentoId } from '../configuracoes/instrumentos/instrumentoId';
+import { Instrumento } from '../configuracoes/instrumentos/instrumento';
 
 @Component({
   selector: 'app-alunos',
@@ -18,7 +20,7 @@ export class AlunosComponent implements OnInit {
  mensagemAlunoSucesso: string;
  mensagemAlunoAlerta: string;
  mensagemAlunoErro: string;
-//  instrumentos = [];
+ instrumentos: InstrumentoId[] = []
  private alunoCollection: AngularFirestoreCollection<Aluno>;
 //  alunos: Observable<AlunoId[]>;
   
@@ -55,6 +57,15 @@ export class AlunosComponent implements OnInit {
     //  .subscribe(
     //    (instrumentos) => {this.instrumentos = instrumentos, console.log(this.instrumentos.payload)}
     //  );
+     //busca os instrumentos
+
+     this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
+      actions => actions.map(a => {
+        const data = a.payload.doc.data() as InstrumentoId;
+        data.id = a.payload.doc.id;
+        this.instrumentos.push(data);
+      })
+    );
   }
 
 }

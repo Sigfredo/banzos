@@ -137,7 +137,6 @@ export class InstrumentosListagemComponent implements OnInit{
       (instrumento) => {
         this.instrumentoSelecionado = instrumento;
         if(id != 0){
-          this.instrumentoEdicaoForm.controls['id'].setValue(instrumento.id);
           this.instrumentoEdicaoForm.controls['nome'].setValue(instrumento.nome);
           this.instrumentoEdicaoForm.controls['descricao'].setValue(instrumento.descricao);
         }
