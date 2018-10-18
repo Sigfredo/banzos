@@ -42,5 +42,16 @@ export class BanzosUtils{
     return this.sharedService.getInstrumentos();
   }
 
+  //busca o valor de "nome" em um array de objetos
+  buscarNomeById(id: string, array: any){
+    console.log("Entrei")
+      for (var i=0; i < array.length; i++) {
+          if (array[i].id === id) {
+              return array[i];
+          }
+      }
+  
+  }
+
 }
 

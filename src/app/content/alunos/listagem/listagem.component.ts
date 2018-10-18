@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, AfterViewInit } from "@angular/core";
 
 import { EditarComponent } from "../editar/editar.component";
 import { Aluno } from "../aluno";
@@ -11,6 +11,7 @@ import { AlunoId } from "../alunoId";
 import * as moment from 'moment';
 import {firestore} from 'firebase/app';
 import Timestamp = firestore.Timestamp;
+import { Instrumento } from "../../configuracoes/instrumentos/instrumento";
 
 @Component({
   selector: 'banzos-aluno-listagem',
@@ -43,15 +44,22 @@ export class ListagemComponent implements OnInit {
   }
 
   @Input()
-  instrumentos = [];
+  instrumentos = new Map<string, Instrumento>();
 
   arrayAlunoSort = [];
 
-
   ngOnInit(): void {
-    console.log(this.instrumentos)
-    let obj = this.instrumentos.find(o => o.nome == 'Gaita')
-    console.log(obj)
+    // this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
+    //   actions => actions.map(a => {
+    //     const data = a.payload.doc.data() as Instrumento;
+    //     this.instrumentos.set(a.payload.doc.id, data);
+    //   })
+    // );
+    // console.log(this.instrumentos)
+    // let obj = this.instrumentos.find(o => o.nome == 'Gaita')
+    // console.log(obj)
+    // console.log(this.instrumentos)
+    // console.log(this.instrumentos.get("8GEdVbL9jYWTwEaGq1M3"))
   }
 
   ordenarAlunos(coluna){
@@ -75,5 +83,13 @@ export class ListagemComponent implements OnInit {
     return this.banzosUtils.extrairData(data);
   }
 
-
+  nomeInstrumento(id){
+    if (this.instrumentos.get(id) != undefined){
+      return this.instrumentos.get(id).nome
+    } else{
+      return id;
+    }
+    // console.log(this.instrumentos.get(id))
+    // return this.instrumentos.get(id).nome;
+  }
 }

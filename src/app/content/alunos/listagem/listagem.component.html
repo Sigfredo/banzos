@@ -86,7 +86,7 @@
     <tr *ngFor="let aluno of alunos | filter : buscarTexto">
         <th scope="row">{{aluno.id}}</th>
         <td>{{aluno.nome}}</td>
-        <td>{{aluno.instrumento}}</td>
+        <td>{{nomeInstrumento(aluno.instrumento)}}</td>
         <td>{{buscarIdade(aluno.nascimento)}}</td>
         <td>{{extrairData(aluno.inicioPlano) | date:'dd/MM/yyyy'}}</td>
         <td>{{extrairData(aluno.fimPlano) | date:'dd/MM/yyyy'}}</td>

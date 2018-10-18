@@ -20,7 +20,7 @@ export class AlunosComponent implements OnInit {
  mensagemAlunoSucesso: string;
  mensagemAlunoAlerta: string;
  mensagemAlunoErro: string;
- instrumentos: InstrumentoId[] = []
+ instrumentos: Map<string, Instrumento> = new Map<string, Instrumento>();
  private alunoCollection: AngularFirestoreCollection<Aluno>;
 //  alunos: Observable<AlunoId[]>;
   
@@ -61,9 +61,8 @@ export class AlunosComponent implements OnInit {
 
      this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
       actions => actions.map(a => {
-        const data = a.payload.doc.data() as InstrumentoId;
-        data.id = a.payload.doc.id;
-        this.instrumentos.push(data);
+        const data = a.payload.doc.data() as Instrumento;
+        this.instrumentos.set(a.payload.doc.id, data);
       })
     );
   }
