@@ -20,9 +20,8 @@ export class AlunosComponent implements OnInit {
  mensagemAlunoSucesso: string;
  mensagemAlunoAlerta: string;
  mensagemAlunoErro: string;
- instrumentos: Map<string, Instrumento> = new Map<string, Instrumento>();
+ instrumentos: InstrumentoId[] = []
  private alunoCollection: AngularFirestoreCollection<Aluno>;
-//  alunos: Observable<AlunoId[]>;
   
 
   constructor(
@@ -31,39 +30,22 @@ export class AlunosComponent implements OnInit {
     private banzosUtils: BanzosUtils,
     private readonly afs: AngularFirestore
     ) {
-      // this.alunoCollection = afs.collection<Aluno>('aluno');
-      // .snapshotChanges() returns a DocumentChangeAction[], which contains
-      // a lot of information about "what happened" with each change. If you want to
-      // get the data and the id use the map operator.
-      // this.alunos = this.alunoCollection.snapshotChanges().pipe(
-      //   map(actions => actions.map(a => {
-      //     const data = a.payload.doc.data() as Aluno;
-      //     const id = a.payload.doc.id;
-      //     return { id, ...data };
-      //   }))
-      // );
-  
     }
      
 
   ngOnInit() {
 
     this.alunosMensagemService.alunoMensagemSucesso().subscribe((message) => {this.mensagemAlunoSucesso = message});
-    //  this.mensagemAlunoSucesso = this.alunosMensagemService.alunoMensagemSucesso().getValue();
      this.alunosMensagemService.alunoMensagemAlerta().subscribe((message) => {this.mensagemAlunoAlerta = message});
      this.alunosMensagemService.alunoMensagemErro().subscribe((message) => {this.mensagemAlunoErro = message});
 
-    //  this.banzosUtils.getInstrumentos()
-    //  .subscribe(
-    //    (instrumentos) => {this.instrumentos = instrumentos, console.log(this.instrumentos.payload)}
-    //  );
      //busca os instrumentos
-
-     this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
+     this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(  
       actions => actions.map(a => {
-        const data = a.payload.doc.data() as Instrumento;
-        this.instrumentos.set(a.payload.doc.id, data);
-      })
+                    const data = a.payload.doc.data() as InstrumentoId;
+                    data.id = a.payload.doc.id;
+                    this.instrumentos.push(data);
+                })
     );
   }
 

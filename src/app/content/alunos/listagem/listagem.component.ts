@@ -21,7 +21,6 @@ import { Instrumento } from "../../configuracoes/instrumentos/instrumento";
 export class ListagemComponent implements OnInit {
 
   private alunoCollection: AngularFirestoreCollection<Aluno>;
-  // private alunos: Observable<AlunoId[]>;
   private alunos: AlunoId[] = [];
 
   constructor(
@@ -44,22 +43,11 @@ export class ListagemComponent implements OnInit {
   }
 
   @Input()
-  instrumentos = new Map<string, Instrumento>();
+  instrumentos = [];
 
   arrayAlunoSort = [];
 
   ngOnInit(): void {
-    // this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
-    //   actions => actions.map(a => {
-    //     const data = a.payload.doc.data() as Instrumento;
-    //     this.instrumentos.set(a.payload.doc.id, data);
-    //   })
-    // );
-    // console.log(this.instrumentos)
-    // let obj = this.instrumentos.find(o => o.nome == 'Gaita')
-    // console.log(obj)
-    // console.log(this.instrumentos)
-    // console.log(this.instrumentos.get("8GEdVbL9jYWTwEaGq1M3"))
   }
 
   ordenarAlunos(coluna){
@@ -84,12 +72,12 @@ export class ListagemComponent implements OnInit {
   }
 
   nomeInstrumento(id){
-    if (this.instrumentos.get(id) != undefined){
-      return this.instrumentos.get(id).nome
-    } else{
-      return id;
+    
+    if (this.instrumentos.find(o => o.id === id) != undefined){
+      return this.instrumentos.find(o => o.id === id).nome
+    } else {
+      return 'Erro';
     }
-    // console.log(this.instrumentos.get(id))
-    // return this.instrumentos.get(id).nome;
   }
+
 }

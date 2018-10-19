@@ -22,7 +22,6 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">ID</th>  
       <th scope="col">
         <div class="banzos-th">
             <a id="nomeAlunoSort" class="banzos-th" href="#" (click)="ordenarAlunos('nome')">
@@ -84,7 +83,6 @@
   <tbody>
 
     <tr *ngFor="let aluno of alunos | filter : buscarTexto">
-        <th scope="row">{{aluno.id}}</th>
         <td>{{aluno.nome}}</td>
         <td>{{nomeInstrumento(aluno.instrumento)}}</td>
         <td>{{buscarIdade(aluno.nascimento)}}</td>
