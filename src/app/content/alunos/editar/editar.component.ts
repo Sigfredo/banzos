@@ -52,10 +52,11 @@ export class EditarComponent implements OnInit {
 
       this.id = this.route.snapshot.paramMap.get('id');
 
-      //busca aluno        
+            
       this.dbCollection = afs.collection<Aluno>('aluno');
 
       if(this.id != null){
+        //busca aluno  
         this.dbCollection.doc(this.id).get().subscribe(
           a => {
             
