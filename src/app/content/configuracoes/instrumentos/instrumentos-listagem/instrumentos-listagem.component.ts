@@ -29,7 +29,7 @@ export class InstrumentosListagemComponent implements OnInit{
   instrumentos: InstrumentoId[] = [];
 
   instrumentoEdicaoForm: FormGroup;
-  instrumentoSelecionado: Instrumento;
+  instrumentoSelecionado: InstrumentoId;
   tituloEdicaoInstrumento: string;
   labelBotaoEdicaoInstrumento: string;
   isInstrumentoEdicao: boolean;
@@ -51,21 +51,6 @@ export class InstrumentosListagemComponent implements OnInit{
     private readonly afs: AngularFirestore
   ) { 
     this.dbCollection = afs.collection<Instrumento>('instrumento');
-
-    if(this.id != null){
-      //busca aluno  
-      this.dbCollection.doc(this.id).get().subscribe(
-        a => {
-          
-          const data = a.data() as InstrumentoId;
-          data.id = a.id;
-          this.instrumentoSelecionado = data;
-
-          this.instrumentoEdicaoForm.controls['nome'].setValue(this.instrumentoSelecionado.nome);
-          this.instrumentoEdicaoForm.controls['descricao'].setValue(this.instrumentoSelecionado.descricao);
-        }
-      );
-    }
   }
 
   ngOnInit(): void { 
@@ -86,11 +71,14 @@ export class InstrumentosListagemComponent implements OnInit{
     this.configuracoesMensagemService.instrumentoMensagemErro().subscribe((message) => {this.mensagemInstrumentoErro = message});
 
     this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(  
-      actions => actions.map(a => {
-                    const data = a.payload.doc.data() as InstrumentoId;
-                    data.id = a.payload.doc.id;
-                    this.instrumentos.push(data);
-                })
+      actions => {
+        this.instrumentos = [];
+        actions.map(a => {
+          const data = a.payload.doc.data() as InstrumentoId;
+          data.id = a.payload.doc.id;
+          this.instrumentos.push(data);
+      })
+      }
     );
 
     moment.locale('pt-BR');
@@ -116,7 +104,6 @@ export class InstrumentosListagemComponent implements OnInit{
 
   enviarAlteracaoInstrumento () {
 
-    const id = this.instrumentoEdicaoForm.get('id').value;
     const nome = this.instrumentoEdicaoForm.get('nome').value;
     const descricao = this.instrumentoEdicaoForm.get('descricao').value;
 
@@ -125,7 +112,7 @@ export class InstrumentosListagemComponent implements OnInit{
     //Se não for exclusão
     if (!this.isInstrumentoExclusao) {
       //Se for adição
-      if(this.id == null){
+      if(this.instrumentoSelecionado.id == null){
         this.dbCollection
         .add({nome, descricao} as Instrumento)
         .then(
@@ -139,11 +126,11 @@ export class InstrumentosListagemComponent implements OnInit{
         );
       // Então é edição
       }else {
-        this.dbCollection.doc(this.id)
+        this.dbCollection.doc(this.instrumentoSelecionado.id)
         .update({nome, descricao})
         .then(
             () => {
-              this.configuracoesMensagemService.instrumentoMensagemSucesso().next('Aluno salvo com sucesso');
+              this.configuracoesMensagemService.instrumentoMensagemSucesso().next('Instrumento salvo com sucesso');
               this.voltar()
             },
             erro => {
@@ -151,48 +138,55 @@ export class InstrumentosListagemComponent implements OnInit{
             }
         );
       }
-    //Exclusão
-    } else {
-      this.dbCollection.doc(this.id).delete()
-        .then(
-            () => {
-              this.configuracoesMensagemService.instrumentoMensagemAlerta().next('Aluno excluído com sucesso');
-                this.instrumentoEdicaoForm.reset();
-                this.voltar();
-            },
-            erro => {
-              this.configuracoesMensagemService.instrumentoMensagemErro().next('Erro ao excluir o aluno');
-            }
-        );
-    }
+    } 
   }
   
+  
+  
+
   buscarInstrumento(id) {
     this.limparMensagens();
     this.tituloEdicaoInstrumento = "Instrumento";
     this.labelBotaoEdicaoInstrumento = "Salvar";
     this.isInstrumentoEdicao = true;
-    this.configuracoesService.buscarInstrumento(id)
-    .subscribe(
-      (instrumento) => {
-        this.instrumentoSelecionado = instrumento;
-        if(id != 0){
-          this.instrumentoEdicaoForm.controls['nome'].setValue(instrumento.nome);
-          this.instrumentoEdicaoForm.controls['descricao'].setValue(instrumento.descricao);
-        }
-      }          
+
+    //busca instrumento
+    this.dbCollection.doc(id).get().subscribe(
+      a => {
+        
+        const data = a.data() as InstrumentoId;
+        data.id = a.id;
+        this.instrumentoSelecionado = data;
+
+        this.instrumentoEdicaoForm.controls['nome'].setValue(this.instrumentoSelecionado.nome);
+        this.instrumentoEdicaoForm.controls['descricao'].setValue(this.instrumentoSelecionado.descricao);
+      }
     );
     this.abrirEdicaoInstrumento();
     
   }
 
+  adicionarInstrumento(){
+    this.limparFormulario();
+    this.abrirEdicaoInstrumento();
+  }
   abrirEdicaoInstrumento(){
     this.isInstrumentoExclusao = false;
     $('#instrumentoEdicaoModal').modal('show');
   }
+
   excluirInstrumento() {
-    this.isInstrumentoExclusao = true;
-    this.enviarAlteracaoInstrumento();
+    this.dbCollection.doc(this.instrumentoSelecionado.id).delete()
+    .then(
+        () => {
+          this.configuracoesMensagemService.instrumentoMensagemAlerta().next('Aluno excluído com sucesso');
+            this.instrumentoEdicaoForm.reset();
+            this.voltar();
+        },
+        erro => {
+          this.configuracoesMensagemService.instrumentoMensagemErro().next('Erro ao excluir o aluno');
+        }
+    );
   }
 
   editarInstrumento() {
@@ -216,7 +210,8 @@ export class InstrumentosListagemComponent implements OnInit{
   }
 
   limparFormulario(): any {
-    this.instrumentoEdicaoForm.controls['id'].setValue('');
+    
+    this.instrumentoSelecionado?this.instrumentoSelecionado.id = null:null;
     this.instrumentoEdicaoForm.controls['nome'].setValue('');
     this.instrumentoEdicaoForm.controls['descricao'].setValue('');
     this.isInstrumentoEdicao = false
@@ -224,6 +219,5 @@ export class InstrumentosListagemComponent implements OnInit{
 
   botaoVoltar() {
     this.closeAddExpenseModal.nativeElement.click();
-    location.reload()
   }
 }
