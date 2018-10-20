@@ -11,6 +11,9 @@ import { DisciplinasMensagemService } from '../disciplinas-mensagem.service';
 import { DisciplinasComponent } from '../disciplinas.component';
 import { Instrumento } from '../../instrumentos/instrumento';
 import { SelectItemsService } from '../../../../shared/select-items/select-items.service';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import { InstrumentoId } from '../../instrumentos/instrumentoId';
+import { DisciplinaId } from '../disciplinaId';
 
 
 @Component({
@@ -22,18 +25,19 @@ import { SelectItemsService } from '../../../../shared/select-items/select-items
 })
 export class DisciplinasEdicaoComponent implements OnInit {
 
-  @Input() disciplina: Disciplina;
   @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
   @Output() mensagemSucessoDisciplina: EventEmitter<string> = new EventEmitter<string>();
 
   disciplinaEditarForm: FormGroup;
-  DisciplinaSelecionado: Disciplina;
+  DisciplinaSelecionada: DisciplinaId;
   tituloEdicaoDisciplina: string;
   labelBotaoEdicaoDisciplina: string;
   isDisciplinaEdicao: boolean;
   isDisciplinaExclusao: boolean;
-  instrumentos: Instrumento[];
   isTeorica: boolean; 
+  private dbCollection: AngularFirestoreCollection;
+  id = null;
+  instrumentos: InstrumentoId[] = []
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,19 +46,54 @@ export class DisciplinasEdicaoComponent implements OnInit {
     private route: ActivatedRoute,
     private _location: Location,
     private selectItemsService: SelectItemsService,
-    private cdRef:ChangeDetectorRef
+    private cdRef:ChangeDetectorRef,
+    private readonly afs: AngularFirestore
     
 
-  ) { }
+  ) {
+    this.id = this.route.snapshot.paramMap.get('id');
+
+            
+      this.dbCollection = afs.collection<Disciplina>('disciplina');
+
+      if(this.id != null){
+        //busca aluno  
+        this.dbCollection.doc(this.id).get().subscribe(
+          a => {
+            
+            const data = a.data() as DisciplinaId;
+            data.id = a.id;
+            this.DisciplinaSelecionada = data;
+
+            this.disciplinaEditarForm.controls['id'].setValue(data.id);
+            this.disciplinaEditarForm.controls['nome'].setValue(data.nome);
+            this.disciplinaEditarForm.controls['instrumento'].setValue(data.instrumento);
+            this.disciplinaEditarForm.controls['frequenciaMinima'].setValue(data.frequenciaMinima);
+            this.disciplinaEditarForm.controls['notaMinima'].setValue(data.notaMinima);
+            this.disciplinaEditarForm.controls['teorica'].setValue(data.teorica);
+            this.setTipoAula(data.teorica)
+            this.cdRef.detectChanges();
+
+          }
+        );
+      }
+
+      //busca os instrumentos
+      this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
+        actions => actions.map(a => {
+          const data = a.payload.doc.data() as InstrumentoId;
+          data.id = a.payload.doc.id;
+          this.instrumentos.push(data);
+        })
+      );
+   }
 
 
-  ngOnInit(): void { 
+  ngOnInit() { 
 
     moment.locale('pt-BR');
 
     this.isTeorica = false;
-   
-    const id = +this.route.snapshot.paramMap.get('id');
 
     this.disciplinaEditarForm = this.formBuilder.group({
       id: ['', Validators.required],
@@ -66,23 +105,16 @@ export class DisciplinasEdicaoComponent implements OnInit {
      
     });
 
-    if (id != 0) {
+    if (this.id != null) {
       this.tituloEdicaoDisciplina = "Disciplina";
       this.labelBotaoEdicaoDisciplina = "Salvar";
       this.isDisciplinaEdicao = true;
-      this.buscarDisciplina(id).subscribe(retorno =>
-        {}
-      )
     } else {
       this.tituloEdicaoDisciplina = "Adicionar Disciplina";
       this.labelBotaoEdicaoDisciplina = "Cadastrar"
       this.isDisciplinaEdicao = false;
     }
 
-    this.selectItemsService.buscarInstrumentos()
-        .subscribe(
-            (instrumentos) => this.instrumentos = instrumentos
-        );
   }
 
   enviarAlteracaoDisciplina () {
@@ -94,59 +126,51 @@ export class DisciplinasEdicaoComponent implements OnInit {
     const notaMinima = this.disciplinaEditarForm.get('notaMinima').value;
     const teorica = this.disciplinaEditarForm.get('teorica').value;
 
+    this.limparMensagens();
+
+    //Se não for exclusão
     if (!this.isDisciplinaExclusao) {
-
-      this.limparMensagens();
-
-      this.configuracoesService
-        .editarDisciplina({id, nome, instrumento, frequenciaMinima, notaMinima, teorica})
-        .subscribe(
+      //Se for adição
+      if(this.id == null){
+        this.dbCollection
+        .add({id, nome, instrumento, frequenciaMinima, notaMinima, teorica} as Disciplina)
+        .then(
             () => {
-              if (this.isDisciplinaEdicao) {
-                 this.configuracoesMensagemService.disciplinaMensagemSucesso().next('Disciplina salvo com sucesso');
-              } else {
-                this.configuracoesMensagemService.disciplinaMensagemSucesso().next('Disciplina cadastrado com sucesso');
-              }
+              this.configuracoesMensagemService.disciplinaMensagemSucesso().next('Aluno cadastrado com sucesso');
               this.voltar()
             },
             erro => {
               this.configuracoesMensagemService.disciplinaMensagemErro().next('Algum dado está repetido ou inválido');
             }
         );
-    } else {
-      this.configuracoesService
-        .excluirDisciplina(id)
-        .subscribe(
+      // Então é edição
+      }else {
+        this.dbCollection.doc(this.id)
+        .update({id, nome, instrumento, frequenciaMinima, notaMinima, teorica})
+        .then(
             () => {
-              this.configuracoesMensagemService.disciplinaMensagemAlerta().next('Disciplina excluído com sucesso');
-                this.disciplinaEditarForm.reset();
-                this.voltar();
+              this.configuracoesMensagemService.disciplinaMensagemSucesso().next('Aluno salvo com sucesso');
+              this.voltar()
             },
             erro => {
-              this.configuracoesMensagemService.disciplinaMensagemErro().next('Erro ao excluir o disciplina');
+              this.configuracoesMensagemService.disciplinaMensagemErro().next('Algum dado está repetido ou inválido');
             }
         );
-    }
-  }
-  
-  buscarDisciplina (id) {
-    return this.configuracoesService.buscarDisciplina(id)
-    .pipe(
-        map(disciplina => {
-          this.disciplina = disciplina;
-          if(id != 0){
-            this.disciplinaEditarForm.controls['id'].setValue(disciplina.id);
-            this.disciplinaEditarForm.controls['nome'].setValue(disciplina.nome);
-            this.disciplinaEditarForm.controls['instrumento'].setValue(disciplina.instrumento);
-            this.disciplinaEditarForm.controls['frequenciaMinima'].setValue(disciplina.frequenciaMinima);
-            this.disciplinaEditarForm.controls['notaMinima'].setValue(disciplina.notaMinima);
-            this.disciplinaEditarForm.controls['teorica'].setValue(disciplina.teorica);
-            this.setTipoAula(disciplina.teorica)
-            this.cdRef.detectChanges();
-          }
-        })
-    );
-    
+      }
+      //Exclusão
+      } else {
+          this.dbCollection.doc(this.id).delete()
+            .then(
+                () => {
+                  this.configuracoesMensagemService.disciplinaMensagemAlerta().next('Aluno excluído com sucesso');
+                    this.disciplinaEditarForm.reset();
+                    this.voltar();
+                },
+                erro => {
+                  this.configuracoesMensagemService.disciplinaMensagemErro().next('Erro ao excluir o aluno');
+                }
+          );
+      }
   }
 
   excluirDisciplina() {

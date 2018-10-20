@@ -22,7 +22,6 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Id</th>
       <th scope="col">
         <div class="banzos-th">
             <a id="nomeDisciplinaSort" class="banzos-th" (click)="ordenarDisciplinas('nome')">
@@ -51,7 +50,6 @@
   <tbody>
 
         <tr *ngFor="let disciplina of disciplinas | filter : buscarTexto">
-            <th scope="row">{{disciplina.id}}</th>
               <td>{{disciplina.nome}}</td>
               <td *ngIf="disciplina.teorica">
                   <h5><span class="badge badge-pill badge-teorica">Teórica</span></h5>

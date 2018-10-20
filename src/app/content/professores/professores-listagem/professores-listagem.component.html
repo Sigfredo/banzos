@@ -22,7 +22,6 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Id</th>
       <th scope="col">
         <div class="banzos-th">
             <a id="nomeProfessorSort" class="banzos-th" (click)="ordenarProfessores('nome')">
@@ -40,7 +39,6 @@
   <tbody>
 
         <tr *ngFor="let professor of professores | filter : buscarTexto">
-            <th scope="row">{{professor.id}}</th>
             <td>{{professor.nome}}</td>
             <td> 
                 <a routerLink="/professor/{{professor.id}}">

@@ -69,7 +69,7 @@ export class EditarComponent implements OnInit {
             this.alunoEditarForm.controls['instrumento'].setValue(this.alunoSelecionado.instrumento);
             this.alunoEditarForm.controls['inicioPlano'].setValue(this.banzosUtils.extrairData(this.alunoSelecionado.inicioPlano));
             this.alunoEditarForm.controls['fimPlano'].setValue(this.banzosUtils.extrairData(this.alunoSelecionado.fimPlano));
-            this.alunoEditarForm.controls['nascimento'].setValue(this.banzosUtils.extrairData(this.alunoSelecionado.nascimento));
+             
             this.alunoEditarForm.controls['telefone'].setValue(this.alunoSelecionado.telefone);
             this.alunoEditarForm.controls['endereco'].setValue(this.alunoSelecionado.endereco);
             this.alunoEditarForm.controls['cep'].setValue(this.alunoSelecionado.cep);
@@ -81,7 +81,6 @@ export class EditarComponent implements OnInit {
       }
 
       //busca os instrumentos
-
       this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
         actions => actions.map(a => {
           const data = a.payload.doc.data() as InstrumentoId;

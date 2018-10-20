@@ -21,7 +21,7 @@ export class AlunosComponent implements OnInit {
  mensagemAlunoAlerta: string;
  mensagemAlunoErro: string;
  instrumentos: InstrumentoId[] = []
- private alunoCollection: AngularFirestoreCollection<Aluno>;
+ 
   
 
   constructor(

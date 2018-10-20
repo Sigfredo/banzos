@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfiguracoesService } from '../configuracoes.service';
 import { DisciplinasMensagemService } from './disciplinas-mensagem.service';
+import { InstrumentoId } from '../instrumentos/instrumentoId';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Instrumento } from '../instrumentos/instrumento';
 
 @Component({
   selector: 'banzos-disciplinas',
@@ -9,15 +12,17 @@ import { DisciplinasMensagemService } from './disciplinas-mensagem.service';
 })
 export class DisciplinasComponent implements OnInit {
 
-disciplinas = [];
  mensagemDisciplinaSucesso: string;
  mensagemDisciplinaAlerta: string;
  mensagemDisciplinaErro: string;
+ instrumentos: InstrumentoId[] = []
+
   
 
   constructor(
     private configuracoesService: ConfiguracoesService,
     private disciplinasMensagemService: DisciplinasMensagemService,
+    private readonly afs: AngularFirestore
     ) { }
 
   ngOnInit() {
@@ -27,11 +32,14 @@ disciplinas = [];
      this.disciplinasMensagemService.disciplinaMensagemAlerta().subscribe((message) => {this.mensagemDisciplinaAlerta = message});
      this.disciplinasMensagemService.disciplinaMensagemErro().subscribe((message) => {this.mensagemDisciplinaErro = message});
 
-     this.configuracoesService.buscarDisciplinas()
-    .subscribe(
-       (response) => {this.disciplinas = response},
-      (error) => {console.log(error)}
-    );
+      //busca os instrumentos
+      this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(  
+        actions => actions.map(a => {
+                      const data = a.payload.doc.data() as InstrumentoId;
+                      data.id = a.payload.doc.id;
+                      this.instrumentos.push(data);
+                  })
+      );
   }
 
 }
