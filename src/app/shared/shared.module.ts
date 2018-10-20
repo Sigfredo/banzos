@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BanzosFilterPipe } from './banzos-filter.pipe';
 import { SelectItemsService } from './select-items/select-items.service';
 import { BanzosUtils } from './banzos-util';
+import { SharedService } from './shared.service';
+import { TipoConta } from './select-items/tipo-conta';
 
 @NgModule({
   imports: [
@@ -36,7 +38,9 @@ import { BanzosUtils } from './banzos-util';
   ],
   providers: [
     SelectItemsService,
-    BanzosUtils
+    BanzosUtils,
+    SharedService,
+    TipoConta
   ]
 })
 export class SharedModule { }

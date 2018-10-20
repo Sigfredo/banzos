@@ -1,5 +1,4 @@
-export class Aluno {
-    id: number;
+export interface Aluno {
     nome: string;
     instrumento: string;
     inicioPlano: Date;

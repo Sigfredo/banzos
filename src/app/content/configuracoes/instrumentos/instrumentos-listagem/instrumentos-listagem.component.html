@@ -22,14 +22,14 @@
 
   <div class="col-sm">
         <button id="editar-disciplina-button" type="button" class="btn btn-primary" 
-            (click)="abrirEdicaoInstrumento()">
+            (click)="adicionarInstrumento()">
             Adicionar Instrumento
         </button>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-sm-2 mb-3" *ngFor="let instrumento of instrumentos  | filter : buscarTexto">
+  <div class="col-sm-2 mb-3" id="instrumentosListagemDiv" *ngFor="let instrumento of instrumentos  | filter : buscarTexto">
     <button type="button" (click)="buscarInstrumento(instrumento.id)"
     class="btn btn-info btn-lg btn-block">{{instrumento.nome}}</button> 
   </div>
