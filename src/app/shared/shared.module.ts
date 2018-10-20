@@ -11,6 +11,7 @@ import { BanzosFilterPipe } from './banzos-filter.pipe';
 import { SelectItemsService } from './select-items/select-items.service';
 import { BanzosUtils } from './banzos-util';
 import { SharedService } from './shared.service';
+import { TipoConta } from './select-items/tipo-conta';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { SharedService } from './shared.service';
   providers: [
     SelectItemsService,
     BanzosUtils,
-    SharedService
+    SharedService,
+    TipoConta
   ]
 })
 export class SharedModule { }

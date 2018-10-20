@@ -123,6 +123,7 @@ export class EditarComponent implements OnInit {
   }
 
   enviarAlteracaoAluno () {
+    
     const nome = this.alunoEditarForm.get('nome').value;
     const instrumento = this.alunoEditarForm.get('instrumento').value;
     const inicioPlano = this.alunoEditarForm.get('inicioPlano').value == null? null:new Date(this.alunoEditarForm.get('inicioPlano').value);

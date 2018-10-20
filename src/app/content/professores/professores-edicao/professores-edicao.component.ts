@@ -11,6 +11,12 @@ import { ProfessoresMensagemService } from '../professores-mensagem.service';
 import { ProfessoresComponent } from '../professores.component';
 import { SelectItemsService } from '../../../shared/select-items/select-items.service';
 import { TipoConta } from '../../../shared/select-items/tipo-conta';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import { InstrumentoId } from '../../configuracoes/instrumentos/instrumentoId';
+import { ProfessorId } from '../professorId';
+import { Instrumento } from '../../configuracoes/instrumentos/instrumento';
+import { SharedService } from 'src/app/shared/shared.service';
+import { BanzosUtils } from 'src/app/shared/banzos-util';
 
 @Component({
   selector: 'banzos-professor-edicao',
@@ -25,12 +31,15 @@ export class ProfessoresEdicaoComponent implements OnInit {
   @Output() mensagemSucessoProfessor: EventEmitter<string> = new EventEmitter<string>();
 
   professorEditarForm: FormGroup;
-  professorSelecionado: Professor;
+  professorSelecionado: ProfessorId;
   tituloEdicaoProfessor: string;
   labelBotaoEdicaoProfessor: string;
   isProfessorEdicao: boolean;
   isProfessorExclusao: boolean;
-  tiposConta: TipoConta[];
+  tiposConta = [];
+  private dbCollection: AngularFirestoreCollection;
+  id = null;
+  instrumentos: InstrumentoId[] = []
 
 
   constructor(
@@ -39,14 +48,59 @@ export class ProfessoresEdicaoComponent implements OnInit {
     private professoresMensagemService: ProfessoresMensagemService,
     private route: ActivatedRoute,
     private _location: Location,
-    private selectItemsService: SelectItemsService
-  ) { }
+    private selectItemsService: SelectItemsService,
+    private readonly afs: AngularFirestore,
+    private sharedService: SharedService,
+    private banzosUtils: BanzosUtils
+  ) { 
+    this.id = this.route.snapshot.paramMap.get('id');
+
+            
+      this.dbCollection = afs.collection<Professor>('professor');
+
+      if(this.id != null){
+        //busca professor  
+        this.dbCollection.doc(this.id).get().subscribe(
+          a => {
+            
+            const data = a.data() as ProfessorId;
+            data.id = a.id;
+            this.professorSelecionado = data;
+
+            this.professorEditarForm.controls['id'].setValue(data.id);
+            this.professorEditarForm.controls['nome'].setValue(data.nome);
+            this.professorEditarForm.controls['nascimento'].setValue(this.banzosUtils.extrairData(data.nascimento));
+            this.professorEditarForm.controls['telefone'].setValue(data.telefone);
+            this.professorEditarForm.controls['email'].setValue(data.email);
+            this.professorEditarForm.controls['endereco'].setValue(data.endereco);
+            this.professorEditarForm.controls['cep'].setValue(data.cep);
+            this.professorEditarForm.controls['banco'].setValue(data.banco);
+            this.professorEditarForm.controls['tipoConta'].setValue(data.tipoConta);
+            this.professorEditarForm.controls['numeroConta'].setValue(data.numeroConta);
+            this.professorEditarForm.controls['agencia'].setValue(data.agencia);
+            this.professorEditarForm.controls['cpf'].setValue(data.cpf);
+            this.professorEditarForm.controls['rg'].setValue(data.rg);
+          }
+        );
+      }
+
+      //busca os instrumentos
+
+      this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
+        actions => actions.map(a => {
+          const data = a.payload.doc.data() as InstrumentoId;
+          data.id = a.payload.doc.id;
+          this.instrumentos.push(data);
+        })
+      );
+      
+      //busca os tipos de conta
+      this.tiposConta = sharedService.getTiposConta();
+  }
 
   ngOnInit(): void { 
 
     moment.locale('pt-BR');
-   
-    const id = +this.route.snapshot.paramMap.get('id');
 
     this.professorEditarForm = this.formBuilder.group({
       id: ['', Validators.required],
@@ -64,30 +118,22 @@ export class ProfessoresEdicaoComponent implements OnInit {
       rg: ['', Validators.required]
     });
 
-    if (id != 0) {
+    if (this.id != null) {
       this.tituloEdicaoProfessor = "Professor";
       this.labelBotaoEdicaoProfessor = "Salvar";
       this.isProfessorEdicao = true;
-      this.buscarProfessor(id).subscribe(retorno =>
-        {}
-      )
     } else {
       this.tituloEdicaoProfessor = "Adicionar Professor";
       this.labelBotaoEdicaoProfessor = "Cadastrar"
       this.isProfessorEdicao = false;
     }
 
-    this.selectItemsService.buscarTipoContas()
-        .subscribe(
-            (tipoConta) => this.tiposConta = tipoConta
-        );
   }
 
   enviarAlteracaoProfessor () {
 
-    const id = this.professorEditarForm.get('id').value;
     const nome = this.professorEditarForm.get('nome').value;
-    const nascimento = this.professorEditarForm.get('nascimento').value;
+    const nascimento = this.professorEditarForm.get('nascimento').value == null? null:new Date(this.professorEditarForm.get('nascimento').value);
     const telefone = this.professorEditarForm.get('telefone').value;
     const email = this.professorEditarForm.get('email').value;
     const endereco = this.professorEditarForm.get('endereco').value;
@@ -100,29 +146,41 @@ export class ProfessoresEdicaoComponent implements OnInit {
     const rg= this.professorEditarForm.get('rg').value
 
     this.limparMensagens();
-    
+    //Se não for exclusão
     if (!this.isProfessorExclusao) {
-
-      this.professoresService
-        .editarProfessor({id, nome, nascimento, telefone, email,
-          endereco, cep, banco, tipoConta, numeroConta, agencia, cpf, rg})
-        .subscribe(
+      //Se for adição
+      if(this.id == null){
+        this.dbCollection
+        .add({nome, nascimento, telefone, email,
+          endereco, cep, banco, tipoConta, numeroConta, agencia, cpf, rg} as Professor)
+        .then(
             () => {
-              if (this.isProfessorEdicao) {
-                 this.professoresMensagemService.professorMensagemSucesso().next('Professor salvo com sucesso');
-              } else {
-                this.professoresMensagemService.professorMensagemSucesso().next('Professor cadastrado com sucesso');
-              }
+              this.professoresMensagemService.professorMensagemSucesso().next('Professor cadastrado com sucesso');
               this.voltar()
             },
             erro => {
               this.professoresMensagemService.professorMensagemErro().next('Algum dado está repetido ou inválido');
             }
         );
+      // Então é edição
+      }else {
+        this.dbCollection.doc(this.id)
+        .update({nome, nascimento, telefone, email,
+          endereco, cep, banco, tipoConta, numeroConta, agencia, cpf, rg})
+        .then(
+            () => {
+              this.professoresMensagemService.professorMensagemSucesso().next('Professor salvo com sucesso');
+              this.voltar()
+            },
+            erro => {
+              this.professoresMensagemService.professorMensagemErro().next('Algum dado está repetido ou inválido');
+            }
+        );
+      }
+    //Exclusão
     } else {
-      this.professoresService
-        .excluirProfessor(id)
-        .subscribe(
+      this.dbCollection.doc(this.id).delete()
+        .then(
             () => {
               this.professoresMensagemService.professorMensagemAlerta().next('Professor excluído com sucesso');
                 this.professorEditarForm.reset();
@@ -133,32 +191,6 @@ export class ProfessoresEdicaoComponent implements OnInit {
             }
         );
     }
-  }
-  
-  buscarProfessor (id) {
-    return this.professoresService.getProfessor(id)
-    .pipe(
-        map(professor => {
-          this.professor = professor;
-          if(id != 0){
-            this.professorEditarForm.controls['id'].setValue(professor.id);
-            this.professorEditarForm.controls['nome'].setValue(professor.nome);
-            this.professorEditarForm.controls['nascimento'].setValue(professor.nascimento);
-            this.professorEditarForm.controls['telefone'].setValue(professor.telefone);
-            this.professorEditarForm.controls['email'].setValue(professor.email);
-            this.professorEditarForm.controls['endereco'].setValue(professor.endereco);
-            this.professorEditarForm.controls['cep'].setValue(professor.cep);
-            this.professorEditarForm.controls['banco'].setValue(professor.banco);
-            this.professorEditarForm.controls['tipoConta'].setValue(professor.tipoConta);
-            this.professorEditarForm.controls['numeroConta'].setValue(professor.numeroConta);
-            this.professorEditarForm.controls['agencia'].setValue(professor.agencia);
-            this.professorEditarForm.controls['cpf'].setValue(professor.cpf);
-            this.professorEditarForm.controls['rg'].setValue(professor.rg);
-
-          }
-        })
-    );
-    
   }
 
   excluirProfessor() {

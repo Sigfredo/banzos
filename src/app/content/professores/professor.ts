@@ -2,7 +2,6 @@ import { Instrumento } from "../configuracoes/instrumentos/instrumento";
 
 
 export class Professor {
-    id: number;
     nome: string;
     nascimento: Date;
     telefone: string;

@@ -18,7 +18,7 @@ import { Instrumento } from "../../configuracoes/instrumentos/instrumento";
   templateUrl: './listagem.component.html',
   styleUrls: ['./listagem.component.scss']
 })
-export class ListagemComponent implements OnInit {
+export class ListagemComponent {
 
   private alunoCollection: AngularFirestoreCollection<Aluno>;
   private alunos: AlunoId[] = [];
@@ -46,9 +46,6 @@ export class ListagemComponent implements OnInit {
   instrumentos = [];
 
   arrayAlunoSort = [];
-
-  ngOnInit(): void {
-  }
 
   ordenarAlunos(coluna){
     if(typeof this.arrayAlunoSort[coluna]==='undefined'){
