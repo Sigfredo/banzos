@@ -191,27 +191,53 @@
     </div>
 
     <!-- Modal De exclusão-->
-<div class="modal fade" id="confirmarExclusaoProfessorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Exclusão de Professor</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+    <div class="modal fade" id="confirmarExclusaoProfessorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Exclusão de Professor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                Deseja realmente excluir o professor?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                <button type="button" (click)="excluirProfessor();" class="btn btn-primary" data-dismiss="modal">Sim</button>
+                </div>
             </div>
-            <div class="modal-body">
-               Deseja realmente excluir o professor?
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-              <button type="button" (click)="excluirProfessor();" class="btn btn-primary" data-dismiss="modal">Sim</button>
-            </div>
-          </div>
+    </div>
+
+    <!--Instrumentos do Professor-->
+    
+        <div class="form-row">
+                
+                    
+                            <div class="professores-instrumentos form-row mt-4 container-fluid professor-habilitacao-head">
+                                <div class="col-11 mt-1"><h4>Habilitações</h4></div>
+                                 <i class="material-icons icon-green">
+                                        add_box
+                                        </i>
+                                    
+                                    </div>
+                   
+                    <div class="form-row professores-instrumentos-bot container-fluid">
+                            <div class="col-sm-2 mb-3 mt-4" id="instrumentosListagemDiv" *ngFor="let instrumentoProfessor of professorSelecionado?.instrumentos  | filter : buscarTexto">
+                                    <button type="button"
+                                    class="btn btn-info btn-lg btn-block">{{instrumentoProfessor.nome}}</button> 
+                                </div>
+                    </div>
+                    
+                    
         </div>
-      </div>
+                
+            
+        
+           
+   
 
 </form>
-
-<!--Instrumentos do Professor-->
 

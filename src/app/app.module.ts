@@ -20,6 +20,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,8 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
     ContentModule,
     NoopAnimationsModule,
     SharedModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule
 
   ],
   providers: [

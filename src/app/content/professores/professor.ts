@@ -1,4 +1,4 @@
-import { Instrumento } from "../configuracoes/instrumentos/instrumento";
+import { InstrumentoId } from "../configuracoes/instrumentos/instrumentoId";
 
 
 export class Professor {
@@ -14,5 +14,5 @@ export class Professor {
     agencia: string;
     cpf: string;
     rg: string;
-    instrumentos: Instrumento[];
+    instrumentos: InstrumentoId[];
   }

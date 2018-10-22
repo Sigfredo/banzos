@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { ViewChild, ElementRef} from '@angular/core';
 import { Professor } from '../professor';
 import { ActivatedRoute } from '@angular/router';
-import { map, filter, catchError, mergeMap } from 'rxjs/operators';
+import { map, filter, catchError, mergeMap, switchMap } from 'rxjs/operators';
 import {Location} from '@angular/common';
 import { ProfessoresMensagemService } from '../professores-mensagem.service';
 import { ProfessoresComponent } from '../professores.component';
@@ -17,6 +17,8 @@ import { ProfessorId } from '../professorId';
 import { Instrumento } from '../../configuracoes/instrumentos/instrumento';
 import { SharedService } from 'src/app/shared/shared.service';
 import { BanzosUtils } from 'src/app/shared/banzos-util';
+import { Subject } from 'rxjs';
+import { AngularFireDatabase, AngularFireAction } from '@angular/fire/database';
 
 @Component({
   selector: 'banzos-professor-edicao',
@@ -39,7 +41,8 @@ export class ProfessoresEdicaoComponent implements OnInit {
   tiposConta = [];
   private dbCollection: AngularFirestoreCollection;
   id = null;
-  instrumentos: InstrumentoId[] = []
+  instrumentos: InstrumentoId[] = [];
+  instrumentosProfessor: InstrumentoId[] = []
 
 
   constructor(
@@ -51,7 +54,8 @@ export class ProfessoresEdicaoComponent implements OnInit {
     private selectItemsService: SelectItemsService,
     private readonly afs: AngularFirestore,
     private sharedService: SharedService,
-    private banzosUtils: BanzosUtils
+    private banzosUtils: BanzosUtils,
+    private db: AngularFireDatabase
   ) { 
     this.id = this.route.snapshot.paramMap.get('id');
 
@@ -66,6 +70,7 @@ export class ProfessoresEdicaoComponent implements OnInit {
             const data = a.data() as ProfessorId;
             data.id = a.id;
             this.professorSelecionado = data;
+            this.professorSelecionado.instrumentos = [];
 
             this.professorEditarForm.controls['id'].setValue(data.id);
             this.professorEditarForm.controls['nome'].setValue(data.nome);
@@ -80,12 +85,21 @@ export class ProfessoresEdicaoComponent implements OnInit {
             this.professorEditarForm.controls['agencia'].setValue(data.agencia);
             this.professorEditarForm.controls['cpf'].setValue(data.cpf);
             this.professorEditarForm.controls['rg'].setValue(data.rg);
-          }
+            this.dbCollection.doc(this.id).collection<Instrumento>('instrumentos').snapshotChanges()
+            .subscribe(actions => actions.map(i => {
+              const data = i.payload.doc.data() as InstrumentoId;
+              data.id = i.payload.doc.id;
+              this.professorSelecionado.instrumentos.push(data);
+            })
+            );
+          
+         }
         );
       }
 
-      //busca os instrumentos
+      
 
+      //busca os instrumentos para a combo
       this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
         actions => actions.map(a => {
           const data = a.payload.doc.data() as InstrumentoId;
