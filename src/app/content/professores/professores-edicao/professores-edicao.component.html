@@ -218,7 +218,7 @@
                     
                             <div class="professores-instrumentos form-row mt-4 container-fluid professor-habilitacao-head">
                                 <div class="col-11 mt-1"><h4>Habilitações</h4></div>
-                                 <i class="material-icons icon-green">
+                                 <i class="material-icons icon-green add-instrumento-professor">
                                         add_box
                                         </i>
                                     
@@ -234,10 +234,42 @@
                     
         </div>
                 
-            
-        
-           
-   
+  
+</form>   
 
-</form>
+        
+    <!-- Modal De adição de instrumento para o professor-->
+        <div class="modal fade" id="professorInstrumentoEdicaoModal" tabindex="-1" role="dialog" aria-labelledby="instrumentoEdicaoModalLabel" aria-hidden="true" data-dismiss="modal" #closeAddExpenseModal>
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="instrumentoEdicaoModalLabel">{{tituloEdicaoInstrumento}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+        
+                    
+                    <label>Selecione o instrumento</label>
+                    <select
+                        class="">  
+                        <option *ngFor="let instrumento of instrumentos">
+                            {{instrumento.nome}}
+                        </option>
+                   </select>
+                    <!-- <div class="col">
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-block">
+                                {{labelBotaoEdicaoInstrumento}}
+                            </button>
+                    </div> -->
+                </div>
+        
+        
+            
+            </div>
+            </div>
+        </div>
 
