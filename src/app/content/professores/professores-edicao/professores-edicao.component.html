@@ -217,17 +217,22 @@
                 
                     
                             <div class="professores-instrumentos form-row mt-4 container-fluid professor-habilitacao-head">
-                                <div class="col-11 mt-1"><h4>Habilitações</h4></div>
+                                <div class="col-10 mt-1"><h4>Habilitações</h4></div>
                                 <a href="#professorInstrumentoEdicaoModal" data-toggle="modal" data-target="#professorInstrumentoEdicaoModal">
-                                    <i class="material-icons icon-green add-instrumento-professor">
+                                    <i class="material-icons icon-green add-instrumento-professor mr-3">
                                         add_box
                                         </i>
+                                </a>
+                                <a href="#professorInstrumentoExclusaoModal" data-toggle="modal" data-target="#professorInstrumentoExclusaoModal">
+                                        <i class="material-icons icon-red add-instrumento-professor">
+                                            remove_circle
+                                            </i>
                                 </a>
                                     
                                     </div>
                    
                     <div class="form-row professores-instrumentos-bot container-fluid">
-                            <div class="col-sm-2 mb-3 mt-4" id="instrumentosListagemDiv" *ngFor="let instrumentoProfessor of professorSelecionado?.instrumentos  | filter : buscarTexto">
+                            <div class="col-sm-2 mb-3 mt-4" id="instrumentosListagemDiv" *ngFor="let instrumentoProfessor of professorSelecionado?.instrumentos | filter : buscarTexto">
                                     <button type="button"
                                     class="btn btn-info btn-lg btn-block">{{instrumentoProfessor.nome}}</button> 
                                 </div>
@@ -241,7 +246,7 @@
 
         
     <!-- Modal De adição de instrumento para o professor-->
-        <div class="modal fade" id="professorInstrumentoEdicaoModal" tabindex="-1" role="dialog" aria-labelledby="instrumentoEdicaoModalLabel" aria-hidden="true" data-dismiss="modal" #closeAddExpenseModal>
+        <div class="modal fade" id="professorInstrumentoEdicaoModal" tabindex="-1" role="dialog" aria-labelledby="instrumentoEdicaoModalLabel" aria-hidden="true" data-dismiss="modal" #closeAddInstrumentoModal>
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -254,18 +259,21 @@
                     <div class="row">
                             <div class="col"> 
                                 <select
+                                    [(ngModel)]="comboInstrumentoProfessor"
                                     class="form-control">  
+                                    <option disabled hidden [value]="undefined">-- selecione --</option>
                                     <option *ngFor="let instrumento of instrumentos">
                                         {{instrumento.nome}}
                                     </option>
                                 </select>
                             </div>
                             <div class="col">
-                                <button
+                                <!-- <button
                                     type="submit"
                                     class="btn btn-primary btn-block">
                                     Adicionar
-                                </button>
+                                </button> -->
+                                <button type="button" (click)="adicionarInstrumentoProfessor();" class="btn btn-primary" data-toggle="modal" data-target="#informaAdicaoProfessorModal">Adicionar</button>
                             </div>
                     </div>
                 </div>
@@ -283,10 +291,67 @@
             </button>
             </div>
             <div class="modal-body">
-            Instrumento adicionado.
+                    <ngb-alert *ngIf="isAdicaoInstrumentoSucesso" type="success" [dismissible]="false">Instrumento adicionado.</ngb-alert>
+                    <ngb-alert *ngIf="!isAdicaoInstrumentoSucesso" type="warning" [dismissible]="false">O professor já tem essa habilitação</ngb-alert>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+            <button (click)="fecharAddInstrumentoProfessor();" type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal De Exclusão de instrumento para o professor-->
+    <div class="modal fade" id="professorInstrumentoExclusaoModal" tabindex="-1" role="dialog" aria-labelledby="instrumentoExclusaoModalLabel" aria-hidden="true" data-dismiss="modal" #closeRemoveInstrumentoModal>
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5> Remover Instrumento </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                            <div class="col"> 
+                                <select
+                                    [(ngModel)]="comboRemoveInstrumentoProfessor"
+                                    class="form-control">  
+                                    <option disabled hidden [value]="undefined">-- selecione --</option>
+                                    <option *ngFor="let instrumento of professorSelecionado?.instrumentos">
+                                        {{instrumento.nome}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <!-- <button
+                                    type="submit"
+                                    class="btn btn-primary btn-block">
+                                    Adicionar
+                                </button> -->
+                                <button type="button" (click)="removerInstrumentoProfessor();" class="btn btn-danger" data-toggle="modal" data-target="#informaRemocaoProfessorModal">Remover</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    <!-- Modal Informando a exclusão de instrumento ao professor-->
+    <div class="modal fade" id="informaRemocaoProfessorModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                    <ngb-alert *ngIf="isExclusaoInstrumentoSucesso" type="success" [dismissible]="false">{{ mensagemRemocaoInstrumentoProfessor }}</ngb-alert>
+                    <ngb-alert *ngIf="!isExclusaoInstrumentoSucesso" type="error" [dismissible]="false">{{ mensagemRemocaoInstrumentoProfessor }}</ngb-alert> 
+            </div>
+            <div class="modal-footer">
+            <button (click)="fecharRemoveInstrumentoProfessor();" type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
             </div>
         </div>
         </div>
