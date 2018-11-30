@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { ViewChild, ElementRef} from '@angular/core';
 import { Professor } from '../professor';
 import { ActivatedRoute } from '@angular/router';
-import { map, filter, catchError, mergeMap } from 'rxjs/operators';
+import { map, filter, catchError, mergeMap, switchMap } from 'rxjs/operators';
 import {Location} from '@angular/common';
 import { ProfessoresMensagemService } from '../professores-mensagem.service';
 import { ProfessoresComponent } from '../professores.component';
@@ -17,6 +17,8 @@ import { ProfessorId } from '../professorId';
 import { Instrumento } from '../../configuracoes/instrumentos/instrumento';
 import { SharedService } from 'src/app/shared/shared.service';
 import { BanzosUtils } from 'src/app/shared/banzos-util';
+import { Subject } from 'rxjs';
+import { AngularFireDatabase, AngularFireAction } from '@angular/fire/database';
 
 @Component({
   selector: 'banzos-professor-edicao',
@@ -28,6 +30,8 @@ import { BanzosUtils } from 'src/app/shared/banzos-util';
 export class ProfessoresEdicaoComponent implements OnInit {
   @Input() professor: Professor;
   @ViewChild('closeAddProfessorModal') closeAddProfessorModal: ElementRef;
+  @ViewChild('closeAddInstrumentoModal') closeAddInstrumentoModal: ElementRef;
+  @ViewChild('closeRemoveInstrumentoModal') closeRemoveInstrumentoModal: ElementRef;
   @Output() mensagemSucessoProfessor: EventEmitter<string> = new EventEmitter<string>();
 
   professorEditarForm: FormGroup;
@@ -39,7 +43,15 @@ export class ProfessoresEdicaoComponent implements OnInit {
   tiposConta = [];
   private dbCollection: AngularFirestoreCollection;
   id = null;
-  instrumentos: InstrumentoId[] = []
+  instrumentos: InstrumentoId[] = [];
+  instrumentosProfessor: InstrumentoId[] = []
+  comboInstrumentoProfessor: string;
+  comboRemoveInstrumentoProfessor: string;
+  instrumentoSelecionadoProfessor: InstrumentoId;
+  isAdicaoInstrumentoSucesso: boolean = true;
+  isExclusaoInstrumentoSucesso: boolean = true;
+  mensagemRemocaoInstrumentoProfessor: string;
+  
 
 
   constructor(
@@ -51,7 +63,8 @@ export class ProfessoresEdicaoComponent implements OnInit {
     private selectItemsService: SelectItemsService,
     private readonly afs: AngularFirestore,
     private sharedService: SharedService,
-    private banzosUtils: BanzosUtils
+    private banzosUtils: BanzosUtils,
+    private db: AngularFireDatabase
   ) { 
     this.id = this.route.snapshot.paramMap.get('id');
 
@@ -66,6 +79,7 @@ export class ProfessoresEdicaoComponent implements OnInit {
             const data = a.data() as ProfessorId;
             data.id = a.id;
             this.professorSelecionado = data;
+            this.professorSelecionado.instrumentos = [];
 
             this.professorEditarForm.controls['id'].setValue(data.id);
             this.professorEditarForm.controls['nome'].setValue(data.nome);
@@ -80,12 +94,24 @@ export class ProfessoresEdicaoComponent implements OnInit {
             this.professorEditarForm.controls['agencia'].setValue(data.agencia);
             this.professorEditarForm.controls['cpf'].setValue(data.cpf);
             this.professorEditarForm.controls['rg'].setValue(data.rg);
-          }
+            this.dbCollection.doc(this.id).collection<Instrumento>('instrumentos').snapshotChanges()
+            .subscribe(actions => {
+              this.professorSelecionado.instrumentos = [];
+              actions.map(i => {
+                const data = i.payload.doc.data() as InstrumentoId;
+                data.id = i.payload.doc.id;
+                this.professorSelecionado.instrumentos.push(data);
+            })
+            }
+            );
+          
+         }
         );
       }
 
-      //busca os instrumentos
+      
 
+      //busca os instrumentos para a combo
       this.afs.collection<Instrumento>('instrumento').snapshotChanges().subscribe(
         actions => actions.map(a => {
           const data = a.payload.doc.data() as InstrumentoId;
@@ -93,7 +119,7 @@ export class ProfessoresEdicaoComponent implements OnInit {
           this.instrumentos.push(data);
         })
       );
-      
+
       //busca os tipos de conta
       this.tiposConta = sharedService.getTiposConta();
   }
@@ -201,6 +227,59 @@ export class ProfessoresEdicaoComponent implements OnInit {
   editarProfessor() {
     this.isProfessorExclusao = false;
     this.enviarAlteracaoProfessor();
+  }
+
+  adicionarInstrumentoProfessor(){
+    if (this.professorSelecionado.instrumentos.find(obj => obj.nome == this.comboInstrumentoProfessor)){
+      this.isAdicaoInstrumentoSucesso = false 
+    }else{
+
+      this.instrumentoSelecionadoProfessor = this.instrumentos.find(obj => obj.nome == this.comboInstrumentoProfessor) as InstrumentoId;
+      // console.log(this.comboInstrumentoProfessor)
+      //var sel = document.getElementById('comboInstrumentoProfessor');
+      //console.log(sel. .value)
+       this.dbCollection.doc(this.id).collection<Instrumento>('instrumentos')
+       .doc(this.instrumentoSelecionadoProfessor.id)
+       .set(this.instrumentoSelecionadoProfessor)
+
+       this.isAdicaoInstrumentoSucesso = true
+    }
+  }
+
+
+  removerInstrumentoProfessor(){
+    console.log("Entrei")
+    
+    if (this.professorSelecionado.instrumentos.find(obj => obj.nome == this.comboRemoveInstrumentoProfessor)){
+      this.instrumentoSelecionadoProfessor = this.professorSelecionado.instrumentos.find(obj => obj.nome == this.comboRemoveInstrumentoProfessor) as InstrumentoId;
+      this.dbCollection.doc(this.id).collection<Instrumento>('instrumentos')
+      .doc(this.instrumentoSelecionadoProfessor.id)
+      .delete()
+      .then(
+        () => {this.isExclusaoInstrumentoSucesso = true,
+               this.mensagemRemocaoInstrumentoProfessor = "Instrumento Removido",
+               console.log("Excluí")
+               },
+         (erro) =>  {this.mensagemRemocaoInstrumentoProfessor = "O professor não tem o instrumento que você está tentando excluir, isso não deveria acontecer... Informe ao Administrador",
+                       console.log("Deu p excluir não senhor.")
+                     }
+      )
+    }else{
+      this.isExclusaoInstrumentoSucesso = false 
+    }
+  }
+
+  getInstrumentosProfessor(){
+    return this.professorSelecionado.instrumentos
+  }
+
+  fecharAddInstrumentoProfessor(){
+    this.closeAddInstrumentoModal.nativeElement.click();
+  }
+
+
+  fecharRemoveInstrumentoProfessor(){
+    this.closeRemoveInstrumentoModal.nativeElement.click();
   }
 
   limparMensagens(): any {

@@ -42,7 +42,6 @@ export class ProfessoresListagemComponent{
   }
 
   ordenarProfessores(coluna){
-    console.log(this.instrumentos)
     this.professores = this.banzosUtils.filter(this.professores,coluna,this.arrayProfessorSort[coluna]==1?true:false)
     if (this.arrayProfessorSort[coluna] == 1){
       this.arrayProfessorSort[coluna] = 0
