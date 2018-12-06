@@ -1,0 +1,55 @@
+<div class="row mb-3">
+  <div class="col-sm-8">
+    <div class="form-group-row ">
+        <form class="form-inline">
+            <input  
+            (keyup)="buscarTexto = $event.target.value" 
+            name="buscarTexto" class="form-control  col-sm-8 mr-1" 
+            type="search" placeholder="Filtrar Sala" aria-label="Search">
+          </form>
+    </div>
+  </div>
+
+  <div class="col-sm">
+      <a routerLink="/novo-sala">
+        <button id="editar-sala-button" type="button" class="btn btn-primary">
+            Adicionar Sala
+        </button>
+      </a>
+    </div>
+</div>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">
+        <div class="banzos-th">
+            <a id="nomeSalaSort" class="banzos-th" (click)="ordenarSalas('nome')">
+                Nome  <span [ngSwitch]="arraySalaSort['nome']">
+                        <i *ngSwitchCase="1" class="fas fa-sort-up"></i>
+                        <i *ngSwitchCase="0" class="fas fa-sort-down"></i>
+                        <i *ngSwitchDefault class="fas fa-sort"></i>
+                </span>
+            </a>
+        </div> 
+      </th>    
+      <th scope="col">Editar</th>
+    </tr>
+  </thead>
+  <tbody>
+
+        <tr *ngFor="let sala of salas | filter : buscarTexto">
+            <td>{{sala.nome}}</td>
+            <td> 
+                <a routerLink="/sala/{{sala.id}}">
+                  
+                    <i class="material-icons">
+                      edit
+                      </i>
+                </a>
+            </td>
+          </tr>
+ 
+   
+  </tbody>
+</table>
