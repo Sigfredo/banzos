@@ -36,7 +36,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     NoopAnimationsModule,
     SharedModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
 
   ],
   providers: [

@@ -14,6 +14,8 @@ import { ProfessoresModule } from './professores/professores.module';
 import { ConfiguracoesModule } from './configuracoes/configuracoes.module';
 import { InstrumentosModule } from './configuracoes/instrumentos/instrumentos.module';
 
+import { FullCalendarModule } from 'ng-fullcalendar';
+
 
 @NgModule({
   imports: [
@@ -22,7 +24,8 @@ import { InstrumentosModule } from './configuracoes/instrumentos/instrumentos.mo
     AlunosModule,
     InstrumentosModule,
     ProfessoresModule,
-    ConfiguracoesModule
+    ConfiguracoesModule,
+    FullCalendarModule
 
   ],
   declarations: [

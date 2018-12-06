@@ -10,6 +10,8 @@ import { DisciplinasComponent } from './content/configuracoes/disciplinas/discip
 import { InstrumentosListagemComponent } from './content/configuracoes/instrumentos/instrumentos-listagem/instrumentos-listagem.component';
 import { ConfiguracoesComponent } from './content/configuracoes/configuracoes.component';
 import { DisciplinasEdicaoComponent } from './content/configuracoes/disciplinas/disciplinas-edicao/disciplinas-edicao.component';
+import { TurmaComponent } from './content/turma/turma.component';
+import { GradeHorariaComponent } from './content/grade-horaria/grade-horaria.component';
 
 const routes: Routes = [
   {
@@ -63,6 +65,14 @@ const routes: Routes = [
   {
     path: 'configuracoes',
     component: ConfiguracoesComponent
+  },
+  {
+    path: 'turmas',
+    component: TurmaComponent
+  },
+  {
+    path: 'grade-horaria',
+    component: GradeHorariaComponent
   }
 
 ];
