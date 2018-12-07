@@ -4,6 +4,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { DisciplinasModule } from './disciplinas/disciplinas.module';
+import { SalasModule } from './salas/salas.module';
 import { InstrumentosModule } from './instrumentos/instrumentos.module';
 import { ConfiguracoesComponent } from './configuracoes.component';
 import { ConfiguracoesService } from './configuracoes.service';
@@ -25,6 +26,7 @@ import { ConfiguracoesMensagemService } from './configuracoes-mensagem.service';
   exports: [
     DisciplinasModule,
     InstrumentosModule,
+    SalasModule,
     ConfiguracoesComponent
   ],
   providers: [

@@ -12,6 +12,8 @@ import { ConfiguracoesComponent } from './content/configuracoes/configuracoes.co
 import { DisciplinasEdicaoComponent } from './content/configuracoes/disciplinas/disciplinas-edicao/disciplinas-edicao.component';
 import { TurmaComponent } from './content/turma/turma.component';
 import { GradeHorariaComponent } from './content/grade-horaria/grade-horaria.component';
+import { SalasComponent } from './content/configuracoes/salas/salas.component'
+import { SalasEdicaoComponent } from './content/configuracoes/salas/salas-edicao/salas-edicao.component'
 
 const routes: Routes = [
   {
@@ -73,7 +75,19 @@ const routes: Routes = [
   {
     path: 'grade-horaria',
     component: GradeHorariaComponent
-  }
+  },
+  {
+    path: 'salas',
+    component: SalasComponent
+  },
+  {
+    path: 'nova-sala',
+    component: SalasEdicaoComponent
+  },
+  {
+    path: 'sala/:id',
+    component: SalasEdicaoComponent
+  },
 
 ];
 

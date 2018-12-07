@@ -1,0 +1,12 @@
+<div class="mt-2 text-center">
+
+  <ngb-alert *ngIf="mensagemSalaSucesso" type="success" (close)="mensagemSalaSucesso = null">{{ mensagemSalaSucesso }}</ngb-alert>
+  <ngb-alert *ngIf="mensagemSalaAlerta" type="warning" (close)="mensagemSalaAlerta = null">{{ mensagemSalaAlerta }}</ngb-alert>
+  <ngb-alert *ngIf="mensagemSalaErro" type="error" (close)="mensagemSalaErro = null">{{ mensagemSalaErro }}</ngb-alert>
+
+<h1>Salas</h1>
+
+</div>
+
+
+<banzos-salas-listagem [instrumentos] = "instrumentos"></banzos-salas-listagem>

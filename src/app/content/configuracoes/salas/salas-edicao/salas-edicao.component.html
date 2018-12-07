@@ -1,0 +1,216 @@
+<ngb-alert *ngIf="mensagemSalaErro" type="error" (close)="mensagemSalaErro = null">{{ mensagemSalaErro }}</ngb-alert>
+<form [formGroup]="salaEditarForm" class="form mt-4" (submit)="editarSala()">
+    <div class="row" style="position: relative;">
+            <div class="col">
+                    <h2 class="text-center">{{tituloEdicaoSala}}</h2>
+            </div>
+            
+            <div class="col-md-2 mt-2 float-right">    
+                        <button
+                        type="button"
+                        (click)="botaoVoltar();"
+                        class="btn btn-block">
+                        Voltar
+                        </button>     
+            </div>
+        </div>
+    <div class="form-group">
+        <label for="nomeSalaInput">Identificação da Sala</label>
+        <input
+            formControlName="nome"
+            type="text"
+            id="nomeSalaInput"
+            class="form-control"
+            placeholder="Nome do sala"
+            autofocus>  
+    </div>
+    
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <div class="form-row">
+        <div class="col">
+                <button
+                *ngIf="isSalaEdicao"
+                type="button"
+                data-toggle="modal" data-target="#confirmarExclusaoSalaModal"
+                class="btn btn-danger btn-block">
+                    Excluir
+                </button>
+        </div>
+        <div class="col">
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-block">
+                    {{labelBotaoEdicaoSala}}
+                </button>
+            </div>
+    </div>
+
+    <!-- Modal De exclusão-->
+    <div class="modal fade" id="confirmarExclusaoSalaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Exclusão de Sala</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                Deseja realmente excluir o sala?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                <button type="button" (click)="excluirSala();" class="btn btn-primary" data-dismiss="modal">Sim</button>
+                </div>
+            </div>
+            </div>
+    </div>
+
+    <!--Instrumentos do Sala-->
+    
+        <div class="form-row">
+                
+                    
+                            <div class="salas-instrumentos form-row mt-4 container-fluid sala-habilitacao-head">
+                                <div class="col-10 mt-1"><h4>Habilitações</h4></div>
+                                <a href="#salaInstrumentoEdicaoModal" data-toggle="modal" data-target="#salaInstrumentoEdicaoModal">
+                                    <i class="material-icons icon-green add-instrumento-sala mr-3">
+                                        add_box
+                                        </i>
+                                </a>
+                                <a href="#salaInstrumentoExclusaoModal" data-toggle="modal" data-target="#salaInstrumentoExclusaoModal">
+                                        <i class="material-icons icon-red add-instrumento-sala">
+                                            remove_circle
+                                            </i>
+                                </a>
+                                    
+                                    </div>
+                   
+                    <div class="form-row salas-instrumentos-bot container-fluid">
+                            <div class="col-sm-2 mb-3 mt-4" id="instrumentosListagemDiv" *ngFor="let instrumentoSala of salaSelecionado?.instrumentos | filter : buscarTexto">
+                                    <button type="button"
+                                    class="btn btn-info btn-lg btn-block">{{instrumentoSala.nome}}</button> 
+                                </div>
+                    </div>
+                    
+                    
+        </div>
+                
+  
+</form>   
+
+        
+    <!-- Modal De adição de instrumento para o sala-->
+        <div class="modal fade" id="salaInstrumentoEdicaoModal" tabindex="-1" role="dialog" aria-labelledby="instrumentoEdicaoModalLabel" aria-hidden="true" data-dismiss="modal" #closeAddInstrumentoModal>
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5> Adicionar Instrumento </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                            <div class="col"> 
+                                <select
+                                    [(ngModel)]="comboInstrumentoSala"
+                                    class="form-control">  
+                                    <option disabled hidden [value]="undefined">-- selecione --</option>
+                                    <option *ngFor="let instrumento of instrumentos">
+                                        {{instrumento.nome}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <!-- <button
+                                    type="submit"
+                                    class="btn btn-primary btn-block">
+                                    Adicionar
+                                </button> -->
+                                <button type="button" (click)="adicionarInstrumentoSala();" class="btn btn-primary" data-toggle="modal" data-target="#informaAdicaoSalaModal">Adicionar</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    <!-- Modal Informando a inclusão de instrumento ao sala-->
+    <div class="modal fade" id="informaAdicaoSalaModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                    <ngb-alert *ngIf="isAdicaoInstrumentoSucesso" type="success" [dismissible]="false">Instrumento adicionado.</ngb-alert>
+                    <ngb-alert *ngIf="!isAdicaoInstrumentoSucesso" type="warning" [dismissible]="false">O sala já tem essa habilitação</ngb-alert>
+            </div>
+            <div class="modal-footer">
+            <button (click)="fecharAddInstrumentoSala();" type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal De Exclusão de instrumento para o sala-->
+    <div class="modal fade" id="salaInstrumentoExclusaoModal" tabindex="-1" role="dialog" aria-labelledby="instrumentoExclusaoModalLabel" aria-hidden="true" data-dismiss="modal" #closeRemoveInstrumentoModal>
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5> Remover Instrumento </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                            <div class="col"> 
+                                <select
+                                    [(ngModel)]="comboRemoveInstrumentoSala"
+                                    class="form-control">  
+                                    <option disabled hidden [value]="undefined">-- selecione --</option>
+                                    <option *ngFor="let instrumento of salaSelecionado?.instrumentos">
+                                        {{instrumento.nome}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <!-- <button
+                                    type="submit"
+                                    class="btn btn-primary btn-block">
+                                    Adicionar
+                                </button> -->
+                                <button type="button" (click)="removerInstrumentoSala();" class="btn btn-danger" data-toggle="modal" data-target="#informaRemocaoSalaModal">Remover</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    <!-- Modal Informando a exclusão de instrumento ao sala-->
+    <div class="modal fade" id="informaRemocaoSalaModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                    <ngb-alert *ngIf="isExclusaoInstrumentoSucesso" type="success" [dismissible]="false">{{ mensagemRemocaoInstrumentoSala }}</ngb-alert>
+                    <ngb-alert *ngIf="!isExclusaoInstrumentoSucesso" type="error" [dismissible]="false">{{ mensagemRemocaoInstrumentoSala }}</ngb-alert> 
+            </div>
+            <div class="modal-footer">
+            <button (click)="fecharRemoveInstrumentoSala();" type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+        </div>
+    </div>
