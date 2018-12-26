@@ -101,9 +101,8 @@ export class ProfessoresEdicaoComponent implements OnInit {
                 const data = i.payload.doc.data() as InstrumentoId;
                 data.id = i.payload.doc.id;
                 this.professorSelecionado.instrumentos.push(data);
-            })
-            }
-            );
+              })
+            });
           
          }
         );

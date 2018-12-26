@@ -45,13 +45,27 @@ export class BanzosUtils{
 
   //busca o valor de "nome" em um array de objetos
   buscarNomeById(id: string, array: any){
-    console.log("Entrei")
       for (var i=0; i < array.length; i++) {
           if (array[i].id === id) {
               return array[i];
           }
       }
   
+  }
+
+  //Filtra a Grade levando em consideração Disciplina, professor e sala.
+  filtrarGrade(grade: GradeHorariaId[], disciplina: string, professor: string, sala: string): GradeHorariaId[]{
+    const retorno = [];
+    for (let g of grade){
+      if (professor === undefined || professor === "" || professor === g.professor){
+        if (disciplina === undefined || disciplina === "" || disciplina === g.disciplina){
+          if(sala === undefined || sala === "" || sala === g.sala){
+            retorno.push(g);
+          }
+        }
+      }
+    }
+    return retorno;
   }
 
   //Inicializa a grade horária, 08:00 a 20:30 com valor 0

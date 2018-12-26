@@ -1,7 +1,11 @@
 import { SalaId } from "../configuracoes/salas/salaId";
+import { DisciplinaId } from "../configuracoes/disciplinas/disciplinaId";
+import { ProfessorId } from "../professores/professorId";
 
 export class GradeHoraria {
     dia: string;
     hora: string;
-    sala: SalaId[];
+    sala: string;
+    disciplina: string;
+    professor: string;
   }

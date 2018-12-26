@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { GradeHoraria } from './grade-horaria';
 import { GradeHorariaId } from './grade-horariaId';
 import { BanzosUtils } from 'src/app/shared/banzos-util';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-grade-horaria',
@@ -13,7 +14,9 @@ import { BanzosUtils } from 'src/app/shared/banzos-util';
 export class GradeHorariaComponent implements OnInit {
 
   private gradeCollection: AngularFirestoreCollection<GradeHoraria>;
-  private grade: GradeHorariaId[] = [];
+  private grade: Observable<GradeHorariaId[]>;
+  private gradeCrua: GradeHorariaId[] = [];
+  private gradeFiltrada: GradeHorariaId[] = [];
   private qtdSalas: number = 4;
 
   gradeSegunda: Map<string, number> = new Map();
@@ -22,6 +25,10 @@ export class GradeHorariaComponent implements OnInit {
   gradeQuinta: Map<string, number> = new Map();
   gradeSexta: Map<string, number> = new Map();
   gradeSabado: Map<string, number> = new Map();
+
+  disciplinaFiltro = "";
+  professorFiltro = "";
+  salaFiltro = "";
  
 
   constructor(
@@ -43,23 +50,41 @@ export class GradeHorariaComponent implements OnInit {
     // .snapshotChanges() returns a DocumentChangeAction[], which contains
     // a lot of information about "what happened" with each change. If you want to
     // get the data and the id use the map operator.
-    this.gradeCollection.snapshotChanges().subscribe(
-      actions => actions.map(a => {
-        const data = a.payload.doc.data() as GradeHorariaId;
-        data.id = a.payload.doc.id;
-        this.populaGrade(data);
-      })
+    this.grade = this.gradeCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as GradeHoraria;
+        const id = a.payload.doc.id;
+        return {id, ...data};
+      }))
+      
     );
+
+    this.grade.subscribe(
+      x => {this.gradeCrua = x,
+            this.filtrarGrade(),
+            this.populaGrade(this.gradeFiltrada)
+      }
+    )
+
 
   }
 
   ngOnInit() {
+
   }
 
+  filtrarGrade(){
+    this.gradeFiltrada = this.banzosUtils.filtrarGrade(this.gradeCrua, this.disciplinaFiltro, "OiWvE2Lg0H9uvRIGJxti", this.salaFiltro);
+  }
 
+  populaGrade(gradeArray: GradeHorariaId[]){
+    for (let g of gradeArray){
+      this.agrupaGrade(g);
+    }
+  }
 
-  //criar metodo
-  populaGrade(elemento: GradeHorariaId){
+  
+  agrupaGrade(elemento: GradeHorariaId){
 
     switch (elemento.dia){
       case "segunda": {
