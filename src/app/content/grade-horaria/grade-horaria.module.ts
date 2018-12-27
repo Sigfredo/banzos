@@ -23,7 +23,7 @@ import { BrowserModule } from '@angular/platform-browser';
  
   ],
   providers: [
-    GradeHorariaComponent
+    GradeHorariaComponent 
   ]
 })
 export class GradeHorariaModule { }

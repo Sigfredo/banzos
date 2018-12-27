@@ -15,6 +15,7 @@ import { ConfiguracoesModule } from './configuracoes/configuracoes.module';
 import { InstrumentosModule } from './configuracoes/instrumentos/instrumentos.module';
 
 import { FullCalendarModule } from 'ng-fullcalendar';
+import { GradeHorariaModule } from './grade-horaria/grade-horaria.module';
 
 
 @NgModule({
@@ -25,20 +26,20 @@ import { FullCalendarModule } from 'ng-fullcalendar';
     InstrumentosModule,
     ProfessoresModule,
     ConfiguracoesModule,
-    FullCalendarModule
+    FullCalendarModule,
+    GradeHorariaModule
 
   ],
   declarations: [
     FinanceiroComponent,
     TurmaComponent,
-    GradeHorariaComponent
   ],
   exports: [
     AlunosModule,
     ProfessoresModule,
     FinanceiroComponent,
     TurmaComponent,
-    GradeHorariaComponent,
+    GradeHorariaModule ,
     ConfiguracoesModule,
     InstrumentosModule
   ]
