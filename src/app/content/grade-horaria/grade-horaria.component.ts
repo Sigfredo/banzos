@@ -1,10 +1,18 @@
-import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { GradeHoraria } from './grade-horaria';
 import { GradeHorariaId } from './grade-horariaId';
 import { BanzosUtils } from 'src/app/shared/banzos-util';
 import { Observable } from 'rxjs';
+import { Disciplina } from '../configuracoes/disciplinas/disciplina';
+import { DisciplinaId } from '../configuracoes/disciplinas/disciplinaId';
+import { ProfessorId } from '../professores/professorId';
+import { SalaId } from '../configuracoes/salas/salaId';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { Component, OnInit, AfterViewInit, Input, EventEmitter, Output } from '@angular/core';
+import { Validators, FormGroup, FormBuilder } from "@angular/forms";
+import { Professor } from '../professores/professor';
+import { Sala } from '../configuracoes/salas/sala';
 
 @Component({
   selector: 'app-grade-horaria',
@@ -29,6 +37,14 @@ export class GradeHorariaComponent implements OnInit {
   disciplinaFiltro = "";
   professorFiltro = "";
   salaFiltro = "";
+
+  disciplinas: DisciplinaId[] = [];
+  professores: ProfessorId[] = [];
+  salas: SalaId[] = [];
+
+  comboFiltroDisciplina: string;
+  comboFiltroProfessor: string;
+  comboFiltroSala: string;
  
 
   constructor(
@@ -66,6 +82,32 @@ export class GradeHorariaComponent implements OnInit {
       }
     )
 
+    //busca os instrumentos para a combo de disciplinas
+    this.afs.collection<Disciplina>('disciplina').snapshotChanges().subscribe(
+      actions => actions.map(a => {
+        const data = a.payload.doc.data() as DisciplinaId;
+        data.id = a.payload.doc.id;
+        this.disciplinas.push(data);
+      })
+    );
+
+    //busca os instrumentos para a combo de professores
+    this.afs.collection<Professor>('professor').snapshotChanges().subscribe(
+      actions => actions.map(a => {
+        const data = a.payload.doc.data() as ProfessorId;
+        data.id = a.payload.doc.id;
+        this.professores.push(data);
+      })
+    );
+
+    //busca os instrumentos para a combo de salas
+    this.afs.collection<Sala>('sala').snapshotChanges().subscribe(
+      actions => actions.map(a => {
+        const data = a.payload.doc.data() as SalaId;
+        data.id = a.payload.doc.id;
+        this.salas.push(data);
+      })
+    );
 
   }
 
@@ -115,6 +157,10 @@ export class GradeHorariaComponent implements OnInit {
     }
 
     
+  }
+
+  teste(numero){
+    console.log(numero)
   }
 
 }

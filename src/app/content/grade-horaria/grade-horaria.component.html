@@ -1,26 +1,5 @@
 <div class="row">
-<div class="col-3">
-<h4>Filtros</h4>
-<div class="row">
-    <input  
-    name="buscarTexto" class="form-control  col-sm-8 mr-1" 
-    type="search" placeholder="Disciplina" aria-label="Search">
-  
-</div>
-<div class="row">
-    <input 
-    name="buscarTexto" class="form-control  col-sm-8 mr-1" 
-    type="search" placeholder="Professor" aria-label="Search">
-</div>
 
-<div class="row">
-    <input   
-    name="buscarTexto" class="form-control  col-sm-8 mr-1" 
-    type="search" placeholder="Sala" aria-label="Search">
-</div>
-
-
-</div>
 <div class="col-7">
   <table class="table table-bordered table-sm fixed">
     <thead>
@@ -741,5 +720,50 @@
     </tbody>
   </table>
 </div> 
+
+
+<div class="col-3 ml-5">
+  <h4>Filtros</h4>
+  <div class="row mt-3">
+    
+    <label for="" class="container-fluid">Disciplina: </label>
+    <select
+    [(ngModel)]="comboFiltroDisciplina" 
+        class="form-control">  
+        <option disabled hidden [value]="undefined">-- selecione --</option>
+        <option *ngFor="let disciplina of disciplinas">
+          {{disciplina.nome}}
+        </option>
+    </select>
+    
+  </div>
+  <div class="row mt-3">
+    <label for="" class="container-fluid">Professor: </label>
+    <select
+        id="comboFiltroProfessor"
+        class="form-control">  
+        <option disabled hidden [value]="undefined">-- selecione --</option>
+        <option *ngFor="let professor of professores">
+          {{professor.nome}}
+        </option>
+    </select>
+  </div>
+  
+  <div class="row mt-3">
+    <label for="" class="container-fluid">Sala: </label>
+    <select
+        id="comboFiltroSala"
+        class="form-control">  
+        <option disabled hidden [value]="undefined">-- selecione --</option>
+        <option *ngFor="let sala of salas">
+          {{sala.nome}}
+        </option>
+    </select>
+  </div>
+  
+  
+  </div>
+
+
 
 </div>
