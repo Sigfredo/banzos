@@ -740,7 +740,7 @@
   <div class="row mt-3">
     <label for="" class="container-fluid">Professor: </label>
     <select
-        id="comboFiltroProfessor"
+        [(ngModel)]="comboFiltroDisciplina"
         class="form-control">  
         <option disabled hidden [value]="undefined">-- selecione --</option>
         <option *ngFor="let professor of professores">
@@ -752,7 +752,7 @@
   <div class="row mt-3">
     <label for="" class="container-fluid">Sala: </label>
     <select
-        id="comboFiltroSala"
+        [(ngModel)]="comboFiltroDisciplina"
         class="form-control">  
         <option disabled hidden [value]="undefined">-- selecione --</option>
         <option *ngFor="let sala of salas">
